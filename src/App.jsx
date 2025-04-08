@@ -24,7 +24,7 @@ const TermsAndConditions = lazyWithLoading(() => import('./component/Footer/Term
 const FAQSection = lazyWithLoading(() => import('./component/Footer/Faq.jsx'));
 const PrivacyPolicy = lazyWithLoading(() => import('./component/Footer/PrivacyPolicy.jsx'));
 const ContactInformation = lazyWithLoading(() => import('./component/Footer/Contact.jsx'));
-const Checkout = lazyWithLoading(() => import('./component/Checkout/checkout.jsx'));
+const Checkout = lazyWithLoading(() => import('./component/Checkout/Checkout.jsx'));
 const PaymentPage = lazyWithLoading(() => import('./component/Checkout/PlaceOrder.jsx'));
 const ProfilePage = lazyWithLoading(() => import('./component/Customer/ProfilePage.jsx'));
 const ProductDetails = lazyWithLoading(() => import('./component/ProductPage/ProductDetails.jsx'));
