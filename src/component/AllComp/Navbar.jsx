@@ -63,6 +63,7 @@
             >
               <MenuIcon />
             </IconButton>
+            <img src='/Untitled.png' width={'30px'} style={{margin:'5px', marginBottom:'10px'}}></img>
             <Typography
               variant="plain"
               level='h1'
