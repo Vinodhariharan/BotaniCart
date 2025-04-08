@@ -1,0 +1,1185 @@
+{
+  "users": [
+    {
+      "firstName": "Vinodhariharan",
+      "lastName": "Ravi",
+      "email": "vinodhari.ravi@outlook.com",
+      "password": "1",
+      "confirmPassword": "1",
+      "id": 6
+    },
+    {
+      "firstName": "Vinod",
+      "lastName": "Ravi",
+      "email": "asdasd@sdfsdf.cms",
+      "password": "2",
+      "confirmPassword": "2",
+      "id": 7
+    },
+    {
+      "firstName": "sdfsdfsdfsdfsdf",
+      "lastName": "Ravi",
+      "email": "asdasdasdasd@dfs.csfd",
+      "password": "3",
+      "confirmPassword": "3",
+      "id": 8
+    }
+  ],
+  "containers": [
+    {
+      "id": 43,
+      "imageSrc": "/assets/images/pots/terracotta-pot.jpg",
+      "title": "Terracotta Clay Pot",
+      "price": 7.99,
+      "description": "Classic and breathable, ideal for succulents, cacti, and herbs.",
+      "link": "terracotta-pot",
+      "Type": "Pot",
+      "Material": "Clay",
+      "category": "containers"
+    },
+    {
+      "id": 44,
+      "imageSrc": "/assets/images/pots/ceramic-pot.jpg",
+      "title": "Ceramic Glazed Pot",
+      "price": 12.99,
+      "description": "Stylish and versatile, available in various glazes and sizes for diverse plants.",
+      "link": "ceramic-pot",
+      "Type": "Pot",
+      "Material": "Ceramic",
+      "category": "containers"
+    },
+    {
+      "id": 45,
+      "imageSrc": "/assets/images/pots/plastic-pot.jpg",
+      "title": "Durable Plastic Pot",
+      "price": 4.99,
+      "description": "Lightweight and affordable, perfect for indoor and outdoor plants.",
+      "link": "plastic-pot",
+      "Type": "Pot",
+      "Material": "Plastic",
+      "category": "containers"
+    },
+    {
+      "id": 46,
+      "imageSrc": "/assets/images/pots/hanging-basket.jpg",
+      "title": "Hanging Basket",
+      "price": 9.99,
+      "description": "Adds vertical interest, ideal for trailing plants and balcony gardens.",
+      "link": "hanging-basket",
+      "Type": "Pot",
+      "category": "containers"
+    },
+    {
+      "id": 47,
+      "imageSrc": "/assets/images/pots/self-watering-pot.jpg",
+      "title": "Self-Watering Pot",
+      "price": 19.99,
+      "description": "Reduces watering frequency, keeps plants thriving during busy schedules.",
+      "link": "self-watering-pot",
+      "Type": "Pot",
+      "category": "containers"
+    },
+    {
+      "id": 48,
+      "imageSrc": "/assets/images/pots/raised-bed.jpg",
+      "title": "Raised Garden Bed",
+      "price": 39.99,
+      "description": "Improves soil drainage and offers better access for vegetables and herbs.",
+      "link": "raised-bed",
+      "Type": "Bed",
+      "category": "containers"
+    },
+    {
+      "id": 49,
+      "imageSrc": "/assets/images/pots/window-box.jpg",
+      "title": "Window Box",
+      "price": 14.99,
+      "description": "Adds color and charm to windowsills, perfect for herbs and flowers.",
+      "link": "window-box",
+      "Type": "Pot",
+      "category": "containers"
+    },
+    {
+      "id": 50,
+      "imageSrc": "/assets/images/pots/planter-trio.jpg",
+      "title": "Planter Trio Set",
+      "price": 24.99,
+      "description": "Three coordinating planters in different sizes, ideal for creating focal points.",
+      "link": "planter-trio",
+      "Type": "Pot",
+      "category": "containers"
+    }
+  ],
+  "tools": [
+    {
+      "id": 1,
+      "imageSrc": "/assets/images/tools/garden-gloves.jpg",
+      "title": "Gardening Gloves",
+      "price": 5.99,
+      "description": "Protect your hands from dirt, thorns, and blisters. Choose breathable and flexible materials.",
+      "link": "garden-gloves",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 2,
+      "imageSrc": "/assets/images/tools/garden-trowel.jpg",
+      "title": "Garden Trowel",
+      "price": 7.99,
+      "description": "Ideal for scooping soil, planting seeds, and transplanting seedlings. Opt for a stainless steel trowel for durability.",
+      "link": "garden-trowel",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 3,
+      "imageSrc": "/assets/images/tools/garden-spade.jpg",
+      "title": "Garden Spade",
+      "price": 14.99,
+      "description": "Digging holes, edging borders, and turning compost are simple with a sturdy spade. Consider weight and handle length for comfort.",
+      "link": "garden-spade",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 4,
+      "imageSrc": "/assets/images/tools/garden-fork.jpg",
+      "title": "Garden Fork",
+      "price": 9.99,
+      "description": "Loosening soil, aerating compost, and turning over mulch are easier with a garden fork. Look for sturdy tines and a comfortable handle.",
+      "link": "garden-fork",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 5,
+      "imageSrc": "/assets/images/tools/gardening-shears.jpg",
+      "title": "Gardening Shears",
+      "price": 12.99,
+      "description": "Pruning branches, trimming herbs, and harvesting vegetables require reliable shears. Choose bypass shears for clean cuts and precision.",
+      "link": "gardening-shears",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 6,
+      "imageSrc": "/assets/images/tools/pruning-saw.jpg",
+      "title": "Pruning Saw",
+      "price": 14.99,
+      "description": "For thicker branches, clean cuts & minimal damage.",
+      "link": "pruning-saw",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 7,
+      "imageSrc": "/assets/images/tools/hand-rake.jpg",
+      "title": "Hand Rake",
+      "price": 9.99,
+      "description": "Versatile for smoothing soil, leaves, & mulch.",
+      "link": "hand-rake",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 8,
+      "imageSrc": "/assets/images/tools/leaf-blower-vacuum.jpg",
+      "title": "Leaf Blower/Vacuum",
+      "price": 39.99,
+      "description": "Saves time & effort battling fall leaves.",
+      "link": "leaf-blower-vacuum",
+      "Type": "Helpful",
+      "category": "tools"
+    },
+    {
+      "id": 9,
+      "imageSrc": "/assets/images/tools/watering-can.jpg",
+      "title": "Watering Can",
+      "price": 5.99,
+      "description": "Directly nourishes roots & minimizes waste.",
+      "link": "watering-can",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 10,
+      "imageSrc": "/assets/images/tools/hose-and-nozzle.jpg",
+      "title": "Hose & Nozzle",
+      "price": 29.99,
+      "description": "Efficient water delivery for larger gardens.",
+      "link": "hose-and-nozzle",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 11,
+      "imageSrc": "/assets/images/tools/wheelbarrow.jpg",
+      "title": "Wheelbarrow",
+      "price": 69.99,
+      "description": "Effortless hauling of soil, compost, & mulch.",
+      "link": "wheelbarrow",
+      "Type": "Helpful",
+      "category": "tools"
+    },
+    {
+      "id": 12,
+      "imageSrc": "/assets/images/tools/garden-kneeler.jpg",
+      "title": "Garden Kneeler",
+      "price": 19.99,
+      "description": "Comfy kneeler for protecting knees & balance.",
+      "link": "garden-kneeler",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 13,
+      "imageSrc": "/assets/images/tools/seed-starting-trays.jpg",
+      "title": "Seed Starting Trays",
+      "price": 7.99,
+      "description": "Sprouts vegetables, herbs, & flowers indoors.",
+      "link": "seed-starting-trays",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 14,
+      "imageSrc": "/assets/images/tools/garden-gloves-with-claws.jpg",
+      "title": "Garden Gloves with Claws",
+      "price": 8.99,
+      "description": "Protection & grip for digging & pulling weeds.",
+      "link": "garden-gloves-with-claws",
+      "Type": "Helpful",
+      "category": "tools"
+    },
+    {
+      "id": 15,
+      "imageSrc": "/assets/images/tools/pruning-loppers.jpg",
+      "title": "Pruning Loppers",
+      "price": 24.99,
+      "description": "Reach high branches & tackle thicker stems.",
+      "link": "pruning-loppers",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 16,
+      "imageSrc": "/assets/images/tools/garden-hoe.jpg",
+      "title": "Garden Hoe",
+      "price": 9.99,
+      "description": "Weeding, aerating soil, & creating furrows.",
+      "link": "garden-hoe",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 17,
+      "imageSrc": "/assets/images/tools/gardening-hat.jpg",
+      "title": "Gardening Hat",
+      "price": 14.99,
+      "description": "Sun protection for face & neck (breathable materials).",
+      "link": "gardening-hat",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 18,
+      "imageSrc": "/assets/images/tools/pruning-snippers.jpg",
+      "title": "Pruning Snippers",
+      "price": 7.99,
+      "description": "Precise control for delicate trimming & sculpting.",
+      "link": "pruning-snippers",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 19,
+      "imageSrc": "/assets/images/tools/gardening-kneeler-pad.jpg",
+      "title": "Gardening Kneeler Pad",
+      "price": 8.99,
+      "description": "Portable comfort & protection while kneeling (waterproof & stain-resistant).",
+      "link": "gardening-kneeler-pad",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 20,
+      "imageSrc": "/assets/images/tools/soil-tester.jpg",
+      "title": "Soil Tester",
+      "price": 12.99,
+      "description": "Monitors soil pH & nutrients for optimal plant growth.",
+      "link": "soil-tester",
+      "Type": "Helpful",
+      "category": "tools"
+    }
+  ],
+  "fertilizers": [
+    {
+      "id": 36,
+      "imageSrc": "/assets/images/fertilizers/all-purpose-fertilizer.jpg",
+      "title": "All-Purpose Garden Fertilizer",
+      "price": 9.99,
+      "description": "Provides essential nutrients for a wide variety of plants, promoting healthy growth and blooms.",
+      "link": "all-purpose-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 37,
+      "imageSrc": "/assets/images/fertilizers/tomato-fertilizer.jpg",
+      "title": "Tomato & Vegetable Fertilizer",
+      "price": 11.99,
+      "description": "Specially formulated to boost yield and flavor in tomatoes, peppers, cucumbers, and other vegetables.",
+      "link": "tomato-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 38,
+      "imageSrc": "/assets/images/fertilizers/rose-fertilizer.jpg",
+      "title": "Rose & Flower Fertilizer",
+      "price": 12.99,
+      "description": "Encourages abundant blooms and vibrant colors in roses, annuals, and perennials.",
+      "link": "rose-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 39,
+      "imageSrc": "/assets/images/fertilizers/citrus-fertilizer.jpg",
+      "title": "Citrus & Fruit Tree Fertilizer",
+      "price": 13.99,
+      "description": "Supports vigorous growth and juicy fruit production in citrus trees, apple trees, and other fruit trees.",
+      "link": "citrus-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 40,
+      "imageSrc": "/assets/images/fertilizers/lawn-fertilizer.jpg",
+      "title": "Lawn Fertilizer",
+      "price": 14.99,
+      "description": "Promotes thick, green, and healthy lawns with balanced nutrients and weed control.",
+      "link": "lawn-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 41,
+      "imageSrc": "/assets/images/fertilizers/organic-fertilizer.jpg",
+      "title": "All-Natural Organic Fertilizer",
+      "price": 16.99,
+      "description": "Made from plant-based ingredients, ideal for gardeners who prefer eco-friendly options.",
+      "link": "organic-fertilizer",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    },
+    {
+      "id": 42,
+      "imageSrc": "/assets/images/fertilizers/compost.jpg",
+      "title": "Compost",
+      "price": 4.99,
+      "description": "Rich, nutrient-rich soil amendment made from decomposed organic matter, improves soil health and fertility.",
+      "link": "compost",
+      "Type": "Fertilizer",
+      "category": "fertilizers"
+    }
+  ],
+  "flowers": [
+    {
+      "id": 1,
+      "imageSrc": "/assets/images/flowers/lavender.jpg",
+      "title": "English Lavender",
+      "price": 7.99,
+      "description": "Fragrant blooms and beautiful foliage, attracts bees and butterflies.",
+      "link": "lavender",
+      "Type": "Outdoor Plant",
+      "category": "flowers"
+    },
+    {
+      "id": 2,
+      "imageSrc": "/assets/images/flowers/hydrangeas.jpg",
+      "title": "Hydrangeas",
+      "price": 14.99,
+      "description": "Puffy spheres of vibrant blooms in diverse colors, a showstopper for any landscape.",
+      "link": "hydrangeas",
+      "Type": "Outdoor Plant",
+      "category": "flowers"
+    },
+    {
+      "id": 3,
+      "imageSrc": "/assets/images/flowers/tulips.jpg",
+      "title": "Tulips",
+      "price": 2.99,
+      "description": "A symbol of spring and new beginnings, available in a rainbow of colors.",
+      "link": "tulips",
+      "Type": "Spring Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 4,
+      "imageSrc": "/assets/images/flowers/orchids.jpg",
+      "title": "Orchids",
+      "price": 29.99,
+      "description": "Exotic elegance with long-lasting blooms, ideal for luxury gifts.",
+      "link": "orchids",
+      "Type": "Houseplant",
+      "category": "flowers"
+    },
+    {
+      "id": 5,
+      "imageSrc": "/assets/images/flowers/peonies.jpg",
+      "title": "Peonies",
+      "price": 8.99,
+      "description": "Fluffy mounds of delicate petals, perfect for romantic occasions and symbolizing prosperity.",
+      "link": "peonies",
+      "Type": "Perennial",
+      "category": "flowers"
+    },
+    {
+      "id": 6,
+      "imageSrc": "/assets/images/flowers/garden-roses.jpg",
+      "title": "Garden Roses",
+      "price": 4.99,
+      "description": "The classic symbol of love and romance, in a spectrum of colors and fragrances.",
+      "link": "garden-roses",
+      "Type": "Outdoor Shrub",
+      "category": "flowers"
+    },
+    {
+      "id": 7,
+      "imageSrc": "/assets/images/flowers/ranunculus.jpg",
+      "title": "Ranunculus",
+      "price": 6.99,
+      "description": "Playful pom-poms in vibrant hues, adding cheerfulness to any occasion.",
+      "link": "ranunculus",
+      "Type": "Spring Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 8,
+      "imageSrc": "/assets/images/flowers/calla-lilies.jpg",
+      "title": "Calla Lilies",
+      "price": 12.99,
+      "description": "Elegant and sophisticated, ideal for funerals and symbolizing purity.",
+      "link": "calla-lilies",
+      "Type": "Summer Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 9,
+      "imageSrc": "/assets/images/flowers/anemones.jpg",
+      "title": "Anemones",
+      "price": 7.99,
+      "description": "Delicate and graceful, symbolizing anticipation and hope.",
+      "link": "anemones",
+      "Type": "Spring Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 10,
+      "imageSrc": "/assets/images/flowers/freesia.jpg",
+      "title": "Freesias",
+      "price": 4.99,
+      "description": "Sweetly scented trumpet-shaped blooms in various colors, symbolizing friendship and trust.",
+      "link": "freesia",
+      "Type": "Spring Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 11,
+      "imageSrc": "/assets/images/flowers/poppies.jpg",
+      "title": "Poppies",
+      "price": 3.99,
+      "description": "Bold and vibrant with papery red, orange, and pink petals, symbolizing remembrance and hope.",
+      "link": "poppies",
+      "Type": "Annual",
+      "category": "flowers"
+    },
+    {
+      "id": 12,
+      "imageSrc": "/assets/images/flowers/dahlias.jpg",
+      "title": "Dahlias",
+      "price": 9.99,
+      "description": "Showstopping blooms in dazzling shapes and colors, adding drama and signifying gratitude.",
+      "link": "dahlias",
+      "Type": "Summer Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 13,
+      "imageSrc": "/assets/images/flowers/gerbera-daisies.jpg",
+      "title": "Gerbera Daisies",
+      "price": 3.99,
+      "description": "Sunny smiles with cheerful yellow, orange, pink, and red petals, symbolizing innocence and joy.",
+      "link": "gerbera-daisies",
+      "Type": "Perennial",
+      "category": "flowers"
+    },
+    {
+      "id": 14,
+      "imageSrc": "/assets/images/flowers/irises.jpg",
+      "title": "Irises",
+      "price": 8.99,
+      "description": "Delicate and elegant with velvety petals in purple, blue, and white, symbolizing wisdom and hope.",
+      "link": "irises",
+      "Type": "Perennial",
+      "category": "flowers"
+    },
+    {
+      "id": 15,
+      "imageSrc": "/assets/images/flowers/lilies.jpg",
+      "title": "Lilies",
+      "price": 15.99,
+      "description": "Fragrant beauties with white, pink, and yellow blooms, symbolizing purity and devotion.",
+      "link": "lilies",
+      "Type": "Summer Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 16,
+      "imageSrc": "/assets/images/flowers/delphiniums.jpg",
+      "title": "Delphiniums",
+      "price": 7.99,
+      "description": "Tall spikes of delicate blue, purple, and white florets, symbolizing joy and an open heart.",
+      "link": "delphiniums",
+      "Type": "Summer Perennial",
+      "category": "flowers"
+    },
+    {
+      "id": 17,
+      "imageSrc": "/assets/images/flowers/alstroemeria.jpg",
+      "title": "Alstroemerias",
+      "price": 5.99,
+      "description": "Long-lasting and versatile with vibrant colors, symbolizing friendship and prosperity.",
+      "link": "alstroemerias",
+      "Type": "Summer Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 18,
+      "imageSrc": "/assets/images/flowers/hyacinths.jpg",
+      "title": "Hyacinths",
+      "price": 6.99,
+      "description": "Sweetly scented clusters in blue, purple, pink, and white, symbolizing playfulness and gratitude.",
+      "link": "hyacinths",
+      "Type": "Spring Bulb",
+      "category": "flowers"
+    },
+    {
+      "id": 19,
+      "imageSrc": "/assets/images/flowers/marigolds.jpg",
+      "title": "Marigolds",
+      "price": 2.99,
+      "description": "Cheerful and vibrant with yellow, orange, and red blooms, symbolizing warmth and longevity.",
+      "link": "marigolds",
+      "Type": "Annual",
+      "category": "flowers"
+    },
+    {
+      "id": 20,
+      "imageSrc": "/assets/images/flowers/sunflowers.jpg",
+      "title": "Sunflowers",
+      "price": 5.99,
+      "description": "Cheerful giants with radiant yellow faces, perfect for summer gardens and bouquets.",
+      "link": "sunflowers",
+      "Type": "Outdoor Plant",
+      "category": "flowers"
+    }
+  ],
+  "shrubs": [
+    {
+      "id": 21,
+      "imageSrc": "/assets/images/shrubs/butterfly-bush.jpg",
+      "title": "Butterfly Bush",
+      "price": 12.99,
+      "description": "Attracts butterflies and hummingbirds with fragrant spikes of blooms in various colors.",
+      "link": "butterfly-bush",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 22,
+      "imageSrc": "/assets/images/shrubs/hydrangea.jpg",
+      "title": "Hydrangea",
+      "price": 15.99,
+      "description": "Showy blooms in shades of blue, pink, and white, perfect for borders and containers.",
+      "link": "hydrangea",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 23,
+      "imageSrc": "/assets/images/shrubs/rose-of-sharon.jpg",
+      "title": "Rose of Sharon",
+      "price": 9.99,
+      "description": "Produces large, trumpet-shaped flowers in various colors, thrives in full sun.",
+      "link": "rose-of-sharon",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 24,
+      "imageSrc": "/assets/images/shrubs/azalea.jpg",
+      "title": "Azalea",
+      "price": 14.99,
+      "description": "Known for their vibrant spring blossoms in shades of pink, purple, red, and white.",
+      "link": "azalea",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 25,
+      "imageSrc": "/assets/images/shrubs/lilac.jpg",
+      "title": "Lilac",
+      "price": 16.99,
+      "description": "Fragrant, cone-shaped clusters of flowers in shades of purple, pink, and white.",
+      "link": "lilac",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 26,
+      "imageSrc": "/assets/images/shrubs/rhododendron.jpg",
+      "title": "Rhododendron",
+      "price": 21.99,
+      "description": "Showy evergreen shrub with large, colorful blossoms in spring, ideal for shady areas.",
+      "link": "rhododendron",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 27,
+      "imageSrc": "/assets/images/shrubs/spirea.jpg",
+      "title": "Spirea",
+      "price": 11.99,
+      "description": "Long-lasting, graceful clusters of blooms in various colors, perfect for borders and hedges.",
+      "link": "spirea",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 28,
+      "imageSrc": "/assets/images/shrubs/forsythia.jpg",
+      "title": "Forsythia",
+      "price": 9.99,
+      "description": "Bright yellow, early-blooming shrub that heralds the arrival of spring.",
+      "link": "forsythia",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 29,
+      "imageSrc": "/assets/images/shrubs/weigela.jpg",
+      "title": "Weigela",
+      "price": 13.99,
+      "description": "Produces trumpet-shaped blooms in pink, red, and white, attracts hummingbirds.",
+      "link": "weigela",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 30,
+      "imageSrc": "/assets/images/shrubs/viburnum.jpg",
+      "title": "Viburnum",
+      "price": 17.99,
+      "description": "Versatile shrub with diverse varieties offering fragrant flowers, colorful berries, and fall foliage.",
+      "link": "viburnum",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 31,
+      "imageSrc": "/assets/images/shrubs/boxwood.jpg",
+      "title": "Boxwood",
+      "price": 19.99,
+      "description": "Evergreen shrub known for its dense foliage and formal shape, ideal for hedges and topiary.",
+      "link": "boxwood",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 32,
+      "imageSrc": "/assets/images/shrubs/holly.jpg",
+      "title": "Holly",
+      "price": 24.99,
+      "description": "Evergreen shrub with iconic red berries and glossy foliage, a winter holiday favorite.",
+      "link": "holly",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 33,
+      "imageSrc": "/assets/images/shrubs/winterberry.jpg",
+      "title": "Winterberry",
+      "price": 18.99,
+      "description": "Deciduous shrub that produces vibrant red berries in fall and winter, attracts birds.",
+      "link": "winterberry",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 34,
+      "imageSrc": "/assets/images/shrubs/clethra.jpg",
+      "title": "Clethra",
+      "price": 15.99,
+      "description": "Known as 'summersweet' for its fragrant, late-summer blooms, thrives in moist conditions.",
+      "link": "clethra",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    },
+    {
+      "id": 35,
+      "imageSrc": "/assets/images/shrubs/ninebark.jpg",
+      "title": "Ninebark",
+      "price": 12.99,
+      "description": "Deciduous shrub with interesting peeling bark and clusters of white or pink flowers.",
+      "link": "ninebark",
+      "Type": "Outdoor Shrub",
+      "category": "shrubs"
+    }
+  ],
+  "trendingPlants": [
+    {
+      "id": 1,
+      "imageSrc": "/assets/images/plants/Monstera-Thai-Constellation.jpg",
+      "title": "Monstera Thai Constellation",
+      "price": 29.99,
+      "description": "Striking variegated foliage, unique and eye-catching.",
+      "link": "monstera-thai-constellation",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 2,
+      "imageSrc": "/assets/images/plants/Philodendron-Birkin.jpg",
+      "title": "Philodendron Birkin",
+      "price": 14.99,
+      "description": "Elongated leaves with captivating stripes, perfect for hanging baskets.",
+      "link": "philodendron-birkin",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 3,
+      "imageSrc": "/assets/images/plants/String-of-Pearls.jpg",
+      "title": "String of Pearls",
+      "price": 9.99,
+      "description": "Delicate and charming, ideal for adding texture to shelves or terrariums.",
+      "link": "string-of-pearls",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 4,
+      "imageSrc": "/assets/images/plants/Pilea-Peperomioides.jpg",
+      "title": "Pilea Peperomioides (Pancake Plant)",
+      "price": 12.99,
+      "description": "Round, coin-shaped leaves, easy to care for and brings good vibes.",
+      "link": "pilea-peperomioides",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 5,
+      "imageSrc": "/assets/images/plants/Jade-Plant.jpeg",
+      "title": "Jade Plant (Money Plant)",
+      "price": 19.99,
+      "description": "Symbol of prosperity and luck, thick leaves with vibrant green color.",
+      "link": "jade-plant",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 6,
+      "imageSrc": "/assets/images/plants/lavender-plant.jpg",
+      "title": "English Lavender",
+      "price": 7.99,
+      "description": "Fragrant blooms and beautiful foliage, attracts bees and butterflies.",
+      "link": "lavender",
+      "Type": "Outdoor Plant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 7,
+      "imageSrc": "/assets/images/plants/calathea-orbifolia.jpg",
+      "title": "Calathea Orbifolia",
+      "price": 39.99,
+      "description": "Unique textured leaves, a conversation starter for any living space.",
+      "link": "calathea-orbifolia",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 8,
+      "imageSrc": "/assets/images/plants/Black-Eyed-Susan.jpg",
+      "title": "Black-Eyed Susan",
+      "price": 3.99,
+      "description": "Cheerful annuals with vibrant yellow daisy-like flowers, attract pollinators.",
+      "link": "black-eyed-susan",
+      "Type": "Outdoor Plant",
+      "category": "trendingPlants"
+    },
+    {
+      "id": 9,
+      "imageSrc": "/assets/images/plants/Air-Plants.jpg",
+      "title": "Air Plant Tillandsia",
+      "price": 8.99,
+      "stock": 25,
+      "description": "Low-maintenance and air purifying, perfect for unique displays.",
+      "link": "air-plant-tillandsia",
+      "Type": "Houseplant",
+      "category": "trendingPlants"
+    }
+  ],
+  "EssentialTools": [
+    {
+      "id": 1,
+      "imageSrc": "/assets/images/tools/garden-gloves.jpg",
+      "title": "Gardening Gloves",
+      "price": 5.99,
+      "description": "Protect your hands from dirt, thorns, and blisters. Choose breathable and flexible materials.",
+      "link": "garden-gloves",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 2,
+      "imageSrc": "/assets/images/tools/garden-trowel.jpg",
+      "title": "Garden Trowel",
+      "price": 7.99,
+      "description": "Ideal for scooping soil, planting seeds, and transplanting seedlings. Opt for a stainless steel trowel for durability.",
+      "link": "garden-trowel",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 3,
+      "imageSrc": "/assets/images/tools/garden-spade.jpg",
+      "title": "Garden Spade",
+      "price": 14.99,
+      "description": "Digging holes, edging borders, and turning compost are simple with a sturdy spade. Consider weight and handle length for comfort.",
+      "link": "garden-spade",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 4,
+      "imageSrc": "/assets/images/tools/garden-fork.jpg",
+      "title": "Garden Fork",
+      "price": 9.99,
+      "description": "Loosening soil, aerating compost, and turning over mulch are easier with a garden fork. Look for sturdy tines and a comfortable handle.",
+      "link": "garden-fork",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 5,
+      "imageSrc": "/assets/images/tools/gardening-shears.jpg",
+      "title": "Gardening Shears",
+      "price": 12.99,
+      "description": "Pruning branches, trimming herbs, and harvesting vegetables require reliable shears. Choose bypass shears for clean cuts and precision.",
+      "link": "gardening-shears",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 6,
+      "imageSrc": "/assets/images/tools/pruning-saw.jpg",
+      "title": "Pruning Saw",
+      "price": 14.99,
+      "description": "For thicker branches, clean cuts & minimal damage.",
+      "link": "pruning-saw",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 7,
+      "imageSrc": "/assets/images/tools/hand-rake.jpg",
+      "title": "Hand Rake",
+      "price": 9.99,
+      "description": "Versatile for smoothing soil, leaves, & mulch.",
+      "link": "hand-rake",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 9,
+      "imageSrc": "/assets/images/tools/watering-can.jpg",
+      "title": "Watering Can",
+      "price": 5.99,
+      "description": "Directly nourishes roots & minimizes waste.",
+      "link": "watering-can",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 10,
+      "imageSrc": "/assets/images/tools/hose-and-nozzle.jpg",
+      "title": "Hose & Nozzle",
+      "price": 29.99,
+      "description": "Efficient water delivery for larger gardens.",
+      "link": "hose-and-nozzle",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 16,
+      "imageSrc": "/assets/images/tools/garden-hoe.jpg",
+      "title": "Garden Hoe",
+      "price": 9.99,
+      "description": "Weeding, aerating soil, & creating furrows.",
+      "link": "garden-hoe",
+      "Type": "Essential",
+      "category": "tools"
+    },
+    {
+      "id": 18,
+      "imageSrc": "/assets/images/tools/pruning-snippers.jpg",
+      "title": "Pruning Snippers",
+      "price": 7.99,
+      "description": "Precise control for delicate trimming & sculpting.",
+      "link": "pruning-snippers",
+      "Type": "Essential",
+      "category": "tools"
+    }
+  ],
+  "HelpfulTools": [
+    {
+      "id": 8,
+      "imageSrc": "/assets/images/tools/leaf-blower-vacuum.jpg",
+      "title": "Leaf Blower/Vacuum",
+      "price": 39.99,
+      "description": "Saves time & effort battling fall leaves.",
+      "link": "leaf-blower-vacuum",
+      "Type": "Helpful",
+      "category": "tools"
+    },
+    {
+      "id": 14,
+      "imageSrc": "/assets/images/tools/garden-gloves-with-claws.jpg",
+      "title": "Garden Gloves with Claws",
+      "price": 8.99,
+      "description": "Protection & grip for digging & pulling weeds.",
+      "link": "garden-gloves-with-claws",
+      "Type": "Helpful",
+      "category": "tools"
+    },
+    {
+      "id": 20,
+      "imageSrc": "/assets/images/tools/soil-tester.jpg",
+      "title": "Soil Tester",
+      "price": 12.99,
+      "description": "Monitors soil pH & nutrients for optimal plant growth.",
+      "link": "soil-tester",
+      "Type": "Helpful",
+      "category": "tools"
+    }
+  ],
+  "UsefulTools": [
+    {
+      "id": 12,
+      "imageSrc": "/assets/images/tools/garden-kneeler.jpg",
+      "title": "Garden Kneeler",
+      "price": 19.99,
+      "description": "Comfy kneeler for protecting knees & balance.",
+      "link": "garden-kneeler",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 13,
+      "imageSrc": "/assets/images/tools/seed-starting-trays.jpg",
+      "title": "Seed Starting Trays",
+      "price": 7.99,
+      "description": "Sprouts vegetables, herbs, & flowers indoors.",
+      "link": "seed-starting-trays",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 15,
+      "imageSrc": "/assets/images/tools/pruning-loppers.jpg",
+      "title": "Pruning Loppers",
+      "price": 24.99,
+      "description": "Reach high branches & tackle thicker stems.",
+      "link": "pruning-loppers",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 17,
+      "imageSrc": "/assets/images/tools/gardening-hat.jpg",
+      "title": "Gardening Hat",
+      "price": 14.99,
+      "description": "Sun protection for face & neck (breathable materials).",
+      "link": "gardening-hat",
+      "Type": "Useful",
+      "category": "tools"
+    },
+    {
+      "id": 19,
+      "imageSrc": "/assets/images/tools/gardening-kneeler-pad.jpg",
+      "title": "Gardening Kneeler Pad",
+      "price": 8.99,
+      "description": "Portable comfort & protection while kneeling (waterproof & stain-resistant).",
+      "link": "gardening-kneeler-pad",
+      "Type": "Useful",
+      "category": "tools"
+    }
+  ],
+  "trees": [
+    {
+      "id": 1,
+      "imageSrc": "/assets/images/trees/oak-tree.jpg",
+      "title": "Oak Tree",
+      "price": 49.99,
+      "description": "Majestic and long-lived, provides ample shade and habitat for wildlife.",
+      "link": "oak-tree",
+      "Type": "Shade Tree",
+      "category": "trees"
+    },
+    {
+      "id": 2,
+      "imageSrc": "/assets/images/trees/maple-tree.jpg",
+      "title": "Maple Tree",
+      "price": 39.99,
+      "description": "Vibrant autumn colors, ideal for landscaping and adding visual interest.",
+      "link": "maple-tree",
+      "Type": "Ornamental Tree",
+      "category": "trees"
+    },
+    {
+      "id": 3,
+      "imageSrc": "/assets/images/trees/cherry-blossom-tree.jpg",
+      "title": "Cherry Blossom Tree",
+      "price": 59.99,
+      "description": "Elegant and iconic, showcases beautiful pink blooms in spring.",
+      "link": "cherry-blossom-tree",
+      "Type": "Flowering Tree",
+      "category": "trees"
+    },
+    {
+      "id": 4,
+      "imageSrc": "/assets/images/trees/pine-tree.jpg",
+      "title": "Pine Tree",
+      "price": 29.99,
+      "description": "Evergreen beauty, perfect for winter landscapes and providing year-round greenery.",
+      "link": "pine-tree",
+      "Type": "Evergreen Tree",
+      "category": "trees"
+    },
+    {
+      "id": 5,
+      "imageSrc": "/assets/images/trees/magnolia-tree.jpg",
+      "title": "Magnolia Tree",
+      "price": 44.99,
+      "description": "Large, fragrant flowers and glossy leaves, adds a touch of Southern charm.",
+      "link": "magnolia-tree",
+      "Type": "Flowering Tree",
+      "category": "trees"
+    },
+    {
+      "id": 6,
+      "imageSrc": "/assets/images/trees/dogwood-tree.jpg",
+      "title": "Dogwood Tree",
+      "price": 34.99,
+      "description": "Springtime blossoms in pink or white, great for ornamental gardens.",
+      "link": "dogwood-tree",
+      "Type": "Ornamental Tree",
+      "category": "trees"
+    },
+    {
+      "id": 7,
+      "imageSrc": "/assets/images/trees/willow-tree.jpg",
+      "title": "Willow Tree",
+      "price": 42.99,
+      "description": "Graceful branches and drooping foliage, often near water features.",
+      "link": "willow-tree",
+      "Type": "Deciduous Tree",
+      "category": "trees"
+    },
+    {
+      "id": 8,
+      "imageSrc": "/assets/images/trees/birch-tree.jpg",
+      "title": "Birch Tree",
+      "price": 37.99,
+      "description": "Distinctive white bark and delicate leaves, adds visual appeal to landscapes.",
+      "link": "birch-tree",
+      "Type": "Ornamental Tree",
+      "category": "trees"
+    },
+    {
+      "id": 9,
+      "imageSrc": "/assets/images/trees/cypress-tree.jpg",
+      "title": "Cypress Tree",
+      "price": 49.99,
+      "description": "Tall and slender evergreen, commonly used for privacy screening.",
+      "link": "cypress-tree",
+      "Type": "Privacy Tree",
+      "category": "trees"
+    },
+    {
+      "id": 10,
+      "imageSrc": "/assets/images/trees/redwood-tree.jpg",
+      "title": "Redwood Tree",
+      "price": 69.99,
+      "description": "Towering and long-lived, native to California and prized for its beauty.",
+      "link": "redwood-tree",
+      "Type": "Evergreen Tree",
+      "category": "trees"
+    },
+    {
+      "id": 11,
+      "imageSrc": "/assets/images/trees/eucalyptus-tree.jpg",
+      "title": "Eucalyptus Tree",
+      "price": 39.99,
+      "description": "Aromatic foliage and fast growth, known for its medicinal properties.",
+      "link": "eucalyptus-tree",
+      "Type": "Aromatic Tree",
+      "category": "trees"
+    },
+    {
+      "id": 12,
+      "imageSrc": "/assets/images/trees/elm-tree.jpg",
+      "title": "Elm Tree",
+      "price": 36.99,
+      "description": "Sturdy and adaptable, often used for urban street planting.",
+      "link": "elm-tree",
+      "Type": "Urban Tree",
+      "category": "trees"
+    },
+    {
+      "id": 13,
+      "imageSrc": "/assets/images/trees/mimosa-tree.jpg",
+      "title": "Mimosa Tree",
+      "price": 47.99,
+      "description": "Fern-like foliage and pink, fluffy flowers, adds a touch of tropical beauty.",
+      "link": "mimosa-tree",
+      "Type": "Flowering Tree",
+      "category": "trees"
+    },
+    {
+      "id": 14,
+      "imageSrc": "/assets/images/trees/japanese-maple-tree.jpg",
+      "title": "Japanese Maple Tree",
+      "price": 55.99,
+      "description": "Dwarf varieties with stunning foliage, perfect for small gardens.",
+      "link": "japanese-maple-tree",
+      "Type": "Dwarf Tree",
+      "category": "trees"
+    },
+    {
+      "id": 15,
+      "imageSrc": "/assets/images/trees/palm-tree.jpg",
+      "title": "Palm Tree",
+      "price": 64.99,
+      "description": "Iconic tropical tree, adds a touch of paradise to outdoor spaces.",
+      "link": "palm-tree",
+      "Type": "Tropical Tree",
+      "category": "trees"
+    }
+  ],
+  "cartItems":[
+
+  ]
+}

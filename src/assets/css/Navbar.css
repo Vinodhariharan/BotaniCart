@@ -1,0 +1,24 @@
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  a{
+    color: #FCF8E8;
+  }
+  
+  .nav-links {
+    display: flex;
+
+  }
+  
+  .cart-icon {
+    display: flex;
+    align-items: center; /* Align the icon vertically in the middle */
+  }
+  
+  .spacer {
+    flex: 1; /* This will push the elements to the right */
+  }
+  
+  

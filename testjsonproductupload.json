@@ -1,0 +1,292 @@
+[
+    {
+      "title": "Garden Kneeler",
+      "imageSrc": "/assets/images/tools/garden-kneeler.jpg",
+      "price": 19.99,
+      "description": "Comfy kneeler for protecting knees & balance.",
+      "link": "garden-kneeler",
+      "category": "tools",
+      "subCategory": "useful-tools",
+      "type": "Useful",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "",
+        "growthRate": "",
+        "maintenance": "Wipe clean after use",
+        "bloomSeason": "",
+        "specialFeatures": "Comfortable, lightweight, portable",
+        "toxicity": "",
+        "material": "Cushioned fabric and foam",
+        "drainageHoles": false,
+        "size": "Standard",
+        "color": "Green/Gray",
+        "useCase": "Kneeling and gardening support"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 20
+      }
+    },
+    {
+      "title": "Seed Starting Trays",
+      "imageSrc": "/assets/images/tools/seed-starting-trays.jpg",
+      "price": 7.99,
+      "description": "Sprouts vegetables, herbs, & flowers indoors.",
+      "link": "seed-starting-trays",
+      "category": "tools",
+      "subCategory": "useful-tools",
+      "type": "Useful",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "Ensure consistent moisture",
+        "growthRate": "",
+        "maintenance": "Clean after each use",
+        "bloomSeason": "",
+        "specialFeatures": "Multiple cells, reusable",
+        "toxicity": "",
+        "material": "Plastic",
+        "drainageHoles": true,
+        "size": "Standard",
+        "color": "White",
+        "useCase": "Seed germination, indoor propagation"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 50
+      }
+    },
+    {
+      "title": "Oak Tree",
+      "imageSrc": "/assets/images/trees/oak-tree.jpg",
+      "price": 49.99,
+      "description": "Majestic and long-lived, provides ample shade and habitat for wildlife.",
+      "link": "oak-tree",
+      "category": "trees",
+      "subCategory": "shade-trees",
+      "type": "Shade Tree",
+      "details": {
+        "scientificName": "Quercus spp.",
+        "sunlight": "Full sun",
+        "watering": "Moderate; once established, drought-tolerant",
+        "growthRate": "Slow to Medium",
+        "maintenance": "Prune dead branches occasionally",
+        "bloomSeason": "Spring",
+        "specialFeatures": "Provides ample shade, long-lived",
+        "toxicity": "Non-toxic",
+        "material": "",
+        "drainageHoles": false,
+        "size": "Large",
+        "color": "Green foliage, brown bark",
+        "useCase": "Shade, landscape, wildlife habitat"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 10
+      }
+    },
+    {
+      "title": "Ceramic Flower Pot",
+      "imageSrc": "/assets/images/pots/ceramic-flower-pot.jpg",
+      "price": 14.99,
+      "description": "Elegant ceramic pot with drainage hole for indoor plants.",
+      "link": "ceramic-flower-pot",
+      "category": "pots",
+      "subCategory": "indoor",
+      "type": "Container",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "",
+        "growthRate": "",
+        "maintenance": "Wipe clean with damp cloth",
+        "bloomSeason": "",
+        "specialFeatures": "Elegant design, suitable for most plants",
+        "toxicity": "",
+        "material": "Ceramic",
+        "drainageHoles": true,
+        "size": "Medium (8-inch diameter)",
+        "color": "Terracotta",
+        "useCase": "Indoor plants, decorative"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 35
+      }
+    },
+    {
+      "title": "Organic Vegetable Seeds Pack",
+      "imageSrc": "/assets/images/seeds/vegetable-seeds-pack.jpg",
+      "price": 9.99,
+      "description": "Collection of 10 organic vegetable seed varieties.",
+      "link": "organic-vegetable-seeds",
+      "category": "seeds",
+      "subCategory": "vegetable",
+      "type": "Seeds",
+      "details": {
+        "scientificName": "Various",
+        "sunlight": "Varies by plant",
+        "watering": "Varies by plant",
+        "growthRate": "Varies",
+        "maintenance": "Follow packet instructions",
+        "bloomSeason": "Spring/Summer",
+        "specialFeatures": "Organic, non-GMO",
+        "toxicity": "Non-toxic",
+        "material": "",
+        "drainageHoles": false,
+        "size": "10 varieties",
+        "color": "Various",
+        "useCase": "Home gardening, vegetables"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 100
+      }
+    },
+    {
+      "title": "Garden Gloves Set",
+      "imageSrc": "/assets/images/tools/garden-gloves.jpg",
+      "price": 11.99,
+      "description": "Durable and comfortable gloves for all gardening tasks.",
+      "link": "garden-gloves",
+      "category": "tools",
+      "subCategory": "protective-gear",
+      "type": "Protection",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "",
+        "growthRate": "",
+        "maintenance": "Machine washable",
+        "bloomSeason": "",
+        "specialFeatures": "Puncture resistant, breathable",
+        "toxicity": "",
+        "material": "Synthetic leather, cotton",
+        "drainageHoles": false,
+        "size": "Medium",
+        "color": "Green",
+        "useCase": "Gardening protection"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 45
+      }
+    },
+    {
+      "title": "Succulent Collection",
+      "imageSrc": "/assets/images/plants/succulent-collection.jpg",
+      "price": 24.99,
+      "description": "Set of 5 assorted small succulents in decorative pots.",
+      "link": "succulent-collection",
+      "category": "plants",
+      "subCategory": "succulents",
+      "type": "Indoor Plant",
+      "details": {
+        "scientificName": "Various",
+        "sunlight": "Bright indirect light",
+        "watering": "Low; water sparingly",
+        "growthRate": "Slow",
+        "maintenance": "Low maintenance",
+        "bloomSeason": "Varies",
+        "specialFeatures": "Drought-tolerant, decorative",
+        "toxicity": "Most are non-toxic",
+        "material": "",
+        "drainageHoles": true,
+        "size": "Small",
+        "color": "Various",
+        "useCase": "Desk plants, windowsill gardening"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 25
+      }
+    },
+    {
+      "title": "Indoor Potting Soil",
+      "imageSrc": "/assets/images/soil/indoor-potting-soil.jpg",
+      "price": 8.99,
+      "description": "Premium potting mix specially formulated for indoor plants.",
+      "link": "indoor-potting-soil",
+      "category": "soil",
+      "subCategory": "potting-mix",
+      "type": "Growing Medium",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "Good water retention",
+        "growthRate": "",
+        "maintenance": "",
+        "bloomSeason": "",
+        "specialFeatures": "Balanced pH, contains perlite for drainage",
+        "toxicity": "Non-toxic",
+        "material": "Peat moss, perlite, vermiculite",
+        "drainageHoles": false,
+        "size": "8 quart bag",
+        "color": "Dark brown",
+        "useCase": "Indoor plant potting"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 60
+      }
+    },
+    {
+      "title": "Pruning Shears",
+      "imageSrc": "/assets/images/tools/pruning-shears.jpg",
+      "price": 15.99,
+      "description": "Sharp, comfortable pruning shears for precise plant maintenance.",
+      "link": "pruning-shears",
+      "category": "tools",
+      "subCategory": "pruning",
+      "type": "Cutting Tool",
+      "details": {
+        "scientificName": "",
+        "sunlight": "",
+        "watering": "",
+        "growthRate": "",
+        "maintenance": "Clean after use, sharpen periodically",
+        "bloomSeason": "",
+        "specialFeatures": "Ergonomic grip, stainless steel blades",
+        "toxicity": "",
+        "material": "Stainless steel, rubber grip",
+        "drainageHoles": false,
+        "size": "8 inches",
+        "color": "Red/Silver",
+        "useCase": "Pruning, deadheading, harvesting"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 40
+      }
+    },
+    {
+      "title": "Lavender Plant",
+      "imageSrc": "/assets/images/plants/lavender.jpg",
+      "price": 12.99,
+      "description": "Fragrant purple flowering plant, perfect for gardens and containers.",
+      "link": "lavender-plant",
+      "category": "plants",
+      "subCategory": "herbs",
+      "type": "Flowering Plant",
+      "details": {
+        "scientificName": "Lavandula angustifolia",
+        "sunlight": "Full sun",
+        "watering": "Low to moderate",
+        "growthRate": "Medium",
+        "maintenance": "Prune after flowering",
+        "bloomSeason": "Summer",
+        "specialFeatures": "Fragrant, attracts pollinators",
+        "toxicity": "Non-toxic",
+        "material": "",
+        "drainageHoles": false,
+        "size": "Medium",
+        "color": "Purple flowers, silver-green foliage",
+        "useCase": "Gardens, containers, aromatherapy"
+      },
+      "stock": {
+        "availability": true,
+        "quantity": 30
+      }
+    }
+  ]

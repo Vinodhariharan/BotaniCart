@@ -1,0 +1,28 @@
+.button-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button img {
+    margin-right: 5px;
+  }
+  
+  /* Optional styles for hover effect */
+  .button:hover {
+    background-color: #eee;
+  }
+  

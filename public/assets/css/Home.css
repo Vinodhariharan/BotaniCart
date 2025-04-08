@@ -1,0 +1,19 @@
+/* Home.css */
+.home {
+    /* Add any styles for the overall home page container */
+  }
+  
+  .catbar{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  
+  .card-row {
+    display: flex;
+    flex-wrap: nowrap; 
+    overflow-x: scroll; 
+margin: 5px 0;  }
+  
+  /* Add any additional styling for your Card component here */
+  

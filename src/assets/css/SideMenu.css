@@ -1,0 +1,68 @@
+/* Import your font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Style for the mega menu */
+.menu-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+/* Styling for the drawer */
+.dropdown-container {
+  background-color: #fff;
+  padding: 20px;
+  height: 100%;
+}
+
+.search-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.menu-item:hover {
+  background-color: #f2f2f2;
+}
+
+/* Styling for the dropdown */
+.dropdown {
+  position: relative;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.dropdown:hover .sub-menu {
+  display: block;
+}

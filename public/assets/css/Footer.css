@@ -1,0 +1,10 @@
+.footer {
+    background-color: #212121;
+    border-top: 1px solid #ccc;
+    color: white;
+    padding: 16px 20PX; /* Optional: Add padding for better spacing */
+  }
+
+  a{
+    color: white;
+  }
