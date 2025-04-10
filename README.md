@@ -14,8 +14,9 @@ Welcome to **BotaniCart**, a refreshed and fully functional full-stack eCommerce
 - Product catalog powered by Firebase Firestore
 - Fully functional shopping cart
 - Search and filter plants
-- Admin support for product management (Coming soon)
-- Fully responsive design
+- Admin support for product management
+- Fully responsive design (Coming soon)
+- Review and Comments section (Coming soon)
 
 ---
 
