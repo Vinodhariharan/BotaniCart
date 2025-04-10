@@ -135,7 +135,6 @@ const HomePage = () => {
   }
 
   return (
-    <CssVarsProvider>
       <Container maxWidth="lg" sx={{ pb: 8 }}>
         {/* Hero Section */}
         <Box
@@ -311,7 +310,7 @@ const HomePage = () => {
             <Typography level="h2">Best Sellers</Typography>
             <Button 
               component={Link} 
-              to="/popular" 
+              to="/bestSelling" 
               variant="plain" 
               color="success" 
               endDecorator={<ArrowForward />}
@@ -333,7 +332,7 @@ const HomePage = () => {
             <Typography level="h2">New Arrivals</Typography>
             <Button 
               component={Link} 
-              to="/new" 
+              to="/new-arrivals" 
               variant="plain" 
               color="success" 
               endDecorator={<ArrowForward />}
@@ -473,7 +472,6 @@ const HomePage = () => {
           </Box>
         </Card>
       </Container>
-    </CssVarsProvider>
   );
 };
 
