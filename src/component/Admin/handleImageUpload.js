@@ -7,7 +7,7 @@ export const handleImageUpload = async (e, setProduct, productId) => {
 
   try {
     // Step 1: Get a presigned URL from your backend
-    const presignRes = await fetch("http://localhost:5000/api/upload", {
+    const presignRes = await fetch("https://botani-cart-s3-bucket-uploader.vercel.app/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
