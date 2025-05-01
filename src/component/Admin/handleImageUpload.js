@@ -7,7 +7,7 @@ export const handleImageUpload = async (e, setProduct, productId) => {
 
   try {
     // Step 1: Get a presigned URL from your backend
-    const presignRes = await fetch("https://botani-cart-s3-bucket-uploader.vercel.app:5000", {
+    const presignRes = await fetch("https://botani-cart-s3-bucket-uploader.vercel.app/api/upload", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,7 +16,14 @@ export const handleImageUpload = async (e, setProduct, productId) => {
         fileName: file.name,
         fileType: file.type,
       }),
+      // Add credentials if needed (if you're using cookies or auth)
+      // credentials: 'include',
     });
+
+    if (!presignRes.ok) {
+      const errorText = await presignRes.text();
+      throw new Error(`Failed to get presigned URL: ${presignRes.status} ${errorText}`);
+    }
 
     const { uploadUrl, fileUrl } = await presignRes.json();
 
@@ -29,9 +36,11 @@ export const handleImageUpload = async (e, setProduct, productId) => {
       body: file,
     });
 
-    if (!uploadRes.ok) throw new Error("S3 upload failed");
+    if (!uploadRes.ok) {
+      throw new Error(`S3 upload failed: ${uploadRes.status}`);
+    }
 
-    console.log("Done");
+    console.log("Upload successful");
 
     // Step 3: Update local state with the new image URL
     setProduct((prev) => ({
@@ -40,7 +49,6 @@ export const handleImageUpload = async (e, setProduct, productId) => {
     }));
 
     // Step 4: Save the file URL to Firestore
-    // Update the document in "products" collection with the productId
     const productRef = doc(db, "products", productId);
     await updateDoc(productRef, {
       imageSrc: fileUrl
@@ -48,6 +56,7 @@ export const handleImageUpload = async (e, setProduct, productId) => {
 
     console.log("Image uploaded to S3 and URL saved to Firestore");
   } catch (err) {
-    console.error("Failed to upload image to S3:", err);
+    console.error("Failed to upload image:", err);
+    // Optionally add user notification here
   }
 };
