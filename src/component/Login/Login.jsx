@@ -22,7 +22,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 // import pic from '../../assets/images/gardeningpic1.gif';
 import logo from '/Untitled.png';
 
-const gardeningImage = "https://www.thrive.org.uk/files/images/Gardening-advice/_large/Ad-image-2.jpg";
+const gardeningImage = "/login-signup.jpg";
 
 function GoogleIcon() {
   return (
@@ -163,7 +163,8 @@ export default function Login({ setLoggedIn }) {
           sx={{
             width: { xs: '100%', md: '50%' },
             ml: { xs: 0, md: '50%' },
-            background: 'linear-gradient(135deg, #b2ebf2 0%, #a5d6a7 100%)',
+            // background: 'linear-gradient(135deg, #b2ebf2 0%, #a5d6a7 100%)',
+            background: '#e5e5e5',
             transition: 'width var(--Transition-duration)',
             transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
             zIndex: 1,

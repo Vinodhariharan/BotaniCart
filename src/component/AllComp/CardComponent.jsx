@@ -9,6 +9,7 @@ import {
   Chip,
   Divider,
   Link,
+  ListDivider,
   Stack,
   Typography,
 } from '@mui/joy';
@@ -66,6 +67,8 @@ export default function ProductCard({ product }) {
           )}
         </AspectRatio>
       </CardOverflow>
+
+    <Divider/>
 
       <CardContent sx={{ p: 1.5 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.5 }}>

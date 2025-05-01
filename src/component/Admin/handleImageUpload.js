@@ -1,32 +1,53 @@
-import { ref as dbRef, set } from "firebase/database";
-import { database } from "../../firebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
-export const handleImageUpload = (e, setProduct, productId) => {
+export const handleImageUpload = async (e, setProduct, productId) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onloadend = async () => {
-    const base64Image = reader.result;
+  try {
+    // Step 1: Get a presigned URL from your backend
+    const presignRes = await fetch("http://localhost:5000/api/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fileName: file.name,
+        fileType: file.type,
+      }),
+    });
 
-    try {
-      // Update local state
-      setProduct((prev) => ({
-        ...prev,
-        imageSrc: base64Image,
-      }));
+    const { uploadUrl, fileUrl } = await presignRes.json();
 
-      // Save base64 image string to Realtime DB
-      await set(dbRef(database, `products/${productId}/image`), {
-        imageUrl: base64Image,
-        uploadedAt: Date.now(),
-      });
+    // Step 2: Upload the file directly to S3
+    const uploadRes = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": file.type,
+      },
+      body: file,
+    });
 
-      console.log("Image saved as base64 in Realtime DB");
-    } catch (err) {
-      console.error("Failed to save image to Realtime DB:", err);
-    }
-  };
+    if (!uploadRes.ok) throw new Error("S3 upload failed");
 
-  reader.readAsDataURL(file);
+    console.log("Done");
+
+    // Step 3: Update local state with the new image URL
+    setProduct((prev) => ({
+      ...prev,
+      imageSrc: fileUrl,  // Update the image URL here
+    }));
+
+    // Step 4: Save the file URL to Firestore
+    // Update the document in "products" collection with the productId
+    const productRef = doc(db, "products", productId);
+    await updateDoc(productRef, {
+      imageSrc: fileUrl
+    });
+
+    console.log("Image uploaded to S3 and URL saved to Firestore");
+  } catch (err) {
+    console.error("Failed to upload image to S3:", err);
+  }
 };

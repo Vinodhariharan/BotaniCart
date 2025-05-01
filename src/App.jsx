@@ -16,6 +16,8 @@ import CategoryExtractorTool from './component/Admin/CategoryExtractor.jsx';
 import JSONProductLoader from './component/Admin/JSONProductLoader.jsx';
 import SpecialProducts from './component/ProductList/SpecialProducts.jsx';
 import ProductList from './component/ProductList/ProductList.jsx';
+import CareGuides from './component/CareGuides/CareGuidesDashboard.jsx';
+import GuideDetail from './component/CareGuides/GuidePage.jsx';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -136,6 +138,8 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="/faq" element={<FAQSection />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<ContactInformation />} />
+        <Route path="/care-guides" element={<CareGuides />} />
+        <Route path="/sample-guides" element={<GuideDetail />} />
         
         {/* Catch all route - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />

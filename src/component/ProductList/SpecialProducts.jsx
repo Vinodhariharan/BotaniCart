@@ -18,9 +18,11 @@ function SpecialProducts({ type }) {
 
   const field = {
     newArrival: 'newArrival',
-    bestSelling: 'bestSelling',
+    bestSelling: 'popular',
     featured: 'featured',
   }[type];
+
+  console.log(field,type,title);
 
   // Instead of fetching products directly, we'll pass a filter configuration
   // to the ProductList component

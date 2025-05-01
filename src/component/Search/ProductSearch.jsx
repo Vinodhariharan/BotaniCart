@@ -43,7 +43,7 @@ const ProductSearch = ({ onProductSelect }) => {
     fetchCategoriesAndSubcategories();
   }, []);
 
-  // Optimized search function with better error handling
+  // Comprehensive search function that covers title, description, and categories
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
       setSearchResults([]);
@@ -58,7 +58,7 @@ const ProductSearch = ({ onProductSelect }) => {
       const productsRef = collection(db, 'products');
       const searchTermLower = searchTerm.toLowerCase();
       
-      // First, check if search term matches any category or subcategory exactly
+      // Check for direct category/subcategory matches
       const categoryMatch = categories.find(
         cat => cat.toLowerCase() === searchTermLower
       );
@@ -69,7 +69,7 @@ const ProductSearch = ({ onProductSelect }) => {
       
       let results = [];
       
-      // If category or subcategory matches, prioritize those results
+      // If direct category match exists, get those products first
       if (categoryMatch) {
         const catQuery = query(
           productsRef, 
@@ -78,8 +78,11 @@ const ProductSearch = ({ onProductSelect }) => {
           limit(5)
         );
         const catSnapshot = await getDocs(catQuery);
-        results = catSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'product' }));
-      } else if (subCategoryMatch) {
+        results = catSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'product', matchType: 'category' }));
+      } 
+      
+      // If direct subcategory match exists, get those products
+      if (subCategoryMatch) {
         const subCatQuery = query(
           productsRef, 
           where('subCategory', '==', subCategoryMatch),
@@ -87,22 +90,50 @@ const ProductSearch = ({ onProductSelect }) => {
           limit(5)
         );
         const subCatSnapshot = await getDocs(subCatQuery);
-        results = subCatSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), type: 'product' }));
+        const subCatResults = subCatSnapshot.docs.map(doc => ({ 
+          id: doc.id, 
+          ...doc.data(), 
+          type: 'product',
+          matchType: 'subCategory'
+        }));
+        
+        results = [...results, ...subCatResults];
       }
       
-      // Add title search with case-insensitive matching
-      const titleQuery = query(
+      // Get all products to search through (using limit to prevent performance issues)
+      // In a production environment, you'd implement server-side text search
+      const allProductsQuery = query(
         productsRef,
-        orderBy('title'),
-        limit(10)
+        orderBy('createdAt', 'desc'), // Assuming you have a createdAt field
+        limit(100) // Limiting to prevent performance issues
       );
-      const titleSnapshot = await getDocs(titleQuery);
-      const titleResults = titleSnapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data(), type: 'product' }))
+      
+      const allProductsSnapshot = await getDocs(allProductsQuery);
+      const allProducts = allProductsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      // Search through titles
+      const titleResults = allProducts
         .filter(product => 
           product.title && 
           product.title.toLowerCase().includes(searchTermLower)
-        );
+        )
+        .map(product => ({
+          ...product,
+          type: 'product',
+          matchType: 'title'
+        }));
+      
+      // Search through descriptions
+      const descriptionResults = allProducts
+        .filter(product => 
+          product.description && 
+          product.description.toLowerCase().includes(searchTermLower)
+        )
+        .map(product => ({
+          ...product,
+          type: 'product',
+          matchType: 'description'
+        }));
       
       // Add matching categories and subcategories to results
       const matchingCategories = categories
@@ -113,21 +144,46 @@ const ProductSearch = ({ onProductSelect }) => {
         .filter(subCat => subCat.toLowerCase().includes(searchTermLower))
         .map(subCat => ({ title: subCat, type: 'subCategory' }));
       
-      // Combine all results, removing duplicates
+      // Combine all results in a prioritized order
       const allResults = [
-        ...results,
-        ...titleResults,
-        ...matchingCategories.slice(0, 3),
-        ...matchingSubCategories.slice(0, 3)
+        ...results,                         // Exact category/subcategory matches
+        ...titleResults,                    // Title matches
+        ...descriptionResults,              // Description matches
+        ...matchingCategories.slice(0, 3),  // Category name matches
+        ...matchingSubCategories.slice(0, 3) // Subcategory name matches
       ];
       
       // Remove duplicates based on id for products
-      const uniqueResults = allResults.filter((item, index, self) => 
-        item.type !== 'product' || 
-        index === self.findIndex(t => t.id === item.id)
-      );
+      const uniqueResults = allResults.filter((item, index, self) => {
+        if (item.type !== 'product') return true;
+        return index === self.findIndex(t => t.type === 'product' && t.id === item.id);
+      });
       
-      setSearchResults(uniqueResults.slice(0, 10));
+      // Sort products to prioritize title matches over description matches
+      const sortedResults = uniqueResults.sort((a, b) => {
+        // First prioritize product types
+        if (a.type === 'product' && b.type !== 'product') return -1;
+        if (a.type !== 'product' && b.type === 'product') return 1;
+        
+        // For products, prioritize by match type
+        if (a.type === 'product' && b.type === 'product') {
+          const matchPriority = {
+            'title': 1,
+            'category': 2,
+            'subCategory': 3,
+            'description': 4
+          };
+          return (matchPriority[a.matchType] || 5) - (matchPriority[b.matchType] || 5);
+        }
+        
+        // For non-products, prioritize categories over subcategories
+        if (a.type === 'category' && b.type === 'subCategory') return -1;
+        if (a.type === 'subCategory' && b.type === 'category') return 1;
+        
+        return 0;
+      });
+      
+      setSearchResults(sortedResults.slice(0, 10));
     } catch (err) {
       console.error('Error searching products:', err);
       setSearchResults([]);
@@ -178,13 +234,33 @@ const ProductSearch = ({ onProductSelect }) => {
     setShowResults(false);
   };
 
+  // Helper function to highlight matching text
+  const highlightMatch = (text, searchTerm) => {
+    if (!text || !searchTerm) return text;
+    
+    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const parts = text.split(regex);
+    
+    return (
+      <>
+        {parts.map((part, index) => 
+          regex.test(part) ? 
+            <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.main' }} key={index}>
+              {part}
+            </Box> : 
+            part
+        )}
+      </>
+    );
+  };
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box sx={{ position: 'relative', width: { xs: '100%', sm: '300px' } }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Input
             fullWidth
-            placeholder="Search products..."
+            placeholder="Search products, descriptions, categories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onFocus={() => {
@@ -260,10 +336,49 @@ const ProductSearch = ({ onProductSelect }) => {
                             )}
                           </Box>
                           <Box sx={{ flexGrow: 1 }}>
-                            <Typography level="body-sm">{result.title}</Typography>
-                            <Typography level="body-xs" color="text.secondary">
-                              ${parseFloat(result.price).toFixed(2)}
+                            <Typography level="body-sm">
+                              {highlightMatch(result.title, searchTerm)}
                             </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              <Typography level="body-xs" color="text.secondary">
+                                ${parseFloat(result.price).toFixed(2)}
+                              </Typography>
+                              
+                              {result.matchType && (
+                                <Chip 
+                                  size="sm" 
+                                  variant="soft"
+                                  color={
+                                    result.matchType === 'title' ? 'primary' : 
+                                    result.matchType === 'description' ? 'warning' : 
+                                    'success'
+                                  }
+                                  sx={{ 
+                                    height: '16px', 
+                                    fontSize: '0.6rem', 
+                                    px: 0.5 
+                                  }}
+                                >
+                                  {result.matchType}
+                                </Chip>
+                              )}
+                            </Box>
+                            
+                            {result.matchType === 'description' && result.description && (
+                              <Typography 
+                                level="body-xs" 
+                                color="text.tertiary"
+                                sx={{ 
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 1,
+                                  WebkitBoxOrient: 'vertical',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis'
+                                }}
+                              >
+                                {highlightMatch(result.description.substring(0, 50) + '...', searchTerm)}
+                              </Typography>
+                            )}
                           </Box>
                         </>
                       ) : (
@@ -275,13 +390,15 @@ const ProductSearch = ({ onProductSelect }) => {
                           >
                             {result.type === 'category' ? 'Category' : 'SubCategory'}
                           </Chip>
-                          <Typography level="body-sm">{result.title}</Typography>
+                          <Typography level="body-sm">
+                            {highlightMatch(result.title, searchTerm)}
+                          </Typography>
                         </Box>
                       )}
                     </Box>
                   </ListItem>
                 ))}
-                {searchTerm.length >= 3 && (
+                {searchTerm.length >= 2 && (
                   <ListItem 
                     sx={{ 
                       cursor: 'pointer',

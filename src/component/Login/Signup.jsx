@@ -145,7 +145,7 @@ export default function Signup() {
           sx={{
             width: { xs: '100%', md: '50%' },
             ml: { xs: 0, md: '50%' },
-            background: 'linear-gradient(135deg, #b2ebf2 0%, #a5d6a7 100%)',
+            background: '#e5e5e5',
             transition: 'width var(--Transition-duration)',
             transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
             zIndex: 1,
@@ -271,7 +271,6 @@ export default function Signup() {
                     sx={{ borderRadius: '20px' }}
                   />
                 </FormControl>
-                
                 <Button
                   type="submit"
                   fullWidth
@@ -287,24 +286,6 @@ export default function Signup() {
                   Sign Up
                 </Button>
               </form>
-              
-              <Divider sx={{ my: 2 }}>or</Divider>
-              
-              <Button
-                variant="soft"
-                color="neutral"
-                fullWidth
-                startDecorator={<GoogleIcon />}
-                sx={{
-                  borderRadius: '20px',
-                  bgcolor: '#fff',
-                  '&:hover': {
-                    bgcolor: '#f5f5f5',
-                  }
-                }}
-              >
-                Sign up with Google
-              </Button>
             </Box>
             <Box component="footer" sx={{ py: 3 }}>
               <Typography level="body-xs" sx={{ textAlign: 'center' }}>
