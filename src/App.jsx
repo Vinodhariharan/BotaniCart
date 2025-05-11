@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes, Outlet, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './component/AllComp/Navbar';
 import ProductCategories from './component/Home/MegaMenu';
 import Footer from './component/Footer/Footer.jsx';
@@ -7,7 +7,7 @@ import { auth } from "./auth";
 import { onAuthStateChanged } from "firebase/auth";
 import ProtectedAdminRoute from './firebase/ProtectedAdminRoute.jsx';
 import LoadingPage from './component/AllComp/LoadingPage';
-import { withLoading, lazyWithLoading } from './component/AllComp/RouteTransition.jsx';
+import { lazyWithLoading } from './component/AllComp/RouteTransition.jsx';
 
 // Regular imports for auth pages (no loading screen)
 import Login from './component/Login/Login';
@@ -15,6 +15,9 @@ import Signup from './component/Login/Signup.jsx';
 import CategoryExtractorTool from './component/Admin/CategoryExtractor.jsx';
 import JSONProductLoader from './component/Admin/JSONProductLoader.jsx';
 import SpecialProducts from './component/ProductList/SpecialProducts.jsx';
+import ProductList from './component/ProductList/ProductList.jsx';
+import CareGuides from './component/CareGuides/CareGuidesDashboard.jsx';
+import GuideDetail from './component/CareGuides/GuidePage.jsx';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -110,10 +113,20 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         {/* Product Listing pages */}
         <Route path='/category/:slug' element={<ProductListPass />} />
         <Route path='/category/' element={<ProductListPass />} />
-        <Route path="/products/:slug" element={<ProductDetails />} />
+        {/* <Route path="/products/:slug" element={<ProductDetails />} /> */}
         <Route path="/new-arrivals" element={<SpecialProducts type="newArrival" />} />
-        <Route path="/bestselling" render={() => <SpecialProducts type="bestSelling" />} />
-        <Route path="/featured" render={() => <SpecialProducts type="featured" />} />
+        <Route path="/bestselling" element={<SpecialProducts type="bestSelling" />} />
+        <Route path="/featured" element={<SpecialProducts type="featured" />} />
+        <Route path="products">
+            {/* Product list with optional query parameters (category, subCategory, search) */}
+            <Route index element={<ProductList initialCategory="All" />} />
+            
+            {/* Product detail page */}
+            <Route path=":productId" element={<ProductDetails />} />
+          </Route>
+          
+          {/* Direct product link (alternative route) */}
+          <Route path="product/:productId" element={<ProductDetails />} />
 
         {/* Order Pages */}
         <Route path="/checkout" element={<Checkout />} />
@@ -125,6 +138,11 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="/faq" element={<FAQSection />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<ContactInformation />} />
+        <Route path="/care-guides" element={<CareGuides />} />
+        <Route path="/sample-guides" element={<GuideDetail />} />
+        
+        {/* Catch all route - redirect to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       
       {!isAuthPage && !isAdminPage && <Footer />}

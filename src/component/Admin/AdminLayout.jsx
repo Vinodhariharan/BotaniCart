@@ -62,8 +62,6 @@ const AdminLayout = () => {
           flexGrow: 1,
           p: 3,
           transition: 'margin 0.2s ease',
-          background: 'linear-gradient(135deg, #e0f7fa 0%, #c8e6c9 100%)',
-
           ml: 0,
           width: { sm: `calc(100% - ${sidebarOpen ? 240 : 72}px)` },
           overflow: 'auto',
@@ -76,27 +74,12 @@ const AdminLayout = () => {
             <CircularProgress size="lg" color="primary" />
           </Box>
         ) : (
-          <>
-            <Box sx={{ mb: 4, mt: 1 }}>
-              <Typography level="h4" sx={{ color: '#000', fontWeight: 'bold' }}>
-                Admin Center
-              </Typography>
-              <Typography level="body-md" sx={{ color: '#000' }}>
-                Manage your plant e-commerce platform
-              </Typography>
-            </Box>
-            
             <Box sx={{ 
               color: '#333',
-              borderRadius: 'lg', 
               p: 3, 
-              boxShadow: 'sm',
-              border: '1px solid',
-              borderColor: themeColors.primary.light + '30'
             }}>
               <Outlet />
             </Box>
-          </>
         )}
       </Box>
     </Box>

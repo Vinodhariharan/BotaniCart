@@ -1,24 +1,102 @@
+/* Navbar.css */
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 .toolbar {
-    display: flex;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  width: 100%;
+}
 
-  a{
-    color: #FCF8E8;
-  }
-  
-  .nav-links {
-    display: flex;
+.nav-link {
+  position: relative;
+  transition: all 0.2s ease;
+}
 
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #136c13;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .toolbar {
+    padding: 0.3rem 0;
   }
-  
-  .cart-icon {
-    display: flex;
-    align-items: center; /* Align the icon vertically in the middle */
+}
+
+/* Animation for dropdown menu */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .spacer {
-    flex: 1; /* This will push the elements to the right */
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  
+}
+
+.MuiMenu-root {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Cart badge styles */
+.MuiBadge-badge {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 600;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #136c13;
+  outline-offset: 2px;
+}
+
+/* Transition for hover effects */
+.MuiButton-root,
+.MuiIconButton-root {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.MuiButton-root:hover,
+.MuiIconButton-root:hover {
+  transform: translateY(-2px);
+}
+
+/* Logo animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.navbar a:hover img {
+  animation: pulse 1s infinite;
+}

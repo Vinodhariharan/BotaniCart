@@ -74,7 +74,7 @@ const Footer = () => {
             {/* <LocationOnIcon sx={{ mr: 1 }} /> 123 Main Street, City, Country */}
           </Typography>
           <Typography level="body2" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <EmailIcon sx={{ mr: 1 }} /> info@example.com
+            <EmailIcon sx={{ mr: 1 }} /> info@botanicart.com
           </Typography>
           {/* <Typography level="body2" sx={{ display: 'flex', alignItems: 'center' }}>
             <PhoneIcon sx={{ mr: 1 }} /> +1 123 456 7890

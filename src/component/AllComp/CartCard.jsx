@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import AspectRatio from '@mui/joy/AspectRatio';
-import IconButton from '@mui/joy/IconButton';
-import Card from '@mui/joy/Card';
-import Typography from '@mui/joy/Typography';
-import Close from '@mui/icons-material/Close';
-import Add from '@mui/icons-material/Add';
-import Remove from '@mui/icons-material/Remove';
+import { 
+  Card,
+  AspectRatio,
+  IconButton,
+  Typography,
+  Box,
+  Stack
+} from '@mui/joy';
+import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { ThemeProvider } from '@mui/joy/styles';
 import theme from '../../theme';
 import { app } from '../../firebaseConfig';
@@ -74,94 +78,85 @@ export function CompactCartCard({ productId }) {
   return (
     <ThemeProvider theme={theme}>
       <Card 
-        orientation="horizontal" 
+        variant="outlined"
         sx={{ 
-          width: '100%', 
-          height: '90px', 
-          boxShadow: 'sm', 
-          margin: '4px 0', 
-          padding: '8px',
+          width: '100%',
+          height: '100px', // Reduced height for drawer
+          p: 1, // Smaller padding
+          mb: 0.5, // Reduced margin
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 2
+          gap: 1 // Reduced gap
         }}
       >
-        <AspectRatio ratio="1" sx={{ width: 60, height: 60, flexShrink: 0 }}>
+        {/* Product Image */}
+        <AspectRatio ratio="1" sx={{ width: 100, height: 100, flexShrink: 0 }}>
           <img
             src={product.imageSrc}
             loading="lazy"
             alt={product.title}
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              objectFit: 'cover',
-              borderRadius: '4px'
-            }}
+            style={{ objectFit: 'cover', borderRadius: '4px' }}
           />
         </AspectRatio>
 
-        <div sx={{ 
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 0.5
-        }}>
-          <Typography level="body-sm" fontWeight="md">
+        {/* Middle Section - Title and Quantity */}
+        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+          <Typography 
+            level="body-sm" 
+            fontWeight="md" 
+            noWrap 
+            title={product.title}
+            sx={{ mb: 0.5 }}
+          >
             {product.title}
           </Typography>
-          <div sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1 
-          }}>
-            <div sx={{
-              display: 'flex',
-              flexDirection: 'row', // Explicitly set to horizontal
-              alignItems: 'center',
-              border: '1px solid',
-              borderColor: 'divider',
-              borderRadius: 'sm'
-            }}>
+          
+          <Stack direction="row" spacing={1} alignItems="center">
+            {/* Quantity Controls */}
+            <Box 
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 'sm',
+                height: '24px'
+              }}
+            >
               <IconButton 
                 size="sm" 
                 variant="plain"
-                color="neutral"
                 onClick={() => handleQuantityChange(cartItem.quantity - 1)}
-                sx={{ px: 0.5 }}
+                sx={{ p: 0 }}
               >
-                <Remove fontSize="small" />
+                <RemoveIcon sx={{ fontSize: 16 }} />
               </IconButton>
 
-              <Typography level="body-sm" sx={{ px: 1 }}>
+              <Typography level="body-xs" sx={{ px: 0.5 }}>
                 {cartItem.quantity}
               </Typography>
 
               <IconButton 
                 size="sm" 
                 variant="plain"
-                color="neutral"
                 onClick={() => handleQuantityChange(cartItem.quantity + 1)}
-                sx={{ px: 0.5 }}
+                sx={{ p: 0 }}
               >
-                <Add fontSize="small" />
+                <AddIcon sx={{ fontSize: 16 }} />
               </IconButton>
-            </div>
+            </Box>
 
-            <Typography level="body-xs" color="neutral" sx={{ ml: 1 }}>
-              {product.price.toFixed(2)} INR each
+            <Typography level="body-xs" color="neutral">
+              ${product.price.toFixed(2)} 
             </Typography>
-          </div>
-        </div>
+          </Stack>
+        </Box>
 
-        <div sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          gap: 1
-        }}>
-          <Typography level="body-sm" fontWeight="lg">
-            {totalPrice} INR
+        {/* Right Section - Price and Remove */}
+        <Stack direction="column" alignItems="flex-end" spacing={0.5} sx={{ flexShrink: 0 }}>
+          <Typography level="body-sm" fontWeight="md">
+            $ {totalPrice}
           </Typography>
 
           <IconButton 
@@ -171,9 +166,9 @@ export function CompactCartCard({ productId }) {
             onClick={handleRemove}
             sx={{ p: 0.5 }}
           >
-            <Close fontSize="small" />
+            <CloseIcon sx={{ fontSize: 16 }} />
           </IconButton>
-        </div>
+        </Stack>
       </Card>
     </ThemeProvider>
   );

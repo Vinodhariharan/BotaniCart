@@ -1,5 +1,22 @@
 import React from 'react';
-import { Box, Divider, List, ListItem, ListItemButton, ListItemContent, Sheet, Slider, Typography, FormControl, Input, Checkbox, Button } from '@mui/joy';
+import {
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormLabel,
+  Input,
+  List,
+  ListItem,
+  Radio,
+  RadioGroup,
+  Slider,
+  Stack,
+  Typography,
+} from '@mui/joy';
+import SearchIcon from '@mui/icons-material/Search';
 
 const FilterSidebar = ({
   categories,
@@ -14,86 +31,142 @@ const FilterSidebar = ({
   selectedBrands,
   toggleBrandSelection,
   clearAllFilters,
-}) => (
-  <Sheet
-    sx={{
-      width: 250, // Fixed width
-      p: 2,
-      borderRight: '1px solid',
-      borderColor: 'divider',
-      overflow: 'auto',
-    }}
-  >
-    <Typography level="h4" sx={{ mb: 2 }}>Filters</Typography>
-
-    <Box sx={{ mb: 3 }}>
-      <Typography level="title-md" sx={{ mb: 1 }}>Categories</Typography>
-      <List size="sm">
-        {categories.map((category) => (
-          <ListItem key={category}>
-            <ListItemButton selected={selectedCategory === category} onClick={() => handleCategoryChange(category)}>
-              <ListItemContent>{category}</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-
-    <Divider />
-
-    {selectedCategory !== 'All' && (
-      <Box sx={{ mb: 3, mt: 2 }}>
-        <Typography level="title-md" sx={{ mb: 1 }}>Sub-Categories</Typography>
-        <List size="sm">
-          {subCategories.map((subCategory) => (
-            <ListItem key={subCategory}>
-              <ListItemButton selected={selectedSubCategory === subCategory} onClick={() => handleSubCategoryChange(subCategory)}>
-                <ListItemContent>{subCategory}</ListItemContent>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider sx={{ mt: 2 }} />
+  searchTerm,
+  setSearchTerm,
+}) => {
+  return (
+    <Card
+      variant="outlined"
+      sx={{
+        width: 280,
+        p: 2,
+        display: { xs: 'none', md: 'block' },
+        flexShrink: 0,
+      }}
+    >
+      <Typography level="h4" sx={{ mb: 2 }}>
+        Filters
+      </Typography>
+      
+      {/* Search Filter */}
+      <Box sx={{ mb: 3 }}>
+        <FormControl>
+          <FormLabel>Search</FormLabel>
+          <Input
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            startDecorator={<SearchIcon />}
+            sx={{ mt: 1 }}
+          />
+        </FormControl>
       </Box>
-    )}
-
-    <Box sx={{ mb: 3, mt: 2 }}>
-      <Typography level="title-md" sx={{ mb: 1 }}>Price Range</Typography>
-      <Box sx={{ px: 1 }}>
-        <Slider value={priceRange} onChange={handlePriceRangeChange} valueLabelDisplay="auto" min={0} max={10000} sx={{ mt: 3 }} />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-          <FormControl size="sm">
-            <Input value={priceRange[0]} width="50px" onChange={(e) => handlePriceRangeChange(null, [Number(e.target.value), priceRange[1]])} startDecorator="$" />
-          </FormControl>
-          <FormControl size="sm">
-            <Input value={priceRange[1]} onChange={(e) => handlePriceRangeChange(null, [priceRange[0], Number(e.target.value)])} startDecorator="$" />
-          </FormControl>
-        </Box>
+      
+      <Divider sx={{ my: 2 }} />
+      
+      {/* Category Filter */}
+      <Box sx={{ mb: 3 }}>
+        <FormControl>
+          <FormLabel>Category</FormLabel>
+          <RadioGroup value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
+            {categories.map((category) => (
+              <Radio
+                key={category}
+                value={category}
+                label={category}
+                checked={selectedCategory === category}
+                sx={{ mt: 1 }}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
       </Box>
-    </Box>
-
-    <Divider />
-
-    <Box sx={{ mb: 3, mt: 2 }}>
-      <Typography level="title-md" sx={{ mb: 1 }}>Brands</Typography>
-      <List size="sm">
-        {brands.map((brand) => (
-          <ListItem key={brand}>
-            <ListItemButton onClick={() => toggleBrandSelection(brand)}>
-              <Checkbox checked={selectedBrands.includes(brand)} onChange={() => toggleBrandSelection(brand)} sx={{ mr: 1 }} />
-              <ListItemContent>{brand}</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-
-    <Divider />
-
-    <Button variant="outlined" color="neutral" onClick={clearAllFilters} fullWidth sx={{ mt: 2 }}>
-      Clear All Filters
-    </Button>
-  </Sheet>
-);
+      
+      <Divider sx={{ my: 2 }} />
+      
+      {/* Subcategory Filter */}
+      {selectedCategory !== 'All' && (
+        <>
+          <Box sx={{ mb: 3 }}>
+            <FormControl>
+              <FormLabel>Subcategory</FormLabel>
+              <RadioGroup value={selectedSubCategory} onChange={(e) => handleSubCategoryChange(e.target.value)}>
+                {subCategories.map((subCategory) => (
+                  <Radio
+                    key={subCategory}
+                    value={subCategory}
+                    label={subCategory}
+                    checked={selectedSubCategory === subCategory}
+                    sx={{ mt: 1 }}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          <Divider sx={{ my: 2 }} />
+        </>
+      )}
+      
+      {/* Price Range Filter */}
+      <Box sx={{ mb: 3 }}>
+        <FormControl>
+          <FormLabel>Price Range</FormLabel>
+          <Box sx={{ px: 1 }}>
+            <Slider
+              value={priceRange}
+              onChange={handlePriceRangeChange}
+              valueLabelDisplay="auto"
+              min={0}
+              max={10000}
+              step={100}
+              marks={[
+                { value: 0, label: '$0' },
+                { value: 5000, label: '$5k' },
+                { value: 10000, label: '$10k' },
+              ]}
+            />
+          </Box>
+          <Stack direction="row" justifyContent="space-between" sx={{ mt: 1 }}>
+            <Typography level="body-sm">${priceRange[0]}</Typography>
+            <Typography level="body-sm">${priceRange[1]}</Typography>
+          </Stack>
+        </FormControl>
+      </Box>
+      
+      <Divider sx={{ my: 2 }} />
+      
+      {/* Brand Filter */}
+      <Box sx={{ mb: 3 }}>
+        <FormControl>
+          <FormLabel>Brand</FormLabel>
+          <List size="sm" sx={{ '--ListItem-paddingY': '0px' }}>
+            {brands.map((brand) => (
+              <ListItem key={brand}>
+                <Checkbox
+                  label={brand}
+                  checked={selectedBrands.includes(brand)}
+                  onChange={() => toggleBrandSelection(brand)}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </FormControl>
+      </Box>
+      
+      <Divider sx={{ my: 2 }} />
+      
+      {/* Clear Filters Button */}
+      <Button
+        variant="outlined"
+        color="neutral"
+        fullWidth
+        onClick={clearAllFilters}
+        sx={{ mt: 2 }}
+      >
+        Clear All Filters
+      </Button>
+    </Card>
+  );
+};
 
 export default FilterSidebar;

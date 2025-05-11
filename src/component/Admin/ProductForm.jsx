@@ -35,7 +35,7 @@ import {
   Snackbar,
 } from '@mui/joy';
 import { Add, ArrowBack, CheckCircle, DeleteOutline, Image, Save, Warning } from '@mui/icons-material';
-import {handleImageUpload} from './handleImageUpload'
+import { handleImageUpload } from './handleImageUpload'
 
 const ProductForm = () => {
   const { productId } = useParams();
@@ -271,7 +271,7 @@ const ProductForm = () => {
       setSnackbarOpen(true);
 
       setTimeout(() => {
-        navigate('/admin');
+        navigate('/admin/product-list');
       }, 1500);
     } catch (err) {
       setSnackbarColor('danger');
@@ -357,7 +357,6 @@ const ProductForm = () => {
         my: 4,
         px: 2,
         py: 4,
-        borderRadius: 'md',
       }}
     >
       <CssBaseline />
@@ -502,7 +501,7 @@ const ProductForm = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageUpload}
+                    onChange={(e) => handleImageUpload(e, setProduct, productId)} // Pass setProduct and productId here
                     style={{ marginBottom: '1rem' }}
                   />
 
@@ -540,6 +539,7 @@ const ProductForm = () => {
                   </AspectRatio>
                 )}
               </Grid>
+
 
 
               <Grid xs={12}>
