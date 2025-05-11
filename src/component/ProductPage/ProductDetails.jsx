@@ -36,6 +36,7 @@ import {
   ShoppingCart,
   ChevronRight
 } from "@mui/icons-material";
+import { useCart } from '../AllComp/CardContext';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -74,34 +75,34 @@ function ProductDetails() {
       quantity: ''
     }
   });
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProductFromFirebase = async () => {
       setLoading(true);
       setError(null);
-
+  
       try {
         // First, try to find product by ID/productId directly
         const productRef = doc(db, "products", productId);
         const docSnap = await getDoc(productRef);
-
+  
         if (docSnap.exists()) {
-          setProductData(docSnap.data());
+          setProductData({ id: docSnap.id, ...docSnap.data() });
         } else {
           // If not found by ID, try to find by link field
           const productsQuery = query(
             collection(db, "products"),
             where("link", "==", productId)
           );
-
+  
           const querySnapshot = await getDocs(productsQuery);
-
+  
           if (!querySnapshot.empty) {
             // Use the first matching document
-            const matchingProduct = querySnapshot.docs[0].data();
-            setProductData(matchingProduct);
+            const matchingDoc = querySnapshot.docs[0];
+            setProductData({ id: matchingDoc.id, ...matchingDoc.data() });
           } else {
-            // No product found
             setError("Product not found");
             console.error("Product not found!");
           }
@@ -113,15 +114,17 @@ function ProductDetails() {
         setLoading(false);
       }
     };
-
+  
     fetchProductFromFirebase();
   }, [productId]);
+  
 
-  const handleAddToCart = () => {
-    // Implementation would be added for cart functionality
-    console.log("Adding to cart:", { ...productData, quantity });
-  };
+  
+    const handleAddToCart = () => {
+      addToCart(productData);
+    };
 
+    console.log(productData);
   const increaseQuantity = () => {
     if (quantity < productData.stock.quantity) {
       setQuantity(quantity + 1);
@@ -322,8 +325,8 @@ function ProductDetails() {
           <Home sx={{ mr: 0.5 }} fontSize="sm" />
           Home
         </Link>
-        <Link to="/shop" style={{ textDecoration: 'none', color: 'inherit' }}>
-          Shop
+        <Link to="/products" style={{ textDecoration: 'none', color: 'inherit' }}>
+          Products
         </Link>
         {productData.category && (
           <Link to={`/category/${productData.category.toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -444,7 +447,7 @@ function ProductDetails() {
             )}
 
             <Typography level="h4" color="primary" fontWeight="lg" my={2}>
-              ₹{productData.price}
+              ${productData.price}
             </Typography>
 
             <Divider sx={{ my: 2 }} />

@@ -22,6 +22,7 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = () => {
     addToCart(product);
+    console.log(product)
   };
 
   return (
@@ -123,7 +124,7 @@ export default function ProductCard({ product }) {
 
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Typography level="title-md" sx={{ fontWeight: 'bold', color: 'success.600' }}>
-            ₹{product.price || "—"}
+            ${product.price || "—"}
           </Typography>
 
           <Button

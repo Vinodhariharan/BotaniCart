@@ -151,10 +151,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
           }}
         >
           <Option component={Link} to="/profile" sx={{ color: '#136c13' }}>
-                  Profile
-                </Option>
-                <Option component={Link} to="/settings" sx={{ color: '#136c13' }}>
-                  Settings
+                  Profile & Orders
                 </Option>
                 <Option onClick={handleLogout} sx={{ color: '#136c13' }}>
                   Logout
