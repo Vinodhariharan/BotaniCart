@@ -127,7 +127,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
         position: 'relative',
         transition: 'all 0.3s ease',
         width: '100%',
-        zIndex: 1000,
+        zIndex: 0,
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
       }}
     >
