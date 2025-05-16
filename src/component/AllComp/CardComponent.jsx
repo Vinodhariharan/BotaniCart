@@ -10,6 +10,7 @@ import {
   Divider,
   Link,
   ListDivider,
+  Snackbar,
   Stack,
   Typography,
 } from '@mui/joy';
@@ -19,10 +20,13 @@ import { useCart } from '../AllComp/CardContext';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const [added, setAdded] = React.useState(false);
 
   const handleAddToCart = () => {
     addToCart(product);
-    console.log(product)
+    setAdded(true); // Change button state to "Added"
+      setTimeout(() => setAdded(false), 1000);
+
   };
 
   return (
@@ -30,6 +34,8 @@ export default function ProductCard({ product }) {
       variant="outlined"
       sx={{
         width: 225,
+        minHeight: '420px',
+        maxHeight: '420px',
         maxWidth: '100%',
         boxShadow: 'sm',
         borderRadius: 'md',
@@ -69,7 +75,7 @@ export default function ProductCard({ product }) {
         </AspectRatio>
       </CardOverflow>
 
-    <Divider/>
+      <Divider />
 
       <CardContent sx={{ p: 1.5 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.5 }}>
@@ -92,7 +98,7 @@ export default function ProductCard({ product }) {
         </Stack>
 
         <Link
-          href={`/products/${product.link || ''}`}
+          href={`/products/${product.id || ''}`}
           overlay
           underline="none"
           sx={{ color: 'text.primary' }}
@@ -122,25 +128,28 @@ export default function ProductCard({ product }) {
 
         <Divider sx={{ my: 0.5 }} />
 
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Stack direction="row" justifyContent="space-between" alignItems="center" >
           <Typography level="title-md" sx={{ fontWeight: 'bold', color: 'success.600' }}>
             ${product.price || "—"}
           </Typography>
 
           <Button
             startDecorator={<ShoppingCartIcon fontSize="small" />}
-            variant="solid"
+            variant={added ? 'soft' : 'solid'}
             color="success"
             size="sm"
+            disabled={added}
             sx={{
               borderRadius: 'xl',
               fontWeight: 600,
               fontSize: '12px',
               py: 0.5,
+              transition: 'all 0.5s ease-in-out',
+              minWidth: 100,
             }}
             onClick={handleAddToCart}
           >
-            Add
+            {added ? 'Added to cart' : 'Add to cart'}
           </Button>
         </Stack>
       </CardContent>

@@ -24,6 +24,8 @@ import ArrowForward from '@mui/icons-material/ArrowForward';
 import LocalShipping from '@mui/icons-material/LocalShipping';
 import Spa from '@mui/icons-material/Spa';
 import VerifiedUser from '@mui/icons-material/VerifiedUser';
+import { Grass } from '@mui/icons-material';
+import FeaturedPlantGuides from '../CareGuides/FeaturedCareGuides';
 
 const HomePage = () => {
   const [featuredPlants, setFeaturedPlants] = useState([]);
@@ -148,7 +150,7 @@ const HomePage = () => {
         >
           <Card variant="outlined" sx={{ 
             bgcolor: 'background.level1', 
-            minHeight: 400,
+            minHeight: 550,
             boxShadow: 'lg' 
           }}>
             <CardContent sx={{ 
@@ -160,8 +162,8 @@ const HomePage = () => {
               zIndex: 1
             }}>
               <Box sx={{ flex: 1 }}>
-                <Typography level="h1" sx={{ mb: 2, color: 'success.600' }}>
-                  Bring Nature Indoors
+                <Typography level="h1" sx={{ fontSize:55, mb: 2, color: 'success.600' }}>
+                  Bring Nature <Grass sx={{fontSize:'100'}}></Grass> Indoors
                 </Typography>
                 <Typography sx={{ mb: 4, color: 'success.700' }}>
                   Discover our hand-picked selection of premium plants for your home or office
@@ -187,7 +189,7 @@ const HomePage = () => {
                 </Box>
               </Box>
               <AspectRatio 
-                ratio="16/9" 
+                ratio="16/12" 
                 sx={{ 
                   minWidth: { xs: '100%', md: '50%' },
                   borderRadius: 'md',
@@ -298,6 +300,8 @@ const HomePage = () => {
             </Button>
           </Box>
           <CardSlider products={featuredPlants} user={user} />
+
+        <FeaturedPlantGuides/>
 
         {/* Best Sellers Section */}
         <Box component="section" sx={{ my: 6 }}>

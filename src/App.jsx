@@ -18,6 +18,9 @@ import SpecialProducts from './component/ProductList/SpecialProducts.jsx';
 import ProductList from './component/ProductList/ProductList.jsx';
 import CareGuides from './component/CareGuides/CareGuidesDashboard.jsx';
 import GuideDetail from './component/CareGuides/GuidePage.jsx';
+import CareGuideForm from './component/Admin/GuideForm.jsx';
+import JSONGuideLoader from './component/Admin/JSONGuideLoader.jsx';
+import CareGuideList from './component/Admin/CareGuideList.jsx';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -91,12 +94,16 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
           <Route path="add-product" element={<ProductForm />} />
           <Route path="product-list" element={<AdminProductList />} />
           <Route path="update-product/:productId" element={<ProductForm />} />
+          <Route path="update-careguide/:guideId" element={<CareGuideForm />} />
           <Route path="users" element={<UsersManagement />} />
           <Route path="reports" element={<div>Reports Dashboard</div>} />
           <Route path="notifications" element={<div>Notifications Center</div>} />
           <Route path="settings" element={<div>Admin Settings</div>} />
           <Route path="category-extractor" element={<CategoryExtractorTool/>} />
           <Route path="json-product-loader" element={<JSONProductLoader/>} />
+          <Route path="add-guide" element={<CareGuideForm/>} />
+          <Route path="json-guide-loader" element={<JSONGuideLoader/>} />
+          <Route path="guide-list" element={<CareGuideList/>} />
         </Route>
 
         {/* Customer Pages */}
@@ -139,7 +146,7 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<ContactInformation />} />
         <Route path="/care-guides" element={<CareGuides />} />
-        <Route path="/sample-guides" element={<GuideDetail />} />
+        <Route path="/care-guides/:id" element={<GuideDetail />} />
         
         {/* Catch all route - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />

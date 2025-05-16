@@ -137,6 +137,19 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             >
               About
             </Button>
+            <Button
+              color="neutral"
+              variant="plain"
+              sx={{ 
+                fontFamily: 'League Spartan, sans-serif', 
+                color: '#136c13',
+              }}
+              component={Link}
+              to="/care-guides"
+              className="nav-link"
+            >
+              Plant Care
+            </Button>
           </Box>
           
           {isLoggedIn ? (

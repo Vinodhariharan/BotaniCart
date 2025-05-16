@@ -20,7 +20,8 @@ import {
   Stack,
   Typography,
   Alert,
-  Badge
+  Badge,
+  Snackbar
 } from "@mui/joy";
 import {
   Home,
@@ -37,12 +38,14 @@ import {
   ChevronRight
 } from "@mui/icons-material";
 import { useCart } from '../AllComp/CardContext';
+import RelatedProducts from "../AllComp/RelatedProducts.jsx";
 
 function ProductDetails() {
   const { productId } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [open, setOpen] = useState(false);
   const [productData, setProductData] = useState({
     title: '',
     imageSrc: '',
@@ -53,8 +56,8 @@ function ProductDetails() {
     subCategory: '',
     type: '',
     featured: false,    // Add these three badge fields
-  newArrival: false,  // instead of a single badge field
-  popular: false,
+    newArrival: false,  // instead of a single badge field
+    popular: false,
     details: {
       scientificName: '',
       sunlight: '',
@@ -81,12 +84,12 @@ function ProductDetails() {
     const fetchProductFromFirebase = async () => {
       setLoading(true);
       setError(null);
-  
+
       try {
         // First, try to find product by ID/productId directly
         const productRef = doc(db, "products", productId);
         const docSnap = await getDoc(productRef);
-  
+
         if (docSnap.exists()) {
           setProductData({ id: docSnap.id, ...docSnap.data() });
         } else {
@@ -95,9 +98,9 @@ function ProductDetails() {
             collection(db, "products"),
             where("link", "==", productId)
           );
-  
+
           const querySnapshot = await getDocs(productsQuery);
-  
+
           if (!querySnapshot.empty) {
             // Use the first matching document
             const matchingDoc = querySnapshot.docs[0];
@@ -114,17 +117,22 @@ function ProductDetails() {
         setLoading(false);
       }
     };
-  
+
     fetchProductFromFirebase();
   }, [productId]);
-  
 
-  
-    const handleAddToCart = () => {
-      addToCart(productData);
-    };
 
-    console.log(productData);
+
+  const handleAddToCart = () => {
+    // for (let i = 0; i < quantity; i++) {
+    addToCart(productData, quantity);
+    setOpen(true); // open snackbar
+
+    // }
+  };
+
+
+  console.log(productData);
   const increaseQuantity = () => {
     if (quantity < productData.stock.quantity) {
       setQuantity(quantity + 1);
@@ -340,72 +348,72 @@ function ProductDetails() {
         {/* Product Image */}
         <Grid xs={12} md={6}>
           <Card variant="outlined" sx={{ overflow: 'hidden', height: '100%' }}>
-          <CardOverflow>
-  {/* Low Stock Badge */}
-  {productData.stock && productData.stock.quantity < 10 && (
-    <Badge
-      color="danger"
-      badgeContent={`Only ${productData.stock.quantity} left!`}
-      sx={{ position: 'absolute', top: 16, right: 16 }}
-    />
-  )}
-  
-  {/* Feature Badges - Position them at the left */}
-  <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
-    {productData.popular && (
-      <Box sx={{ 
-        bgcolor: 'warning.300',
-        color: 'white',
-        px: 2,
-        py: 0.5,
-        borderRadius: 'md',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 'xs'
-      }}>
-        Best Seller
-      </Box>
-    )}
-    
-    {productData.featured && (
-      <Box sx={{ 
-        bgcolor: 'primary.400',
-        color: 'white',
-        px: 2,
-        py: 0.5,
-        borderRadius: 'md',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 'xs'
-      }}>
-        Featured
-      </Box>
-    )}
-    
-    {productData.newArrival && (
-      <Box sx={{ 
-        bgcolor: 'success.400',
-        color: 'white',
-        px: 2,
-        py: 0.5,
-        borderRadius: 'md',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 'xs'
-      }}>
-        New Arrival
-      </Box>
-    )}
-  </Box>
-  
-  <AspectRatio ratio="4/3" objectFit="cover">
-    <img
-      src={productData.imageSrc}
-      alt={productData.title}
-      loading="lazy"
-    />
-  </AspectRatio>
-</CardOverflow>
+            <CardOverflow>
+              {/* Low Stock Badge */}
+              {productData.stock && productData.stock.quantity < 10 && (
+                <Badge
+                  color="danger"
+                  badgeContent={`Only ${productData.stock.quantity} left!`}
+                  sx={{ position: 'absolute', top: 16, right: 16 }}
+                />
+              )}
+
+              {/* Feature Badges - Position them at the left */}
+              <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                {productData.popular && (
+                  <Box sx={{
+                    bgcolor: 'warning.300',
+                    color: 'white',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 'md',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: 'xs'
+                  }}>
+                    Best Seller
+                  </Box>
+                )}
+
+                {productData.featured && (
+                  <Box sx={{
+                    bgcolor: 'primary.400',
+                    color: 'white',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 'md',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: 'xs'
+                  }}>
+                    Featured
+                  </Box>
+                )}
+
+                {productData.newArrival && (
+                  <Box sx={{
+                    bgcolor: 'success.400',
+                    color: 'white',
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 'md',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: 'xs'
+                  }}>
+                    New Arrival
+                  </Box>
+                )}
+              </Box>
+
+              <AspectRatio ratio="4/3" objectFit="cover">
+                <img
+                  src={productData.imageSrc}
+                  alt={productData.title}
+                  loading="lazy"
+                />
+              </AspectRatio>
+            </CardOverflow>
           </Card>
         </Grid>
 
@@ -495,76 +503,80 @@ function ProductDetails() {
               Add to Garden
             </Button>
 
+            <Snackbar open={open} variant="soft" color="success" autoHideDuration={3000} onClose={() => setOpen(false)}>
+              Added to cart!
+            </Snackbar>
+
             <Stack direction="row" spacing={1} mt={3} flexWrap="wrap">
-  {productData.stock && productData.stock.availability ? (
-    <Chip
-      color="success"
-      variant="soft"
-      size="md"
-    >
-      In Stock
-    </Chip>
-  ) : (
-    <Chip
-      color="danger"
-      variant="soft"
-      size="md"
-    >
-      Out of Stock
-    </Chip>
-  )}
+              {productData.stock && productData.stock.availability ? (
+                <Chip
+                  color="success"
+                  variant="soft"
+                  size="md"
+                >
+                  In Stock
+                </Chip>
+              ) : (
+                <Chip
+                  color="danger"
+                  variant="soft"
+                  size="md"
+                >
+                  Out of Stock
+                </Chip>
+              )}
 
-  {productData.subCategory && (
-    <Chip
-      color="primary"
-      variant="soft"
-      size="md"
-    >
-      {productData.subCategory}
-    </Chip>
-  )}
+              {productData.subCategory && (
+                <Chip
+                  color="primary"
+                  variant="soft"
+                  size="md"
+                >
+                  {productData.subCategory}
+                </Chip>
+              )}
 
-  {productData.type && (
-    <Chip
-      color="neutral"
-      variant="soft"
-      size="md"
-    >
-      {productData.type}
-    </Chip>
-  )}
-  
-  {/* Add chips based on the boolean fields */}
-  {productData.popular && (
-    <Chip
-      color="warning"
-      variant="soft"
-      size="md"
-    >
-      Best Seller
-    </Chip>
-  )}
-  
-  {productData.featured && (
-    <Chip
-      color="primary"
-      variant="soft"
-      size="md"
-    >
-      Featured
-    </Chip>
-  )}
-  
-  {productData.newArrival && (
-    <Chip
-      color="success"
-      variant="soft"
-      size="md"
-    >
-      New Arrival
-    </Chip>
-  )}
-</Stack>
+              {productData.type && (
+                <Chip
+                  color="neutral"
+                  variant="soft"
+                  size="md"
+                >
+                  {productData.type}
+                </Chip>
+              )}
+
+              {/* Add chips based on the boolean fields */}
+              {productData.popular && (
+                <Chip
+                  color="warning"
+                  variant="soft"
+                  size="md"
+                >
+                  Best Seller
+                </Chip>
+              )}
+
+              {productData.featured && (
+                <Chip
+                  color="primary"
+                  variant="soft"
+                  size="md"
+                >
+                  Featured
+                </Chip>
+              )}
+
+              {productData.newArrival && (
+                <Chip
+                  color="success"
+                  variant="soft"
+                  size="md"
+                >
+                  New Arrival
+                </Chip>
+              )}
+            </Stack>
           </Sheet>
         </Grid>
 
@@ -581,12 +593,12 @@ function ProductDetails() {
         </Grid>
 
         {/* Related Products Section - This could be added in a future enhancement */}
-        {/* <Grid xs={12}>
-          <Typography level="h5" component="h2" sx={{ mt: 6, mb: 3 }}>
+        <Grid xs={12}>
+          <Typography level="h2" component="h2" sx={{ mt: 6, mb: 3 }}>
             You May Also Like
           </Typography>
           <RelatedProducts category={productData.category} currentProductId={productId} />
-        </Grid> */}
+        </Grid>
       </Grid>
     </Container>
   );

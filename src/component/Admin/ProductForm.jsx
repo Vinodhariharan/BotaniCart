@@ -300,7 +300,7 @@ const ProductForm = () => {
 
       // Navigate back to dashboard after a short delay
       setTimeout(() => {
-        navigate('/admin-dashboard');
+        navigate('/admin/product-list');
       }, 1500);
     } catch (err) {
       setDeleteModalOpen(false);
@@ -337,7 +337,7 @@ const ProductForm = () => {
             <Typography level="body-md" sx={{ mt: 1 }}>{error}</Typography>
             <Button
               variant="solid"
-              onClick={() => navigate('/admin-dashboard')}
+              onClick={() => navigate('/admin/product-list')}
               sx={{ mt: 2 }}
               startDecorator={<ArrowBack />}
             >
@@ -800,7 +800,7 @@ const ProductForm = () => {
             <Button
               variant="outlined"
               color="neutral"
-              onClick={() => navigate('/admin-dashboard')}
+              onClick={() => navigate('/admin/product-list')}
               startDecorator={<ArrowBack />}
             >
               Cancel & Return

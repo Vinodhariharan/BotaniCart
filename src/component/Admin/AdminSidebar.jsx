@@ -25,6 +25,13 @@ import {
   ChevronLeft as ChevronLeftIcon,
   CategoryRounded,
   UploadFileRounded,
+  DocumentScanner,
+  Info,
+  Home,
+  HomeMax,
+  HomeMini,
+  House,
+  Grass,
 } from "@mui/icons-material";
 
 const Sidebar = ({ open, onToggle, onLogout }) => {
@@ -38,11 +45,14 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
     { text: "Users", icon: <PeopleIcon />, path: "/admin/users" },
     { text: "Products", icon: <ProductsIcon />, path: "/admin/product-list" },
     { text: "Add Product", icon: <AddIcon />, path: "/admin/add-product" },
-    { text: "Reports", icon: <ReportsIcon />, path: "/admin/reports" },
-    { text: "Notifications", icon: <NotificationsIcon />, path: "/admin/notifications" },
-    { text: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
+    // { text: "Reports", icon: <ReportsIcon />, path: "/admin/reports" },
+    // { text: "Notifications", icon: <NotificationsIcon />, path: "/admin/notifications" },
+    // { text: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
     { text: "Category Extractor", icon: <CategoryRounded />, path: "/admin/category-extractor" },
     { text: "Product JSON Uploader", icon: <UploadFileRounded />, path: "/admin/json-product-loader" },
+    { text: "Add CareGuide", icon: <Info />, path: "/admin/add-guide" },
+    { text: "Guide JSON Upoader", icon: <DocumentScanner />, path: "/admin/json-guide-loader" },
+    { text: "CareGuide List", icon: <Grass />, path: "/admin/guide-list" },
   ];
 
   return (
@@ -147,7 +157,7 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
           })}
         </List>
 
-        <Box sx={{ mt: "auto", mb: 2, px: 2 }}>
+        <Box sx={{ mt: "auto", px: 2 }}>
           <ListDivider sx={{ my: 2 }} />
           <ListItem>
             <ListItemButton
@@ -169,6 +179,32 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
                 <LogoutIcon />
               </ListItemDecorator>
               {open && <ListItemContent>Logout</ListItemContent>}
+            </ListItemButton>
+          </ListItem>
+        </Box>
+        <Box sx={{ mt: "auto", mb: 2, px: 2 }}>
+          <ListDivider sx={{ my: 2 }} />
+          <ListItem>
+            <ListItemButton
+              component={Link}
+              to="/"
+              sx={{
+                justifyContent: open ? "flex-start" : "center",
+                "&:hover": {
+                  bgcolor: "#c8e6c930",
+                },
+              }}
+            >
+              <ListItemDecorator
+                sx={{
+                  minWidth: open ? "auto" : "100%",
+                  justifyContent: open ? "flex-start" : "center",
+                  color: "#005005",
+                }}
+              >
+                <House />
+              </ListItemDecorator>
+              {open && <ListItemContent>Website</ListItemContent>}
             </ListItemButton>
           </ListItem>
         </Box>

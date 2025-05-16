@@ -6,6 +6,8 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import LoginIcon from '@mui/icons-material/Login';
 import Drawer from '@mui/joy/Drawer';
 import Button from '@mui/joy/Button';
 import List from '@mui/joy/List';
@@ -31,32 +33,45 @@ export default function CartDrawer() {
   const navigate = useNavigate();
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const {cartProducts} = useCart();
+  const { cartProducts } = useCart();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Only set up listener if user is authenticated
-    if (auth.currentUser) {
-      // Reference to the user's document
-      const userCartRef = doc(db, 'users', auth.currentUser.uid);
+    // Check if user is authenticated
+    const unsubscribeAuth = auth.onAuthStateChanged(user => {
+      setIsAuthenticated(!!user);
+      setLoading(user ? true : false);
+      
+      if (user) {
+        // Reference to the user's document
+        const userCartRef = doc(db, 'users', user.uid);
 
-      // Set up real-time listener for cart items
-      const unsubscribe = onSnapshot(userCartRef, (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data();
-          const cartData = userData.cart?.items || [];
-          
-          setCartItems(cartData);
+        // Set up real-time listener for cart items
+        const unsubscribe = onSnapshot(userCartRef, (docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const userData = docSnapshot.data();
+            const cartData = userData.cart?.items || [];
+            
+            setCartItems(cartData);
+            setLoading(false);
+          } else {
+            setCartItems([]);
+            setLoading(false);
+          }
+        }, (error) => {
+          console.error("Error fetching cart:", error);
           setLoading(false);
-        }
-      }, (error) => {
-        console.error("Error fetching cart:", error);
-        setLoading(false);
-      });
+        });
 
-      // Cleanup subscription
-      return () => unsubscribe();
-    }
-  }, [auth.currentUser, db]);
+        return () => unsubscribe();
+      } else {
+        setCartItems([]);
+      }
+    });
+
+    // Cleanup subscription
+    return () => unsubscribeAuth();
+  }, [auth, db]);
 
   // Calculate total cart quantity
   const totalCartQuantity = useMemo(() => {
@@ -68,6 +83,11 @@ export default function CartDrawer() {
     setOpen(false);
   };
 
+  const handleSignIn = () => {
+    navigate('/login');
+    setOpen(false);
+  };
+
   return (
     <div>
       <Button
@@ -75,7 +95,7 @@ export default function CartDrawer() {
         variant="soft"
         color="neutral"
         endDecorator={
-          <Badge badgeContent={totalCartQuantity} color="primary">
+          <Badge badgeContent={isAuthenticated ? totalCartQuantity : 0} color="primary">
             <ShoppingCartIcon color="white" />
           </Badge>
         }
@@ -105,7 +125,31 @@ export default function CartDrawer() {
           <ModalClose />
           <Divider />
           <DialogContent sx={{ gap: 2 }}>
-            {loading ? (
+            {!isAuthenticated ? (
+              <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
+                <Typography level="h5" textAlign="center" sx={{ mb: 2 }}>
+                  Sign In Required
+                </Typography>
+                <Typography level="body-lg" textAlign="center" sx={{ mb: 4 }}>
+                  Please sign in to view your cart and add items.
+                </Typography>
+                <Button
+                  size="lg"
+                  variant="solid"
+                  color="primary"
+                  onClick={handleSignIn}
+                  startDecorator={<LoginIcon />}
+                  sx={{ 
+                    borderRadius: '20px', 
+                    backgroundColor: '#0A4938', 
+                    color: '#fff',
+                    px: 4 
+                  }}
+                >
+                  Sign In
+                </Button>
+              </Stack>
+            ) : loading ? (
               <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
                 <CircularProgress />
                 <Typography level="body-sm" mt={2}>
@@ -136,29 +180,47 @@ export default function CartDrawer() {
           </DialogContent>
           <Divider sx={{ mt: 'auto' }} />
           <Stack direction="row" justifyContent="space-between" useFlexGap spacing={1}>
-            <Button 
-              sx={{ 
-                borderRadius: '20px', 
-                backgroundColor: '#0A4938', 
-                color: '#fff' 
-              }} 
-              variant="soft" 
-              onClick={handleCheckout}
-              disabled={cartItems.length === 0 || loading}
-            >
-              Checkout
-            </Button>
-            <Button 
-              sx={{ 
-                borderRadius: '20px', 
-                backgroundColor: 'red', 
-                color: '#fff' 
-              }} 
-              variant="soft" 
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button 
+                  sx={{ 
+                    borderRadius: '20px', 
+                    backgroundColor: '#0A4938', 
+                    color: '#fff' 
+                  }} 
+                  variant="solid" 
+                  onClick={handleCheckout}
+                  disabled={cartItems.length === 0 || loading}
+                  startDecorator={<ShoppingCartCheckoutIcon />}
+                >
+                  Checkout
+                </Button>
+                <Button 
+                  sx={{ 
+                    borderRadius: '20px', 
+                    backgroundColor: 'red', 
+                    color: '#fff' 
+                  }} 
+                  variant="solid" 
+                  onClick={() => setOpen(false)}
+                >
+                  Close
+                </Button>
+              </>
+            ) : (
+              <Button 
+                fullWidth
+                sx={{ 
+                  borderRadius: '20px', 
+                  backgroundColor: 'red', 
+                  color: '#fff' 
+                }} 
+                variant="solid" 
+                onClick={() => setOpen(false)}
+              >
+                Close
+              </Button>
+            )}
           </Stack>
         </Sheet>
       </Drawer>

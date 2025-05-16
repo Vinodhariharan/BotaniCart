@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { 
+import {
   Card,
   AspectRatio,
   IconButton,
@@ -15,16 +15,18 @@ import { ThemeProvider } from '@mui/joy/styles';
 import theme from '../../theme';
 import { app } from '../../firebaseConfig';
 import { useCart } from './CardContext';
+import { red } from '@mui/material/colors';
 
 export function CompactCartCard({ productId }) {
-  const { 
-    rawCartItems, 
-    updateQuantity, 
-    removeFromCart 
+  const {
+    rawCartItems,
+    updateQuantity,
+    removeFromCart
   } = useCart();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [removed, setRemoved] = useState(false);
   const db = getFirestore(app);
 
   // Find the specific cart item for this product
@@ -64,9 +66,12 @@ export function CompactCartCard({ productId }) {
   };
 
   const handleRemove = () => {
-    if (product && cartItem) {
-      removeFromCart({ productId: productId });
-    }
+    setRemoved(true);
+    setTimeout(() => {
+      if (product && cartItem) {
+        removeFromCart({ productId: productId });
+      }
+    }, 800);
   };
 
   if (loading || !product || !cartItem) {
@@ -77,9 +82,9 @@ export function CompactCartCard({ productId }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Card 
+      <Card
         variant="outlined"
-        sx={{ 
+        sx={{
           width: '100%',
           height: '100px', // Reduced height for drawer
           p: 1, // Smaller padding
@@ -87,11 +92,17 @@ export function CompactCartCard({ productId }) {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 1 // Reduced gap
+          gap: 1, // Reduced gap
+          border:'0px',
+          borderRadius:'7px',
+          backgroundColor: removed ? 'danger.softBg' : '#fff',
+          transition: 'transform 0.5s ease, background-color 0.3s ease',
         }}
       >
         {/* Product Image */}
-        <AspectRatio ratio="1" sx={{ width: 100, height: 100, flexShrink: 0 }}>
+
+        <AspectRatio ratio="1" sx={{ width: 100, height: 100, flexShrink: 0 ,          transition: 'transform 0.5s ease, background-color 0.3s ease',
+}}>
           <img
             src={product.imageSrc}
             loading="lazy"
@@ -99,78 +110,107 @@ export function CompactCartCard({ productId }) {
             style={{ objectFit: 'cover', borderRadius: '4px' }}
           />
         </AspectRatio>
+        {!removed && <>
+          {/* Middle Section - Title and Quantity */}
+          <Box sx={{ flexGrow: 1, minWidth: 0,           transition: 'transform 0.5s ease, background-color 0.3s ease',
+ }}>
+            <Typography
+              level="body-sm"
+              fontWeight="md"
+              noWrap
+              title={product.title}
+              sx={{ mb: 0.5 }}
+            >
+              {product.title}
+            </Typography>
 
-        {/* Middle Section - Title and Quantity */}
-        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-          <Typography 
-            level="body-sm" 
-            fontWeight="md" 
-            noWrap 
-            title={product.title}
-            sx={{ mb: 0.5 }}
-          >
-            {product.title}
-          </Typography>
-          
-          <Stack direction="row" spacing={1} alignItems="center">
-            {/* Quantity Controls */}
-            <Box 
+            <Stack direction="row" spacing={1} alignItems="center">
+              {/* Quantity Controls */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  // border: '1px solid',
+                  // borderColor: '',
+                  // borderRadius: 'sm',
+                  height: '24px'
+                }}
+              >
+                <IconButton
+                  size="sm"
+                  variant="plain"
+                  onClick={() => handleQuantityChange(cartItem.quantity - 1)}
+                  sx={{ p: 0 }}
+                >
+                  <RemoveIcon sx={{ fontSize: 16 }} />
+                </IconButton>
+
+                <Typography level="body-xs" sx={{ px: 0.5 }}>
+                  {cartItem.quantity}
+                </Typography>
+
+                <IconButton
+                  size="sm"
+                  variant="plain"
+                  onClick={() => handleQuantityChange(cartItem.quantity + 1)}
+                  sx={{ p: 0 }}
+                >
+                  <AddIcon sx={{ fontSize: 16 }} />
+                </IconButton>
+              </Box>
+
+              <Typography level="body-xs" color="neutral">
+                ${product.price.toFixed(2)}
+              </Typography>
+            </Stack>
+          </Box>
+
+          {/* Right Section - Price and Remove */}
+          <Stack direction="column" alignItems="flex-end" spacing={0.5} sx={{ flexShrink: 0 }}>
+            <Typography level="body-sm" fontWeight="md">
+              $ {totalPrice}
+            </Typography>
+
+            <IconButton
+              size="sm"
+              variant="soft"
+              color="danger"
+              onClick={handleRemove}
+              sx={{ p: 0.5 }}
+            >
+              <CloseIcon sx={{ fontSize: 16 }} />
+            </IconButton>
+          </Stack>
+        </>}
+
+        {removed &&<>
+           <Box 
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                border: '1px solid',
-                borderColor: 'divider',
-                borderRadius: 'sm',
-                height: '24px'
+                justifyItems: 'center',
+                width: '100%',
+                backgroundColor: 'danger.softBg',
+                height: '100%',
+                borderRadius: "5px",
+                          transition: 'transform 0.5s ease, background-color 0.3s ease',
+
               }}
             >
-              <IconButton 
-                size="sm" 
-                variant="plain"
-                onClick={() => handleQuantityChange(cartItem.quantity - 1)}
-                sx={{ p: 0 }}
-              >
-                <RemoveIcon sx={{ fontSize: 16 }} />
-              </IconButton>
-
-              <Typography level="body-xs" sx={{ px: 0.5 }}>
-                {cartItem.quantity}
-              </Typography>
-
-              <IconButton 
-                size="sm" 
-                variant="plain"
-                onClick={() => handleQuantityChange(cartItem.quantity + 1)}
-                sx={{ p: 0 }}
-              >
-                <AddIcon sx={{ fontSize: 16 }} />
-              </IconButton>
-            </Box>
-
-            <Typography level="body-xs" color="neutral">
-              ${product.price.toFixed(2)} 
+              <Typography
+              level="body-sm"
+              fontWeight="md"
+              noWrap
+              title={product.title}
+              sx={{ mb: 0.5 }}
+            >
+              {product.title} removed!  
             </Typography>
-          </Stack>
-        </Box>
-
-        {/* Right Section - Price and Remove */}
-        <Stack direction="column" alignItems="flex-end" spacing={0.5} sx={{ flexShrink: 0 }}>
-          <Typography level="body-sm" fontWeight="md">
-            $ {totalPrice}
-          </Typography>
-
-          <IconButton 
-            size="sm" 
-            variant="soft" 
-            color="danger"
-            onClick={handleRemove}
-            sx={{ p: 0.5 }}
-          >
-            <CloseIcon sx={{ fontSize: 16 }} />
-          </IconButton>
-        </Stack>
-      </Card>
-    </ThemeProvider>
+            </Box>
+          </>
+        }
+      </Card >
+    </ThemeProvider >
   );
 }
 
