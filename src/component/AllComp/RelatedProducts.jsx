@@ -5,7 +5,7 @@ import { app } from '../../firebaseConfig';
 import { Box, Typography, CircularProgress } from '@mui/joy';
 import CardSlider from './CardSlider';
 
-const RelatedProducts = ({ category, currentProductId, limit: productLimit = 6 }) => {
+const RelatedProducts = ({setaddtoCartSnack, category, currentProductId, limit: productLimit = 6 }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -83,7 +83,7 @@ const RelatedProducts = ({ category, currentProductId, limit: productLimit = 6 }
 
   return (
     <Box sx={{ width: '100%', py: 2 }}>
-      <CardSlider products={products} user={user} />
+      <CardSlider setaddtoCartSnack={setaddtoCartSnack} products={products} user={user} />
     </Box>
   );
 };

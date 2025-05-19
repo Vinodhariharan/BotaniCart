@@ -12,13 +12,11 @@ import {
   Drawer,
   Menu,
   MenuItem,
-  Select,
-  Option,
   Divider,
 } from '@mui/joy';
 import Toolbar from '@mui/material/Toolbar';
 import LoginIcon from '@mui/icons-material/Login';
-import { PersonPinCircleRounded, Menu as MenuIcon, KeyboardArrowDown } from '@mui/icons-material';
+import { PersonPinCircleRounded, Menu as MenuIcon, KeyboardArrowDown, Person, ShoppingBag, Payment, Settings, Logout } from '@mui/icons-material';
 import '../../assets/css/Navbar.css';
 import CartDrawer from './CartDrawer';
 import { logoutUser } from '../../auth';
@@ -27,9 +25,8 @@ import ProductSearch from '../Search/ProductSearch';
 
 const Navbar = ({ isLoggedIn, setLoggedIn }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleLogout = async () => {
     try {
       await logoutUser();
@@ -51,8 +48,8 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
       component="header"
       position="fixed"
       className="navbar"
-      sx={{ 
-        backgroundColor: 'white', 
+      sx={{
+        backgroundColor: 'white',
         width: '100%',
         zIndex: 1000,
       }}
@@ -65,19 +62,19 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             color="neutral"
             onClick={handleDrawerToggle}
             aria-label="Open menu"
-            sx={{ 
+            sx={{
               display: { xs: 'flex', md: 'none' },
               mr: 1
             }}
           >
             <MenuIcon />
           </Button>
-          
+
           {/* Logo */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img 
-              src='/Untitled.png' 
-              width='30px' 
+            <img
+              src='/Untitled.png'
+              width='30px'
               alt="BotaniCart Logo"
               style={{ margin: '5px', marginBottom: '10px' }}
             />
@@ -93,20 +90,20 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               </Link>
             </Typography>
           </Box>
-          
+
           {/* Desktop Search */}
-          <Box sx={{ 
-            display: { xs: 'none', md: 'block' }, 
-            flexGrow: 1, 
-            mx: 4 
+          <Box sx={{
+            display: { xs: 'none', md: 'block' },
+            flexGrow: 1,
+            mx: 4
           }}>
             <ProductSearch />
           </Box>
-          
+
           {/* Navigation Links */}
-          <Box 
-            className="nav-links" 
-            sx={{ 
+          <Box
+            className="nav-links"
+            sx={{
               display: { xs: 'none', md: 'flex' },
               alignItems: 'center'
             }}
@@ -114,8 +111,8 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             <Button
               color="neutral"
               variant="plain"
-              sx={{ 
-                fontFamily: 'League Spartan, sans-serif', 
+              sx={{
+                fontFamily: 'League Spartan, sans-serif',
                 color: '#136c13',
               }}
               component={Link}
@@ -127,8 +124,8 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             <Button
               color="neutral"
               variant="plain"
-              sx={{ 
-                fontFamily: 'League Spartan, sans-serif', 
+              sx={{
+                fontFamily: 'League Spartan, sans-serif',
                 color: '#136c13',
               }}
               component={Link}
@@ -140,8 +137,8 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             <Button
               color="neutral"
               variant="plain"
-              sx={{ 
-                fontFamily: 'League Spartan, sans-serif', 
+              sx={{
+                fontFamily: 'League Spartan, sans-serif',
                 color: '#136c13',
               }}
               component={Link}
@@ -151,55 +148,121 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               Plant Care
             </Button>
           </Box>
-          
+
+          {/* Profile Menu - Updated Format */}
           {isLoggedIn ? (
-        <Select
-          placeholder="Profile"
-          indicator={<KeyboardArrowDown />}
-          sx={{
-            width: 120,
-            fontFamily: 'League Spartan, sans-serif',
-            borderRadius: '20px',
-            margin: '10px',
-          }}
-        >
-          <Option component={Link} to="/profile" sx={{ color: '#136c13' }}>
-                  Profile & Orders
-                </Option>
-                <Option onClick={handleLogout} sx={{ color: '#136c13' }}>
+            <Dropdown>
+              <MenuButton
+                variant="outlined"
+                color="neutral"
+                endDecorator={<KeyboardArrowDown />}
+                sx={{
+                  fontFamily: 'League Spartan, sans-serif',
+                  borderRadius: '20px',
+                  margin: '10px',
+                  color: '#136c13',
+                  borderColor: '#136c13',
+                  '&:hover': {
+                    borderColor: '#136c13',
+                    backgroundColor: 'rgba(19, 108, 19, 0.04)',
+                  }
+                }}
+              >
+                Manage Account
+              </MenuButton>
+              <Menu
+                sx={{
+                  minWidth: '180px',
+                  fontFamily: 'League Spartan, sans-serif',
+                }}
+              >
+                <MenuItem
+                  component={Link}
+                  to="/account/profile"
+                  sx={{
+                    color: '#136c13',
+                    gap: 1.5
+                  }}
+                >
+                  <Person fontSize="small" />
+                  My Profile
+                </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to="/account/orders"
+                  sx={{
+                    color: '#136c13',
+                    gap: 1.5
+                  }}
+                >
+                  <ShoppingBag fontSize="small" />
+                  My Orders
+                </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to="/account/billing"
+                  sx={{
+                    color: '#136c13',
+                    gap: 1.5
+                  }}
+                >
+                  <Payment fontSize="small" />
+                  Billing Info
+                </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to="/account/settings"
+                  sx={{
+                    color: '#136c13',
+                    gap: 1.5
+                  }}
+                >
+                  <Settings fontSize="small" />
+                  Account Settings
+                </MenuItem>
+                <MenuItem
+                  onClick={handleLogout}
+                  sx={{
+                    color: '#136c13',
+                    gap: 1.5
+                  }}
+                >
+                  <Logout fontSize="small" />
                   Logout
-                </Option>
-        </Select>
-      ) : (
-        <Button
-          color="primary"
-          sx={{
-            fontFamily: 'League Spartan, sans-serif',
-            borderRadius: '20px',
-            margin: '10px',
-            color: '#fff',
-          }}
-          component={Link}
-          to="/login"
-        >
-          Login
-        </Button>
-      )}
-          
+                </MenuItem>
+              </Menu>
+            </Dropdown>
+          ) : (
+            <Button
+              color="primary"
+              startDecorator={<LoginIcon />}
+              sx={{
+                fontFamily: 'League Spartan, sans-serif',
+                borderRadius: '20px',
+                margin: '10px',
+                color: '#fff',
+              }}
+              component={Link}
+              to="/login"
+            >
+              Login
+            </Button>
+          )}
+
           {/* Cart Drawer */}
           <CartDrawer />
         </Toolbar>
-        
+
         {/* Mobile Search */}
-        <Box sx={{ 
-          display: { xs: 'block', md: 'none' }, 
-          px: 2, 
-          pb: 2 
+        <Box sx={{
+          display: { xs: 'block', md: 'none' },
+          px: 2,
+          pb: 2
         }}>
           <ProductSearch />
         </Box>
       </Container>
-      
+
       {/* Mobile Navigation Drawer */}
       <Drawer
         open={drawerOpen}
@@ -208,9 +271,9 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
         size="sm"
         sx={{ display: { xs: 'block', md: 'none' } }}
       >
-        <Box 
-          sx={{ 
-            width: 250, 
+        <Box
+          sx={{
+            width: 250,
             p: 2,
             display: 'flex',
             flexDirection: 'column'
@@ -218,13 +281,13 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
           role="navigation"
           aria-label="Mobile navigation"
         >
-          <Typography 
-            level="h4" 
+          <Typography
+            level="h4"
             sx={{ mb: 2, fontFamily: 'League Spartan, sans-serif' }}
           >
             BotaniCart
           </Typography>
-          
+
           <Box component="nav" sx={{ mb: 3 }}>
             <Button
               component={Link}
@@ -232,7 +295,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               variant="plain"
               color="neutral"
               fullWidth
-              sx={{ 
+              sx={{
                 justifyContent: 'flex-start',
                 fontFamily: 'League Spartan, sans-serif',
                 color: '#136c13',
@@ -248,7 +311,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               variant="plain"
               color="neutral"
               fullWidth
-              sx={{ 
+              sx={{
                 justifyContent: 'flex-start',
                 fontFamily: 'League Spartan, sans-serif',
                 color: '#136c13',
@@ -259,12 +322,12 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               About
             </Button>
           </Box>
-          
+
           <Typography level="body2" sx={{ mb: 1 }}>Categories</Typography>
           <MegaMenu onSelect={handleDrawerToggle} />
         </Box>
       </Drawer>
-      <Divider/>
+      <Divider />
     </Sheet>
   );
 };

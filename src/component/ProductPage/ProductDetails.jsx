@@ -39,9 +39,13 @@ import {
 } from "@mui/icons-material";
 import { useCart } from '../AllComp/CardContext';
 import RelatedProducts from "../AllComp/RelatedProducts.jsx";
+import CartSnackbar from "../AllComp/CartSnackBar.jsx";
+import useUser from "../../AuthProtectedRoute/useUser.js";
 
 function ProductDetails() {
   const { productId } = useParams();
+    const { isUser } = useUser();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -78,7 +82,23 @@ function ProductDetails() {
       quantity: ''
     }
   });
+  const [addtoCartSnack, setaddtoCartSnack] = useState(''); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const { addToCart } = useCart();
+
+  //addto Cart SnackBar
+  useEffect(() => {
+      if (addtoCartSnack) {
+        setOpenSnackbar(true);
+      }
+    }, [addtoCartSnack]);
+     
+    const handleClose = (_, reason) => {
+    if (reason === 'clickaway') return;
+  
+    setOpenSnackbar(false);
+    setaddtoCartSnack(''); // or setAddToCartSnack(null);
+  };
 
   useEffect(() => {
     const fetchProductFromFirebase = async () => {
@@ -124,15 +144,18 @@ function ProductDetails() {
 
 
   const handleAddToCart = () => {
-    // for (let i = 0; i < quantity; i++) {
+    if(isUser){
     addToCart(productData, quantity);
-    setOpen(true); // open snackbar
+    //  setTimeout(() => setAdded(false), 1000);
+      setaddtoCartSnack("Added to Cart!");}
+    else{
+      setaddtoCartSnack("Sign in to add plants to your garden collection");
+      setTimeout(1000);
+    }
 
-    // }
   };
 
 
-  console.log(productData);
   const increaseQuantity = () => {
     if (quantity < productData.stock.quantity) {
       setQuantity(quantity + 1);
@@ -597,9 +620,14 @@ function ProductDetails() {
           <Typography level="h2" component="h2" sx={{ mt: 6, mb: 3 }}>
             You May Also Like
           </Typography>
-          <RelatedProducts category={productData.category} currentProductId={productId} />
+          <RelatedProducts setaddtoCartSnack={setaddtoCartSnack} category={productData.category} currentProductId={productId} />
         </Grid>
       </Grid>
+       <CartSnackbar
+        open={openSnackbar}
+        message={addtoCartSnack}
+        onClose={handleClose}
+      />
     </Container>
   );
 }

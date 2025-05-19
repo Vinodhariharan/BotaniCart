@@ -26,6 +26,8 @@ import Spa from '@mui/icons-material/Spa';
 import VerifiedUser from '@mui/icons-material/VerifiedUser';
 import { Grass } from '@mui/icons-material';
 import FeaturedPlantGuides from '../CareGuides/FeaturedCareGuides';
+import { Alert, Snackbar } from '@mui/joy';
+import CartSnackbar from '../AllComp/CartSnackBar';
 
 const HomePage = () => {
   const [featuredPlants, setFeaturedPlants] = useState([]);
@@ -35,6 +37,8 @@ const HomePage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [addtoCartSnack, setaddtoCartSnack] = useState(''); 
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
     // Listen for auth state changes
@@ -49,6 +53,19 @@ const HomePage = () => {
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+      if (addtoCartSnack) {
+        setOpenSnackbar(true);
+      }
+    }, [addtoCartSnack]);
+     
+    const handleClose = (_, reason) => {
+    if (reason === 'clickaway') return;
+  
+    setOpenSnackbar(false);
+    setaddtoCartSnack(''); // or setAddToCartSnack(null);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +84,6 @@ const HomePage = () => {
           ...doc.data()
         }));
         setFeaturedPlants(featuredData);
-        console.log(featuredData);
         // Fetch popular plants (based on ratings or sales) - limit to 8
         const popularQuery = query(
           collection(db, 'products'),
@@ -81,7 +97,6 @@ const HomePage = () => {
           ...doc.data()
         }));
         setPopularPlants(popularData);
-        console.log(popularData);
         // Fetch new arrivals - limit to 8
         const newArrivalsQuery = query(
           collection(db, "products"),
@@ -95,7 +110,6 @@ const HomePage = () => {
           ...doc.data(),
         }));
         setNewArrivals(newArrivalsData);
-        console.log(newArrivalsData)
         // Fetch categories
         const categoriesSnapshot = await getDocs(collection(db, 'categories'));
         const categoriesData = categoriesSnapshot.docs.map(doc => ({
@@ -299,7 +313,7 @@ const HomePage = () => {
               View All
             </Button>
           </Box>
-          <CardSlider products={featuredPlants} user={user} />
+          <CardSlider setaddtoCartSnack={setaddtoCartSnack} products={featuredPlants} user={user} />
 
         <FeaturedPlantGuides/>
 
@@ -322,7 +336,7 @@ const HomePage = () => {
               View All
             </Button>
           </Box>
-          <CardSlider products={popularPlants} user={user} />
+          <CardSlider setaddtoCartSnack={setaddtoCartSnack} products={popularPlants} user={user} />
         </Box>
 
           {/* New Arrivals Section */}
@@ -344,7 +358,7 @@ const HomePage = () => {
               View All
             </Button>
           </Box>
-          <CardSlider products={newArrivals} user={user} />
+          <CardSlider setaddtoCartSnack={setaddtoCartSnack} products={newArrivals} user={user} />
         </Box>
 
         {/* Benefits Section  */}
@@ -473,6 +487,11 @@ const HomePage = () => {
             <Button color="success" size="lg">
               Subscribe
             </Button>
+             <CartSnackbar
+        open={openSnackbar}
+        message={addtoCartSnack}
+        onClose={handleClose}
+      />
           </Box>
         </Card>
       </Container>

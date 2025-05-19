@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'r
 import Navbar from './component/AllComp/Navbar';
 import ProductCategories from './component/Home/MegaMenu';
 import Footer from './component/Footer/Footer.jsx';
-import { auth } from "./auth"; 
+import { auth } from "./auth";
 import { onAuthStateChanged } from "firebase/auth";
-import ProtectedAdminRoute from './firebase/ProtectedAdminRoute.jsx';
+import ProtectedAdminRoute from './AuthProtectedRoute/ProtectedAdminRoute.jsx';
 import LoadingPage from './component/AllComp/LoadingPage';
 import { lazyWithLoading } from './component/AllComp/RouteTransition.jsx';
 
@@ -21,6 +21,12 @@ import GuideDetail from './component/CareGuides/GuidePage.jsx';
 import CareGuideForm from './component/Admin/GuideForm.jsx';
 import JSONGuideLoader from './component/Admin/JSONGuideLoader.jsx';
 import CareGuideList from './component/Admin/CareGuideList.jsx';
+import ProfileLayout from './component/Customer/ProfileLayout.jsx';
+import ProfileInfo from './component/Customer/ProfileInfo.jsx';
+import ProtectedUserRoute from './AuthProtectedRoute/ProtectedUserRoute.jsx';
+import OrdersList from './component/Customer/OrderDetails.jsx';
+import BillingInfo from './component/Customer/BillingInfo.jsx';
+import AccountSettings from './component/Customer/AccountSettings.jsx';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -66,7 +72,10 @@ const App = () => {
   return (
     <Router>
       <Suspense fallback={<GlobalLoadingFallback />}>
+          {/* <SnackbarProvider> */}
+
         <AppContent isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+      {/* </SnackbarProvider> */}
       </Suspense>
     </Router>
   );
@@ -85,7 +94,7 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
     <div>
       {!isAuthPage && !isAdminPage && <Navbar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />}
       {!isAuthPage && !isAdminPage && <ProductCategories />}
-      
+
       <Routes>
         {/* Admin Routes */}
         <Route path="/admin" element={<ProtectedAdminRoute component={AdminLayout} />}>
@@ -99,15 +108,21 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
           <Route path="reports" element={<div>Reports Dashboard</div>} />
           <Route path="notifications" element={<div>Notifications Center</div>} />
           <Route path="settings" element={<div>Admin Settings</div>} />
-          <Route path="category-extractor" element={<CategoryExtractorTool/>} />
-          <Route path="json-product-loader" element={<JSONProductLoader/>} />
-          <Route path="add-guide" element={<CareGuideForm/>} />
-          <Route path="json-guide-loader" element={<JSONGuideLoader/>} />
-          <Route path="guide-list" element={<CareGuideList/>} />
+          <Route path="category-extractor" element={<CategoryExtractorTool />} />
+          <Route path="json-product-loader" element={<JSONProductLoader />} />
+          <Route path="add-guide" element={<CareGuideForm />} />
+          <Route path="json-guide-loader" element={<JSONGuideLoader />} />
+          <Route path="guide-list" element={<CareGuideList />} />
         </Route>
 
         {/* Customer Pages */}
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/account" element={<ProtectedUserRoute component={ProfileLayout} />}>
+          <Route index element={<Navigate to="/account/profile" replace />} />
+          <Route path="profile" element={<ProfileInfo />} />
+          <Route path="orders" element={<OrdersList />} />
+          <Route path="billing" element={<BillingInfo />} />
+          <Route path="settings" element={<AccountSettings />} />
+        </Route>
 
         {/* Auth Pages - No loading screen */}
         <Route path="/register" element={<Signup />} />
@@ -125,15 +140,15 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="/bestselling" element={<SpecialProducts type="bestSelling" />} />
         <Route path="/featured" element={<SpecialProducts type="featured" />} />
         <Route path="products">
-            {/* Product list with optional query parameters (category, subCategory, search) */}
-            <Route index element={<ProductList initialCategory="All" />} />
-            
-            {/* Product detail page */}
-            <Route path=":productId" element={<ProductDetails />} />
-          </Route>
-          
-          {/* Direct product link (alternative route) */}
-          <Route path="product/:productId" element={<ProductDetails />} />
+          {/* Product list with optional query parameters (category, subCategory, search) */}
+          <Route index element={<ProductList initialCategory="All" />} />
+
+          {/* Product detail page */}
+          <Route path=":productId" element={<ProductDetails />} />
+        </Route>
+
+        {/* Direct product link (alternative route) */}
+        <Route path="product/:productId" element={<ProductDetails />} />
 
         {/* Order Pages */}
         <Route path="/checkout" element={<Checkout />} />
@@ -147,11 +162,11 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="/contact" element={<ContactInformation />} />
         <Route path="/care-guides" element={<CareGuides />} />
         <Route path="/care-guides/:id" element={<GuideDetail />} />
-        
+
         {/* Catch all route - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      
+
       {!isAuthPage && !isAdminPage && <Footer />}
     </div>
   );

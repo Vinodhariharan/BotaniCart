@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Breadcrumbs, Button, Card, CircularProgress, Link, Typography, Stack } from '@mui/joy';
+import { Box, Breadcrumbs, Button, Card, CircularProgress, Link, Typography, Stack, Snackbar, Alert } from '@mui/joy';
 import HomeIcon from '@mui/icons-material/Home';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SearchIcon from '@mui/icons-material/Search';
@@ -12,6 +12,7 @@ import ProductControls from './ProductControls';
 import ActiveFilters from './ActiveFilters';
 import ProductGrid from './ProductGrid';
 import PaginationControls from './PaginationControls';
+import CartSnackbar from '../AllComp/CartSnackBar';
 
 export default function ProductList({ initialCategory = 'All', specialFilter = null }) {
   const location = useLocation();
@@ -40,6 +41,9 @@ export default function ProductList({ initialCategory = 'All', specialFilter = n
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [brands, setBrands] = useState([]);
   const [activeFilters, setActiveFilters] = useState([]);
+  const [addtoCartSnack, setaddtoCartSnack] = useState(''); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
 
   const productsPerPage = 20;
   const paginationRef = useRef({ snapshots: [null], currentCursor: null });
@@ -278,7 +282,6 @@ if (specialFilter) {
       });
 
       setProducts(fetchedProducts);
-      console.log(fetchedProducts);
       setHasMore(fetchedProducts.length >= productsPerPage);
 
       // Update pagination snapshots
@@ -327,6 +330,22 @@ if (specialFilter) {
     // Reset to first page when search changes
     setCurrentPage(1);
   };
+
+
+  //Cart Snack Bar
+  useEffect(() => {
+    if (addtoCartSnack) {
+      setOpenSnackbar(true);
+    }
+  }, [addtoCartSnack]);
+   
+  const handleClose = (_, reason) => {
+  if (reason === 'clickaway') return;
+
+  setOpenSnackbar(false);
+  setaddtoCartSnack(''); // or setAddToCartSnack(null);
+};
+
   
   const toggleBrandSelection = (brand) => {
     setSelectedBrands((prev) => 
@@ -418,6 +437,7 @@ if (specialFilter) {
   };
 
   return (
+    <>
     <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
       {/* Desktop Sidebar Filter */}
       <FilterSidebar
@@ -532,7 +552,7 @@ if (specialFilter) {
 
         {/* Product Grid */}
         {!loading && !error && products.length > 0 && (
-          <ProductGrid products={products} viewMode={viewMode} />
+          <ProductGrid setaddtoCartSnack={setaddtoCartSnack} products={products} viewMode={viewMode} />
         )}
         
         {/* Pagination Controls */}
@@ -547,5 +567,11 @@ if (specialFilter) {
         )}
       </Box>
     </Stack>
+        <CartSnackbar
+        open={openSnackbar}
+        message={addtoCartSnack}
+        onClose={handleClose}
+      />
+    </>
   );
 }

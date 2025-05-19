@@ -17,15 +17,24 @@ import {
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import '../../assets/css/button.css';
 import { useCart } from '../AllComp/CardContext';
+import useUser from '../../AuthProtectedRoute/useUser';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({setaddtoCartSnack, product }) {
   const { addToCart } = useCart();
   const [added, setAdded] = React.useState(false);
+  const { isUser } = useUser();
 
   const handleAddToCart = () => {
+    if(isUser){
     addToCart(product);
     setAdded(true); // Change button state to "Added"
       setTimeout(() => setAdded(false), 1000);
+      setaddtoCartSnack("Added to Cart!");
+    }
+    else{
+      setaddtoCartSnack("Sign in to add plants to your garden collection");
+      setTimeout(1000);
+    }
 
   };
 
