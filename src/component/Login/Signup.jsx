@@ -145,7 +145,7 @@ export default function Signup() {
           sx={{
             width: { xs: '100%', md: '50%' },
             ml: { xs: 0, md: '50%' },
-            background: '#e5e5e5',
+            background: '#fff',
             transition: 'width var(--Transition-duration)',
             transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
             zIndex: 1,
@@ -181,7 +181,7 @@ export default function Signup() {
                   fontFamily="League Spartan"
                   sx={{ color: '#136c13' }}
                 >
-                  <Link to="/" style={{ color: '#136c13', textDecoration: 'none' }}>
+                  <Link to="/" style={{ color: '#333', textDecoration: 'none' }}>
                     BotaniCart
                   </Link>
                 </Typography>
@@ -228,7 +228,7 @@ export default function Signup() {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    sx={{ borderRadius: '20px' }}
+                    sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                   />
                 </FormControl>
                 
@@ -238,7 +238,7 @@ export default function Signup() {
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    sx={{ borderRadius: '20px' }}
+                    sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                   />
                 </FormControl>
                 
@@ -248,7 +248,7 @@ export default function Signup() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    sx={{ borderRadius: '20px' }}
+                    sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                   />
                 </FormControl>
                 
@@ -258,7 +258,7 @@ export default function Signup() {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    sx={{ borderRadius: '20px' }}
+                    sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                   />
                 </FormControl>
                 
@@ -268,7 +268,7 @@ export default function Signup() {
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    sx={{ borderRadius: '20px' }}
+                    sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                   />
                 </FormControl>
                 <Button
@@ -276,7 +276,7 @@ export default function Signup() {
                   fullWidth
                   sx={{
                     mt: 3,
-                    borderRadius: '20px',
+                    borderRadius: '20px', background:'#F0F0F0',
                     bgcolor: '#136c13',
                     '&:hover': {
                       bgcolor: '#0e5a0e',

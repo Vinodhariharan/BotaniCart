@@ -15,6 +15,7 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import LeafIcon from '@mui/icons-material/Spa'; // Using Spa as a leaf equivalent
 import LoginIcon from '@mui/icons-material/Login';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from 'react-router-dom';
 
 const CartSnackbar = ({ open, message, onClose, severity = "success" }) => {
   const theme = useTheme();
@@ -135,6 +136,8 @@ const CartSnackbar = ({ open, message, onClose, severity = "success" }) => {
               }}
               startDecorator={<LoginIcon fontSize="inherit" />}
               onClick={onClose}
+              component={Link}
+              to='/login'
             >
               Sign In
             </Button>

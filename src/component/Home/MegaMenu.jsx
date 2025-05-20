@@ -46,6 +46,23 @@ const MegaMenu = ({ compact, onItemClick }) => {
     fetchCategories();
   }, []);
 
+  function toTitle(str) {
+  // Handle edge cases - return empty string if input is falsy
+  if (!str) return '';
+  
+  // Split the string into an array of words, map over each word
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => {
+      // Skip empty strings
+      if (word.length === 0) return '';
+      // Capitalize the first letter and join with the rest of the word
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+}
+
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -94,10 +111,10 @@ const MegaMenu = ({ compact, onItemClick }) => {
                   onClick={() => handleItemClick(category)}
                   sx={{
                     borderRadius: 'md',
-                    color: '#136c13',
+                    color: '#555',
                     transition: 'all 0.2s',
                     '&:hover': {
-                      backgroundColor: 'rgba(19, 108, 19, 0.08)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
                       transform: 'translateX(4px)'
                     }
                   }}
@@ -148,7 +165,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
               <Typography 
                 level="title-md" 
                 fontWeight="bold"
-                sx={{ color: '#136c13', ml: 1 }}
+                sx={{ color: '#555', ml: 1 }}
               >
                 Categories
               </Typography>
@@ -156,15 +173,15 @@ const MegaMenu = ({ compact, onItemClick }) => {
                 <IconButton
                   size="md"
                   variant="soft"
-                  color="primary"
+                  color="neutral"
                   onClick={handleDrawerToggle}
                   aria-label="Open categories menu"
                   sx={{ 
                     borderRadius: '50%',
-                    bgcolor: 'rgba(19, 108, 19, 0.1)',
-                    color: '#136c13',
+                    bgcolor: 'rgba(0, 0, 0, 0.05)',
+                    color: '#666',
                     '&:hover': {
-                      bgcolor: 'rgba(19, 108, 19, 0.2)'
+                      bgcolor: 'rgba(0, 0, 0, 0.1)'
                     }
                   }}
                 >
@@ -187,16 +204,16 @@ const MegaMenu = ({ compact, onItemClick }) => {
                 gap: 1.5
               }}>
                 <Typography 
-                  level="title-sm" 
+                  level="title-lg" 
                   fontWeight="md"
                   sx={{ 
                     display: 'flex',
                     alignItems: 'center',
-                    color: '#136c13',
+                    color: '#222',
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  BROWSE CATEGORIES
+                  Browse Categories
                 </Typography>
                 
                 <Divider orientation="vertical" />
@@ -215,7 +232,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                       height: '6px',
                     },
                     '&::-webkit-scrollbar-thumb': {
-                      backgroundColor: 'rgba(19, 108, 19, 0.2)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.15)',
                       borderRadius: '10px',
                     }
                   }}
@@ -252,19 +269,19 @@ const MegaMenu = ({ compact, onItemClick }) => {
                             to={`/category/${category.id}`}
                             onClick={() => handleItemClick(category)}
                             variant="soft"
-                            color="primary"
+                            color="neutral"
                             sx={{
                               borderRadius: '16px',
                               transition: 'all 0.2s ease',
-                              color: '#136c13',
+                              color: '#555',
                               '&:hover': {
-                                bgcolor: 'rgba(19, 108, 19, 0.15)',
+                                bgcolor: 'rgba(0, 0, 0, 0.08)',
                                 transform: 'translateY(-2px)',
                                 boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
                               }
                             }}
                           >
-                            {category.name}
+                            {toTitle(category.name)}
                           </Chip>
                         </Tooltip>
                       </ListItem>
@@ -302,7 +319,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
             <Typography 
               level="title-lg" 
               sx={{ 
-                color: '#136c13', 
+                color: '#222', 
                 fontWeight: 'bold',
                 display: 'flex',
                 alignItems: 'center',
@@ -355,11 +372,11 @@ const MegaMenu = ({ compact, onItemClick }) => {
                       onClick={() => handleItemClick(category)}
                       sx={{
                         borderRadius: 'md',
-                        color: '#136c13',
+                        color: '#555',
                         transition: 'all 0.2s',
                         py: 1.5,
                         '&:hover': {
-                          backgroundColor: 'rgba(19, 108, 19, 0.08)',
+                          backgroundColor: 'rgba(0, 0, 0, 0.04)',
                         }
                       }}
                     >
@@ -374,7 +391,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                           alignItems: 'center',
                           gap: 1.5
                         }}>
-                          <Typography level="body-md" fontWeight="md">
+                          <Typography level="body-lg" color="#333" fontWeight="md">
                             {category.name}
                           </Typography>
                         </Box>

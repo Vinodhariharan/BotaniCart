@@ -63,25 +63,27 @@ const OrdersList = () => {
   }, [userData]);
 
   const handleOpen = async (order) => {
-    setSelectedOrder(order);
-    setOpen(true);
-    setLoadingProducts(true);
+  setSelectedOrder(order);
+  setOpen(true);
+  setLoadingProducts(true);
 
-    const productMap = {};
-    await Promise.all(
-      order.items.map(async (item) => {
-        const product = await getProductDetails(item.productId);
-        if (product) {
-          productMap[item.productId] = { ...product, quantity: item.quantity };
-        }
-      })
-    );
+  const productMap = {};
+  await Promise.all(
+    order.items.map(async (item) => {
+      const product = await getProductDetails(item.productId);
+      if (product) {
+        productMap[item.productId] = { ...product, quantity: item.quantity };
+      }
+    })
+  );
 
-    setProductDetails(productMap);
-    console.log(productDetails);
-    setLoadingProducts(false);
-  };
-
+  // Console log the productMap directly - this will show the data you just fetched
+  
+  setProductDetails(productMap);
+  // Don't console.log(productDetails) here - it will still show the old value
+  
+  setLoadingProducts(false);
+};
   // Function to determine status chip color
   const getStatusColor = (status) => {
     switch (status) {
@@ -141,11 +143,9 @@ const OrdersList = () => {
         <Typography level="h2" fontWeight="lg">
           Your Orders
         </Typography>
-        <Badge badgeContent={orders.length} color="primary">
           <Chip variant="soft" color="neutral" size="lg">
             {orders.length} {orders.length === 1 ? 'Order' : 'Orders'} 
           </Chip>
-        </Badge>
       </Box>
       
       <Divider sx={{ mb: 4 }} />
@@ -188,7 +188,7 @@ const OrdersList = () => {
                 <Grid container spacing={2} alignItems="center">
                   <Grid xs={12} sm={7}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <ReceiptRoundedIcon sx={{ mr: 1, color: 'primary.500' }} />
+                      {/* <ReceiptRoundedIcon sx={{ mr: 1, color: 'primary.500' }} /> */}
                       <Typography level="title-lg">
                         Order #{order.orderNumber}
                       </Typography>
@@ -241,8 +241,9 @@ const OrdersList = () => {
                     color="neutral" 
                     size="sm"
                     onClick={() => {}}
+                    disabled='true'
                   >
-                    Track Order
+                    Track Order - Not Available
                   </Button>
                   <Button 
                     variant="solid" 
@@ -334,10 +335,10 @@ const OrdersList = () => {
                                   overflow: 'hidden'
                                 }}
                               >
-                                {productDetails[item.productId].imageUrl ? (
+                                {productDetails[item.productId].imageSrc ? (
                                   <img
-                                    src={productDetails[item.productId].imageUrl}
-                                    alt={productDetails[item.productId].name}
+                                    src={productDetails[item.productId].imageSrc}
+                                    alt={productDetails[item.productId].title}
                                     style={{ objectFit: 'cover' }}
                                   />
                                 ) : (
@@ -349,7 +350,7 @@ const OrdersList = () => {
                               
                               <Box sx={{ flexGrow: 1 }}>
                                 <Typography level="title-sm">
-                                  {productDetails[item.productId].name}
+                                  {productDetails[item.productId].title }
                                 </Typography>
                                 <Typography level="body-xs" color="neutral.600">
                                   Qty: {item.quantity}
@@ -486,18 +487,19 @@ const OrdersList = () => {
             
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 3 }}>
               <Button 
+                variant="solid" 
+                color="primary"
+                onClick={() => {}}
+                disabled='true'
+              >
+                Download Invoice - Not Available
+              </Button>
+              <Button 
                 variant="outlined" 
                 color="neutral" 
                 onClick={() => setOpen(false)}
               >
                 Close
-              </Button>
-              <Button 
-                variant="solid" 
-                color="primary"
-                onClick={() => {}}
-              >
-                Download Invoice
               </Button>
             </Box>
           </ModalDialog>

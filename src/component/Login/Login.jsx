@@ -124,47 +124,12 @@ export default function Login({ setLoggedIn }) {
           minHeight: '100vh',
         }}
       >
-        {/* Image Side (Left side now) */}
-        <Box
-          sx={{
-            width: { xs: '100%', md: '50%' },
-            height: { xs: '300px', md: '100vh' },
-            position: { xs: 'static', md: 'fixed' },
-            left: 0,
-            top: 0,
-            bottom: 0,
-            overflow: 'hidden',
-            borderRadius: { xs: 0, md: '0 16px 16px 0' },
-            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-          }}
-        >
-          {/* Background image with overlay */}
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              backgroundImage: `url(${gardeningImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                background: 'linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)',
-              }
-            }}
-          />          
-        </Box>
-
         {/* Form Side (Right side now) */}
         <Box
           sx={{
             width: { xs: '100%', md: '50%' },
-            ml: { xs: 0, md: '50%' },
             // background: 'linear-gradient(135deg, #b2ebf2 0%, #a5d6a7 100%)',
-            background: '#e5e5e5',
+            background: '#fff',
             transition: 'width var(--Transition-duration)',
             transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
             zIndex: 1,
@@ -200,7 +165,7 @@ export default function Login({ setLoggedIn }) {
                   fontFamily="League Spartan"
                   sx={{ color: '#136c13' }}
                 >
-                  <Link to="/" style={{ color: '#136c13', textDecoration: 'none' }}>
+                  <Link to="/" style={{ color: '#333', textDecoration: 'none' }}>
                     BotaniCart
                   </Link>
                 </Typography>
@@ -245,7 +210,7 @@ export default function Login({ setLoggedIn }) {
                   startDecorator={<GoogleIcon />}
                   onClick={handleGoogleSignIn}
                   sx={{
-                    borderRadius: '20px',
+                    borderRadius: '20px', background:'#F0F0F0',
                     bgcolor: '#fff',
                     '&:hover': {
                       bgcolor: '#f5f5f5',
@@ -265,7 +230,7 @@ export default function Login({ setLoggedIn }) {
                       name="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      sx={{ borderRadius: '20px' }}
+                      sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                     />
                   </FormControl>
                   <FormControl sx={{ mt: 2 }}>
@@ -275,7 +240,7 @@ export default function Login({ setLoggedIn }) {
                       name="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      sx={{ borderRadius: '20px' }}
+                      sx={{ borderRadius: '20px', background:'#F0F0F0' }}
                     />
                   </FormControl>
                   <Stack sx={{ gap: 4, mt: 2 }}>
@@ -295,7 +260,7 @@ export default function Login({ setLoggedIn }) {
                       type="submit"
                       fullWidth
                       sx={{
-                        borderRadius: '20px',
+                        borderRadius: '20px', background:'#F0F0F0',
                         bgcolor: '#136c13',
                         '&:hover': {
                           bgcolor: '#0e5a0e',
@@ -316,6 +281,42 @@ export default function Login({ setLoggedIn }) {
           </Box>
         </Box>
       </Box>
+
+      {/* Image Side (Left side now) */}
+        <Box
+          sx={{
+            width: { xs: '100%', md: '50%' },
+            height: { xs: '300px', md: '100vh' },
+            position: { xs: 'static', md: 'fixed' },
+            left: 0,
+            top: 0,
+            bottom: 0,
+            overflow: 'hidden',
+                        ml: { xs: 0, md: '50%' },
+
+            borderRadius: { xs: 0, md: '0 16px 16px 0' },
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+          }}
+        >
+          {/* Background image with overlay */}
+          <Box
+            sx={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              backgroundImage: `url(${gardeningImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)',
+              }
+            }}
+          />          
+        </Box>
 
       <Snackbar
         open={snackbarOpen}

@@ -176,8 +176,8 @@ const HomePage = () => {
               zIndex: 1
             }}>
               <Box sx={{ flex: 1 }}>
-                <Typography level="h1" sx={{ fontSize:55, mb: 2, color: 'success.600' }}>
-                  Bring Nature <Grass sx={{fontSize:'100'}}></Grass> Indoors
+                <Typography level="h1" sx={{ fontSize:55, mb: 2, color: '#333' }}>
+                  Bring Nature Indoors
                 </Typography>
                 <Typography sx={{ mb: 4, color: 'success.700' }}>
                   Discover our hand-picked selection of premium plants for your home or office
@@ -196,7 +196,7 @@ const HomePage = () => {
                     to="/care-guides"
                     size="lg"
                     variant="outlined"
-                    color="success"
+                    color="primary"
                   >
                     Plant Care Guides
                   </Button>

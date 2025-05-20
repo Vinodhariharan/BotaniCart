@@ -83,9 +83,9 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               level='h1'
               component="div"
               fontFamily="League Spartan, sans-serif"
-              sx={{ color: '#136c13' }}
+              sx={{ color: '#333' }}
             >
-              <Link to="/" style={{ color: '#136c13', textDecoration: 'none' }}>
+              <Link to="/" style={{ color: '#333', textDecoration: 'none' }}>
                 BotaniCart
               </Link>
             </Typography>
@@ -113,7 +113,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               variant="plain"
               sx={{
                 fontFamily: 'League Spartan, sans-serif',
-                color: '#136c13',
+                color: '#555',
               }}
               component={Link}
               to="/"
@@ -126,7 +126,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               variant="plain"
               sx={{
                 fontFamily: 'League Spartan, sans-serif',
-                color: '#136c13',
+                color: '#555',
               }}
               component={Link}
               to="/about"
@@ -153,22 +153,22 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
           {isLoggedIn ? (
             <Dropdown>
               <MenuButton
-                variant="outlined"
+                variant="plain"
                 color="neutral"
                 endDecorator={<KeyboardArrowDown />}
                 sx={{
                   fontFamily: 'League Spartan, sans-serif',
                   borderRadius: '20px',
                   margin: '10px',
-                  color: '#136c13',
-                  borderColor: '#136c13',
+                  color: '#1976d2',
+                  borderColor: '#999',
                   '&:hover': {
-                    borderColor: '#136c13',
-                    backgroundColor: 'rgba(19, 108, 19, 0.04)',
+                    borderColor: '#777',
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
                   }
                 }}
               >
-                Manage Account
+                Account
               </MenuButton>
               <Menu
                 sx={{
@@ -180,7 +180,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                   component={Link}
                   to="/account/profile"
                   sx={{
-                    color: '#136c13',
+                    color: '#555',
                     gap: 1.5
                   }}
                 >
@@ -191,7 +191,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                   component={Link}
                   to="/account/orders"
                   sx={{
-                    color: '#136c13',
+                    color: '#555',
                     gap: 1.5
                   }}
                 >
@@ -202,7 +202,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                   component={Link}
                   to="/account/billing"
                   sx={{
-                    color: '#136c13',
+                    color: '#555',
                     gap: 1.5
                   }}
                 >
@@ -213,7 +213,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                   component={Link}
                   to="/account/settings"
                   sx={{
-                    color: '#136c13',
+                    color: '#555',
                     gap: 1.5
                   }}
                 >
@@ -223,7 +223,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                 <MenuItem
                   onClick={handleLogout}
                   sx={{
-                    color: '#136c13',
+                    color: '#555',
                     gap: 1.5
                   }}
                 >
@@ -234,13 +234,12 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
             </Dropdown>
           ) : (
             <Button
-              color="primary"
+              color="neutral"
+              variant="soft"
               startDecorator={<LoginIcon />}
               sx={{
                 fontFamily: 'League Spartan, sans-serif',
                 borderRadius: '20px',
-                margin: '10px',
-                color: '#fff',
               }}
               component={Link}
               to="/login"
@@ -283,7 +282,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
         >
           <Typography
             level="h4"
-            sx={{ mb: 2, fontFamily: 'League Spartan, sans-serif' }}
+            sx={{ mb: 2, fontFamily: 'League Spartan, sans-serif', color: '#333' }}
           >
             BotaniCart
           </Typography>
@@ -298,7 +297,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               sx={{
                 justifyContent: 'flex-start',
                 fontFamily: 'League Spartan, sans-serif',
-                color: '#136c13',
+                color: '#555',
                 mb: 1
               }}
               onClick={handleDrawerToggle}
@@ -314,7 +313,7 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
               sx={{
                 justifyContent: 'flex-start',
                 fontFamily: 'League Spartan, sans-serif',
-                color: '#136c13',
+                color: '#555',
                 mb: 1
               }}
               onClick={handleDrawerToggle}

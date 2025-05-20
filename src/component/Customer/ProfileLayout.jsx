@@ -39,6 +39,8 @@ const ProfileLayout = ({ userData }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log(userData)
+
   const expandedWidth = 240;
   const collapsedWidth = 72;
 
@@ -98,6 +100,8 @@ const ProfileLayout = ({ userData }) => {
   }
 
   return (
+          <Container >
+
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'Window' }}>
       <CssBaseline />
 
@@ -131,17 +135,14 @@ const ProfileLayout = ({ userData }) => {
               <>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Box>
-                    <Typography level="h2" sx={{ fontWeight: 'bold', color: '#136c13' }}>
-                      BotaniCart
+                    <Typography level="h3" sx={{ fontWeight: 'bold', color: '' }}>
+                      {userData.firstName + " " + userData.lastName}
                     </Typography>
                     <Typography level="body-sm" sx={{ color: '#000' }}>
-                      My Account
+                      My Account Page
                     </Typography>
                   </Box>
                 </Box>
-                <IconButton onClick={handleDrawerToggle} size="sm" variant="solid" color="neutral">
-                  <ChevronLeftIcon />
-                </IconButton>
               </>
             ) : (
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -202,7 +203,7 @@ const ProfileLayout = ({ userData }) => {
             })}
           </List>
 
-          <Box sx={{ mt: 'auto', px: 2 }}>
+          {/* <Box sx={{ mt: 'auto', px: 2 }}>
             <ListDivider sx={{ my: 2 }} />
             <ListItem>
               <ListItemButton
@@ -226,8 +227,8 @@ const ProfileLayout = ({ userData }) => {
                 {sidebarOpen && <ListItemContent>Logout</ListItemContent>}
               </ListItemButton>
             </ListItem>
-          </Box>
-          <Box sx={{ mt: 'auto', mb: 2, px: 2 }}>
+          </Box> */}
+          {/* <Box sx={{ mt: 'auto', mb: 2, px: 2 }}>
             <ListDivider sx={{ my: 2 }} />
             <ListItem>
               <ListItemButton
@@ -252,8 +253,8 @@ const ProfileLayout = ({ userData }) => {
                 {sidebarOpen && <ListItemContent>Website</ListItemContent>}
               </ListItemButton>
             </ListItem>
-          </Box>
-        </Box>
+          </Box>*/}
+        </Box> 
       </Sheet>
 
       {/* Main Content Area */}
@@ -279,22 +280,21 @@ const ProfileLayout = ({ userData }) => {
               open={!!error}
               autoHideDuration={3000}
               onClose={() => setError(null)}
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              color="danger" variant="soft"
+              anchorOrigin={{ vertical: 'top', horizontal: 'center',  color:"danger" }}
             >
-              <Alert color="danger" variant="soft" onClose={() => setError(null)}>
                 {error}
-              </Alert>
             </Snackbar>
 
             <Snackbar
               open={!!success}
               autoHideDuration={3000}
               onClose={() => setSuccess(null)}
+              color="success"
+              variant="soft"
               anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-              <Alert color="success" variant="soft" onClose={() => setSuccess(null)}>
                 {success}
-              </Alert>
             </Snackbar>
             <>
               {/* Pass both the Firebase auth user and the Firestore userData to child components */}
@@ -306,7 +306,7 @@ const ProfileLayout = ({ userData }) => {
         )}
       </Box>
     </Box>
-  );
+    </Container>  );
 };
 
 export default ProfileLayout;

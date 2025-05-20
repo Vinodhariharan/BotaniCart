@@ -23,15 +23,19 @@ export default function ProductCard({setaddtoCartSnack, product }) {
   const { addToCart } = useCart();
   const [added, setAdded] = React.useState(false);
   const { isUser } = useUser();
+  let addSound = new Audio('/addtocart.mp3');
+  let alertSound = new Audio('/alert.mp3');
 
   const handleAddToCart = () => {
     if(isUser){
+      addSound.play();
     addToCart(product);
     setAdded(true); // Change button state to "Added"
       setTimeout(() => setAdded(false), 1000);
       setaddtoCartSnack("Added to Cart!");
     }
     else{
+      alertSound.play();
       setaddtoCartSnack("Sign in to add plants to your garden collection");
       setTimeout(1000);
     }
@@ -128,17 +132,21 @@ export default function ProductCard({setaddtoCartSnack, product }) {
           </Typography>
         </Link>
 
-        {product.details && (
+        {product.details.sunlight ? (
           <Typography level="body-xs" sx={{ color: 'text.tertiary', mt: 0.5, fontSize: '10px' }}>
             {product.details.sunlight && `${product.details.sunlight} • `}
             {product.details.watering && `${product.details.watering}`}
+          </Typography>
+        ):(
+          <Typography level="body-xs" sx={{ color: 'text.tertiary', mt: 0.5, fontSize: '10px' }}>
+            {product.details.specialFeatures}
           </Typography>
         )}
 
         <Divider sx={{ my: 0.5 }} />
 
         <Stack direction="row" justifyContent="space-between" alignItems="center" >
-          <Typography level="title-md" sx={{ fontWeight: 'bold', color: 'success.600' }}>
+          <Typography level="title-md" sx={{ fontWeight: 'bold', color: '#333' }}>
             ${product.price || "—"}
           </Typography>
 

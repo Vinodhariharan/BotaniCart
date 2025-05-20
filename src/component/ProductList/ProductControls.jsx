@@ -13,7 +13,7 @@ const ProductControls = ({ sortOrder, handleSortChange, viewMode, handleViewMode
         Filters
       </Button>
     </Box>
-    <Box sx={{ display: 'flex', gap: 1, flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' } }}>
+    {/* <Box sx={{ display: 'flex', gap: 1, flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'stretch', sm: 'center' } }}>
       <FormControl size="sm" sx={{ minWidth: 120 }}>
         <Select value={sortOrder} onChange={handleSortChange} startDecorator={<SortIcon />}>
           <Option value="price-asc">Price: Low to High</Option>
@@ -30,8 +30,8 @@ const ProductControls = ({ sortOrder, handleSortChange, viewMode, handleViewMode
         <IconButton variant={viewMode === 'list' ? 'solid' : 'plain'} color={viewMode === 'list' ? 'primary' : 'neutral'} onClick={() => handleViewModeChange('list')} size="sm">
           <ViewListIcon />
         </IconButton>
-      </Box>
-    </Box>
+      </Box> */}
+    {/* </Box> */}
   </Box>
 );
 

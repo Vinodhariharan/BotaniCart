@@ -5,9 +5,6 @@ import {
   doc, 
   onSnapshot
 } from 'firebase/firestore';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import LoginIcon from '@mui/icons-material/Login';
 import Drawer from '@mui/joy/Drawer';
 import Button from '@mui/joy/Button';
 import List from '@mui/joy/List';
@@ -19,12 +16,18 @@ import DialogContent from '@mui/joy/DialogContent';
 import ModalClose from '@mui/joy/ModalClose';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { Badge } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/joy/CircularProgress';
+import Badge from '@mui/joy/Badge';
+import IconButton from '@mui/joy/IconButton';
+import { useNavigate } from 'react-router-dom';
 import { app } from '../../firebaseConfig';
 import CompactCartCard from './CartCard';
 import { useCart } from './CardContext';
+
+// Import Joy UI icons instead of Material UI icons
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import ShoppingCartCheckout from '@mui/icons-material/ShoppingCartCheckout';
+import Login from '@mui/icons-material/Login';
 
 export default function CartDrawer() {
   const [open, setOpen] = useState(false);
@@ -89,26 +92,34 @@ export default function CartDrawer() {
   };
 
   return (
-    <div>
-      <Button
-        sx={{ borderRadius: '20px' }}
-        variant="soft"
-        color="neutral"
-        endDecorator={
-          <Badge badgeContent={isAuthenticated ? totalCartQuantity : 0} color="primary">
-            <ShoppingCartIcon color="white" />
-          </Badge>
-        }
-        onClick={() => setOpen(true)}
-      >
-        View Cart
-      </Button>
+    <React.Fragment>
+      <Badge badgeContent={isAuthenticated ? totalCartQuantity : 0} color="neutral">
+        <Button
+          variant="soft"
+          color="neutral"
+          startDecorator={<ShoppingCart />}
+          onClick={() => setOpen(true)}
+          sx={{ borderRadius: '20px' }}
+        >
+          View Cart
+        </Button>
+      </Badge>
+      
       <Drawer 
-        variant="plain" 
+        variant="outlined" 
         open={open} 
         onClose={() => setOpen(false)} 
         size="md" 
         anchor="right"
+        slotProps={{
+          content: {
+            sx: {
+              bgcolor: 'background.surface',
+              p: 0,
+              boxShadow: 'lg'
+            }
+          }
+        }}
       >
         <Sheet
           sx={{
@@ -122,42 +133,37 @@ export default function CartDrawer() {
           }}
         >
           <DialogTitle>Your Cart</DialogTitle>
-          <ModalClose />
+          <ModalClose variant="plain" sx={{ m: 1 }} />
           <Divider />
           <DialogContent sx={{ gap: 2 }}>
             {!isAuthenticated ? (
               <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
-                <Typography level="h5" textAlign="center" sx={{ mb: 2 }}>
+                <Typography level="h4" textAlign="center" sx={{ mb: 2 }}>
                   Sign In Required
                 </Typography>
-                <Typography level="body-lg" textAlign="center" sx={{ mb: 4 }}>
+                <Typography textAlign="center" sx={{ mb: 4 }}>
                   Please sign in to view your cart and add items.
                 </Typography>
                 <Button
                   size="lg"
-                  variant="solid"
+                  variant="soft"
                   color="primary"
                   onClick={handleSignIn}
-                  startDecorator={<LoginIcon />}
-                  sx={{ 
-                    borderRadius: '20px', 
-                    backgroundColor: '#0A4938', 
-                    color: '#fff',
-                    px: 4 
-                  }}
+                  startDecorator={<Login />}
+                  sx={{ borderRadius: '20px', px: 4 }}
                 >
                   Sign In
                 </Button>
               </Stack>
             ) : loading ? (
               <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
-                <CircularProgress />
+                <CircularProgress variant="soft" />
                 <Typography level="body-sm" mt={2}>
                   Loading your cart...
                 </Typography>
               </Stack>
             ) : cartItems.length === 0 ? (
-              <Typography level="body-lg" textAlign="center" sx={{ py: 4 }}>
+              <Typography textAlign="center" sx={{ py: 4 }}>
                 Your cart is empty.
               </Typography>
             ) : (
@@ -172,7 +178,7 @@ export default function CartDrawer() {
                     </ListItem>
                   ))}
                 </List>
-                <Typography level="h6" sx={{ mt: 2, textAlign: 'right' }}>
+                <Typography level="title-md" sx={{ mt: 2, textAlign: 'right' }}>
                   Total Items: {cartItems.length}
                 </Typography>
               </>
@@ -183,26 +189,20 @@ export default function CartDrawer() {
             {isAuthenticated ? (
               <>
                 <Button 
-                  sx={{ 
-                    borderRadius: '20px', 
-                    backgroundColor: '#0A4938', 
-                    color: '#fff' 
-                  }} 
                   variant="solid" 
+                  color="#fff"
                   onClick={handleCheckout}
                   disabled={cartItems.length === 0 || loading}
-                  startDecorator={<ShoppingCartCheckoutIcon />}
+                  startDecorator={<ShoppingCartCheckout />}
+                  sx={{ borderRadius: '20px', backgroundColor:"#136c13", color:'#fff'}}
                 >
                   Checkout
                 </Button>
                 <Button 
-                  sx={{ 
-                    borderRadius: '20px', 
-                    backgroundColor: 'red', 
-                    color: '#fff' 
-                  }} 
-                  variant="solid" 
+                  variant="plain" 
+                  color="neutral" 
                   onClick={() => setOpen(false)}
+                  sx={{ borderRadius: 'md' }}
                 >
                   Close
                 </Button>
@@ -210,13 +210,10 @@ export default function CartDrawer() {
             ) : (
               <Button 
                 fullWidth
-                sx={{ 
-                  borderRadius: '20px', 
-                  backgroundColor: 'red', 
-                  color: '#fff' 
-                }} 
-                variant="solid" 
+                variant="plain" 
+                color="neutral" 
                 onClick={() => setOpen(false)}
+                sx={{ borderRadius: 'md' }}
               >
                 Close
               </Button>
@@ -224,6 +221,6 @@ export default function CartDrawer() {
           </Stack>
         </Sheet>
       </Drawer>
-    </div>
+    </React.Fragment>
   );
 }
