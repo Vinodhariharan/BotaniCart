@@ -19,9 +19,9 @@ function About() {
         <Typography level="body1" mb={3} sx={{ fontSize: '1.25rem' }}>
           Founded in 2022 by Vinod Hariharan R, BotaniCart emerged from a shared love for plants and a vision to make bringing nature indoors an accessible and enriching experience. What started as a small stall at the local farmer's market, filled with unique succulents and aromatic herbs, has grown into a thriving community for plant lovers everywhere.
         </Typography>
-        <Typography level="h3" mb={2}>
+        {/* <Typography level="h3" mb={2}>
           Discover the Joy of Gardening
-        </Typography>
+        </Typography> */}
         {/* <MasonryImageList /> */}
         <Typography level="h2" mb={2}>
           More Than Just Foliage:
@@ -52,7 +52,7 @@ function About() {
         <Box display="flex" justifyContent="center">
           <Button
             component={Link}
-            to="/productList/flowers"
+            to="/products"
             variant="contained"
             size="lg"
             sx={{
