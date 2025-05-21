@@ -235,11 +235,11 @@ const GuideDetail = () => {
                     my: 3
                   }}
                 >
-                  <img
+                  {section.imageURL && <img
                     src={section.imageURL}
                     alt={section.title || guide.title}
                     style={{ width: '100%', height: 'auto' }}
-                  />
+                  />}
                   {section.imageCaption && (
                     <Typography
                       level="body-xs"

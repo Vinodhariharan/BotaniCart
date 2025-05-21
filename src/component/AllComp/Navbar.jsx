@@ -16,16 +16,18 @@ import {
 } from '@mui/joy';
 import Toolbar from '@mui/material/Toolbar';
 import LoginIcon from '@mui/icons-material/Login';
-import { PersonPinCircleRounded, Menu as MenuIcon, KeyboardArrowDown, Person, ShoppingBag, Payment, Settings, Logout } from '@mui/icons-material';
+import { PersonPinCircleRounded, Menu as MenuIcon, KeyboardArrowDown, Person, ShoppingBag, Payment, Settings, Logout, AdminPanelSettings } from '@mui/icons-material';
 import '../../assets/css/Navbar.css';
 import CartDrawer from './CartDrawer';
 import { logoutUser } from '../../auth';
 import MegaMenu from '../Home/MegaMenu';
 import ProductSearch from '../Search/ProductSearch';
+import useAdmin from '../../AuthProtectedRoute/useAdmin';
 
 const Navbar = ({ isLoggedIn, setLoggedIn }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const {isAdmin}= useAdmin();
 
   const handleLogout = async () => {
     try {
@@ -176,6 +178,17 @@ const Navbar = ({ isLoggedIn, setLoggedIn }) => {
                   fontFamily: 'League Spartan, sans-serif',
                 }}
               >
+                {(isAdmin && <MenuItem
+                  component={Link}
+                  to="/admin"
+                  sx={{
+                    color: '#555',
+                    gap: 1.5
+                  }}
+                >
+                  <AdminPanelSettings fontSize="small" />
+                  Admin Page
+                </MenuItem>)}
                 <MenuItem
                   component={Link}
                   to="/account/profile"

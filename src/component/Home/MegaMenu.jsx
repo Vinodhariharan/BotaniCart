@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
-import { 
-  Container, 
-  Sheet, 
-  Typography, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  Drawer, 
-  IconButton, 
-  Box, 
+import {
+  Container,
+  Sheet,
+  Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  Drawer,
+  IconButton,
+  Box,
   Divider,
   Chip,
   Tooltip
@@ -47,21 +47,21 @@ const MegaMenu = ({ compact, onItemClick }) => {
   }, []);
 
   function toTitle(str) {
-  // Handle edge cases - return empty string if input is falsy
-  if (!str) return '';
-  
-  // Split the string into an array of words, map over each word
-  return str
-    .toLowerCase()
-    .split(' ')
-    .map(word => {
-      // Skip empty strings
-      if (word.length === 0) return '';
-      // Capitalize the first letter and join with the rest of the word
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(' ');
-}
+    // Handle edge cases - return empty string if input is falsy
+    if (!str) return '';
+
+    // Split the string into an array of words, map over each word
+    return str
+      .toLowerCase()
+      .split(' ')
+      .map(word => {
+        // Skip empty strings
+        if (word.length === 0) return '';
+        // Capitalize the first letter and join with the rest of the word
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  }
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -77,7 +77,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
   // If compact prop is true, render a simplified version (used in mobile drawer)
   if (compact) {
     return (
-      <Box sx={{ 
+      <Box sx={{
         width: '100%',
       }}>
         <List>
@@ -85,7 +85,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
             // Simple loading state for compact view
             Array(5).fill(0).map((_, index) => (
               <ListItem key={`loading-${index}`}>
-                <ListItemButton disabled sx={{ 
+                <ListItemButton disabled sx={{
                   opacity: 0.7,
                   animation: 'pulse 1.5s infinite',
                   '@keyframes pulse': {
@@ -105,9 +105,9 @@ const MegaMenu = ({ compact, onItemClick }) => {
           ) : (
             categories.map((category) => (
               <ListItem key={category.id}>
-                <ListItemButton 
-                  component={Link} 
-                  to={`/category/${category.id}`}
+                <ListItemButton
+                  component={Link}
+                  to={`/category/?category=${category.id}`}
                   onClick={() => handleItemClick(category)}
                   sx={{
                     borderRadius: 'md',
@@ -150,20 +150,20 @@ const MegaMenu = ({ compact, onItemClick }) => {
     >
       <Container>
         <nav aria-label="Category navigation">
-          <Box sx={{ 
-            display: 'flex', 
+          <Box sx={{
+            display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
             {/* Mobile Toggle Button */}
-            <Box sx={{ 
+            <Box sx={{
               display: { xs: 'flex', md: 'none' },
               alignItems: 'center',
               width: '100%',
               justifyContent: 'space-between'
             }}>
-              <Typography 
-                level="title-md" 
+              <Typography
+                level="title-md"
                 fontWeight="bold"
                 sx={{ color: '#555', ml: 1 }}
               >
@@ -176,7 +176,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                   color="neutral"
                   onClick={handleDrawerToggle}
                   aria-label="Open categories menu"
-                  sx={{ 
+                  sx={{
                     borderRadius: '50%',
                     bgcolor: 'rgba(0, 0, 0, 0.05)',
                     color: '#666',
@@ -191,9 +191,9 @@ const MegaMenu = ({ compact, onItemClick }) => {
             </Box>
 
             {/* Desktop Categories List */}
-            <Box 
-              className="content" 
-              sx={{ 
+            <Box
+              className="content"
+              sx={{
                 display: { xs: 'none', md: 'block' },
                 width: '100%'
               }}
@@ -203,10 +203,10 @@ const MegaMenu = ({ compact, onItemClick }) => {
                 alignItems: 'center',
                 gap: 1.5
               }}>
-                <Typography 
-                  level="title-lg" 
+                <Typography
+                  level="title-lg"
                   fontWeight="md"
-                  sx={{ 
+                  sx={{
                     display: 'flex',
                     alignItems: 'center',
                     color: '#222',
@@ -215,9 +215,9 @@ const MegaMenu = ({ compact, onItemClick }) => {
                 >
                   Browse Categories
                 </Typography>
-                
+
                 <Divider orientation="vertical" />
-                
+
                 <List
                   className="category-links"
                   orientation="horizontal"
@@ -242,7 +242,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                     Array(5).fill(0).map((_, index) => (
                       <Chip
                         key={`loading-${index}`}
-                        sx={{ 
+                        sx={{
                           opacity: 0.7,
                           animation: 'pulse 1.5s infinite',
                           '@keyframes pulse': {
@@ -266,7 +266,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                         <Tooltip title={`Browse ${category.name}`} placement="top">
                           <Chip
                             component={Link}
-                            to={`/category/${category.id}`}
+                            to={`/category/${category.name}`}
                             onClick={() => handleItemClick(category)}
                             variant="soft"
                             color="neutral"
@@ -303,23 +303,23 @@ const MegaMenu = ({ compact, onItemClick }) => {
         variant="plain"
         sx={{ display: { md: 'none' } }}
       >
-        <Box sx={{ 
-          width: 280, 
+        <Box sx={{
+          width: 280,
           height: '100%',
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
             justifyContent: 'space-between',
             p: 2,
             borderBottom: '1px solid rgba(0,0,0,0.1)'
           }}>
-            <Typography 
-              level="title-lg" 
-              sx={{ 
-                color: '#222', 
+            <Typography
+              level="title-lg"
+              sx={{
+                color: '#222',
                 fontWeight: 'bold',
                 display: 'flex',
                 alignItems: 'center',
@@ -328,18 +328,18 @@ const MegaMenu = ({ compact, onItemClick }) => {
             >
               Categories
             </Typography>
-            <IconButton onClick={handleDrawerToggle} style={{margin:'10px'}} aria-label="Close categories menu">
+            <IconButton onClick={handleDrawerToggle} style={{ margin: '10px' }} aria-label="Close categories menu">
               <CloseIcon />
             </IconButton>
           </Box>
-          
+
           <Box sx={{ overflowY: 'auto', flexGrow: 1, p: 0 }}>
             <List>
               {loading ? (
                 // Loading state for mobile drawer
                 Array(8).fill(0).map((_, index) => (
                   <ListItem key={`loading-drawer-${index}`}>
-                    <ListItemButton disabled sx={{ 
+                    <ListItemButton disabled sx={{
                       opacity: 0.7,
                       animation: 'pulse 1.5s infinite',
                       '@keyframes pulse': {
@@ -353,11 +353,11 @@ const MegaMenu = ({ compact, onItemClick }) => {
                   </ListItem>
                 ))
               ) : categories.length === 0 ? (
-                <Box sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'center', 
+                <Box sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  height: '100px' 
+                  height: '100px'
                 }}>
                   <Typography level="body-md" sx={{ color: 'neutral.500' }}>
                     No categories available
@@ -380,14 +380,14 @@ const MegaMenu = ({ compact, onItemClick }) => {
                         }
                       }}
                     >
-                      <Box sx={{ 
-                        display: 'flex', 
+                      <Box sx={{
+                        display: 'flex',
                         alignItems: 'center',
                         width: '100%',
                         justifyContent: 'space-between'
                       }}>
-                        <Box sx={{ 
-                          display: 'flex', 
+                        <Box sx={{
+                          display: 'flex',
                           alignItems: 'center',
                           gap: 1.5
                         }}>

@@ -17,7 +17,7 @@ const withLoading = (Component) => {
 const lazyWithLoading = (factory) => {
   const LazyComponent = lazy(factory);
   return (props) => (
-    <Suspense fallback={<LoadingPage timeout={0} />}>
+    <Suspense fallback={<LoadingPage timeout={5000} />}>
       <LazyComponent {...props} />
     </Suspense>
   );

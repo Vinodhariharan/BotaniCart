@@ -41,18 +41,23 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
   const collapsedWidth = 72;
 
   const menuItems = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
-    { text: "Users", icon: <PeopleIcon />, path: "/admin/users" },
-    { text: "Products", icon: <ProductsIcon />, path: "/admin/product-list" },
-    { text: "Add Product", icon: <AddIcon />, path: "/admin/add-product" },
     // { text: "Reports", icon: <ReportsIcon />, path: "/admin/reports" },
     // { text: "Notifications", icon: <NotificationsIcon />, path: "/admin/notifications" },
     // { text: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
-    { text: "Category Extractor", icon: <CategoryRounded />, path: "/admin/category-extractor" },
+     // Core functionality
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
+    { text: "Users", icon: <PeopleIcon />, path: "/admin/users" },
+    
+    // Products section
+    { text: "Products", icon: <ProductsIcon />, path: "/admin/product-list" },
+    { text: "Add Product", icon: <AddIcon />, path: "/admin/add-product" },
     { text: "Product JSON Uploader", icon: <UploadFileRounded />, path: "/admin/json-product-loader" },
-    { text: "Add CareGuide", icon: <Info />, path: "/admin/add-guide" },
-    { text: "Guide JSON Upoader", icon: <DocumentScanner />, path: "/admin/json-guide-loader" },
+    { text: "Category Extractor", icon: <CategoryRounded />, path: "/admin/category-extractor" },
+    
+    // Care Guides section
     { text: "CareGuide List", icon: <Grass />, path: "/admin/guide-list" },
+    { text: "Add CareGuide", icon: <Info />, path: "/admin/add-guide" },
+    { text: "Guide JSON Uploader", icon: <DocumentScanner />, path: "/admin/json-guide-loader" },
   ];
 
   return (
@@ -86,15 +91,24 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
             <>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                 <Box>
-                  <Typography level="h2" sx={{ fontWeight: "bold", color: "#136c13" }}>
+                  <Box sx={{display:"flex"}}>
+                  <img
+                    src="/Untitled.png"
+                    alt="BotaniCart Logo"
+                    style={{
+                      height: '30px',
+                    }}
+                  />
+                  <Typography level="h2" sx={{ fontWeight: "bold", ml:'5px', color: "#333" }}>
                     BotaniCart
                   </Typography>
+                  </Box>
                   <Typography level="body-sm" sx={{ color: "#000" }}>
                     Admin Panel
                   </Typography>
                 </Box>
               </Box>
-              <IconButton onClick={onToggle} size="sm" variant="solid" color="neutral">
+              <IconButton onClick={onToggle} size="sm" variant="plain" color="neutral">
                 <ChevronLeftIcon />
               </IconButton>
             </>
@@ -128,7 +142,7 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
                   selected={isActive}
                   sx={{
                     justifyContent: open ? "flex-start" : "center",
-                    px: open ? 2 : 0,
+                    px: open ? 0 : 0,
                     "&.Mui-selected": {
                       bgcolor: "#e0f7fa",
                       color: "#000",
@@ -143,14 +157,14 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
                 >
                   <ListItemDecorator
                     sx={{
-                      color: isActive ? "inherit" : "#2e7d32",
+                      color: isActive ? "#2e7d32" : "#333",
                       minWidth: open ? "auto" : "100%",
                       justifyContent: open ? "flex-start" : "center",
                     }}
                   >
                     {item.icon}
                   </ListItemDecorator>
-                  {open && <ListItemContent>{item.text}</ListItemContent>}
+                  {open && <ListItemContent sx={{ml:0.5}}>{item.text}</ListItemContent>}
                 </ListItemButton>
               </ListItem>
             );
@@ -173,7 +187,7 @@ const Sidebar = ({ open, onToggle, onLogout }) => {
                 sx={{
                   minWidth: open ? "auto" : "100%",
                   justifyContent: open ? "flex-start" : "center",
-                  color: "#005005",
+                  color: "#333  ",
                 }}
               >
                 <LogoutIcon />

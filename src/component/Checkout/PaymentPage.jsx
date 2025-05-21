@@ -20,10 +20,10 @@ const PaymentPage = ({ open, onClose, onPaymentSuccess, orderTotal, userData, pr
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [cardDetails, setCardDetails] = useState({
-    cardNumber: '',
-    cardHolder: '',
-    expiryDate: '',
-    cvv: ''
+    cardNumber: userData.billingInfo.cardNumber,
+    cardHolder: userData.billingInfo.cardholderName,
+    expiryDate: userData.billingInfo.expiryDate,
+    cvv: userData.billingInfo.cvv
   });
   
   const handleChange = (e) => {

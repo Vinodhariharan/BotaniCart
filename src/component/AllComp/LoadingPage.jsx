@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-const LoadingPage = ({ timeout = 1000, children }) => {
+const LoadingPage = ({ timeout = 5000, children }) => {
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
@@ -58,7 +58,7 @@ const LoadingPage = ({ timeout = 1000, children }) => {
         >
           <Box 
             component="img"
-            src="/logo.png" 
+            src="/Untitled.png" 
             alt="Logo"
             sx={{ 
               width: 50, 

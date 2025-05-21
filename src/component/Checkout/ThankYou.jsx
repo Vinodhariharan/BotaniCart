@@ -118,7 +118,7 @@ const ThankYou = () => {
               <li>Find the perfect spot with appropriate light</li>
               <li>Allow time for your plants to acclimate to their new home</li>
             </Typography>
-            <Button variant="outlined" sx={{ mt: 2 }}>
+            <Button variant="outlined" sx={{ mt: 2 }} component={Link} to='/care-guides'>
               View Plant Care Guides
             </Button>
           </Box>

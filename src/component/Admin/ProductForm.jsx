@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { collection, addDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, getDoc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../auth';
 import {
   AspectRatio,
@@ -87,9 +87,25 @@ const ProductForm = () => {
   const [newDetailName, setNewDetailName] = useState('');
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  // Common product categories
-  const categories = ['plants', 'tools', 'fertilizers', 'pots', 'seeds', 'accessories'];
+
+  const fetchCategories = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "categories"));
+      console.log(snapshot);
+      console.log(snapshot);
+      const categoryList = snapshot.docs.map(doc => doc.data().name); // returns array of names
+      setCategories(categoryList); // update state
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
 
   // Fetch the product data from Firestore if in edit mode
   useEffect(() => {
@@ -271,7 +287,7 @@ const ProductForm = () => {
       setSnackbarOpen(true);
 
       setTimeout(() => {
-        navigate('/admin/product-list');
+        navigate(-1);
       }, 1500);
     } catch (err) {
       setSnackbarColor('danger');
