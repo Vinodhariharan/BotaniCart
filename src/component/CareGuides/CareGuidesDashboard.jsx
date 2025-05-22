@@ -171,7 +171,7 @@ const CareGuides = () => {
             <Typography sx={{ p: 3 }}>Loading guides...</Typography>
           ) : guides.length > 1 ? (
             guides.slice(1).map((guide) => (
-              <Grid xs={12} sm={6} md={4} key={guide.id}>
+              <Grid xs={12} sm={6} md={4} key={guide.id} sx={{mb:3}}>
                 <Card
                   sx={{
                     height: '100%',
@@ -181,7 +181,7 @@ const CareGuides = () => {
                     '&:hover': {
                       transform: 'translateY(-8px)',
                       boxShadow: 'lg'
-                    }
+                    },
                   }}
                 >
                   <AspectRatio

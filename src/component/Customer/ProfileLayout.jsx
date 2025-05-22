@@ -12,10 +12,9 @@ import {
   ListItemDecorator,
   IconButton,
   CircularProgress,
-  Alert,
   ListDivider,
   CssBaseline,
-  Snackbar
+  Snackbar,
 } from '@mui/joy';
 import {
   Person as ProfileIcon,
@@ -24,11 +23,12 @@ import {
   Settings as SettingsIcon,
   Logout as LogoutIcon,
   Menu as MenuIcon,
-  ChevronLeft as ChevronLeftIcon,
-  House
+  House,
+  ChevronLeft as ChevronLeftIcon
 } from '@mui/icons-material';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../../auth'; // Adjust the path based on your project structure
+import { useMediaQuery } from '@mui/material';
 
 const ProfileLayout = ({ userData }) => {
   const [user, setUser] = useState(null);
@@ -38,11 +38,18 @@ const ProfileLayout = ({ userData }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
-
-  console.log(userData)
+  
+  // Responsive breakpoints
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  
+  // Automatically collapse sidebar on mobile
+  useEffect(() => {
+    setSidebarOpen(!isMobile);
+  }, [isMobile]);
 
   const expandedWidth = 240;
   const collapsedWidth = 72;
+  const mobileWidth = isMobile ? 0 : collapsedWidth;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
@@ -100,58 +107,96 @@ const ProfileLayout = ({ userData }) => {
   }
 
   return (
-          <Container >
-
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'Window' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'Window', flexDirection: isMobile ? 'column' : 'row' }}>
       <CssBaseline />
 
-      {/* Sidebar */}
-      <Sheet
-        sx={{
-          display: 'flex',
-          height: '100vh',
+      {/* Mobile Header with menu toggle */}
+      {isMobile && (
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          p: 2, 
+          borderBottom: '1px solid #ccc',
           position: 'sticky',
           top: 0,
+          // zIndex: 1100,
+          bgcolor: '#fff'
+        }}>
+          <Typography level="h4" sx={{ fontWeight: 'bold' }}>
+            {userData.firstName + " " + userData.lastName}
+          </Typography>
+          <IconButton onClick={handleDrawerToggle} size="md" variant="outlined" color="neutral">
+            <MenuIcon />
+          </IconButton>
+        </Box>
+      )}
+
+      {/* Sidebar - Full height on desktop, drawer on mobile */}
+      <Sheet
+        sx={{
+          display: sidebarOpen || !isMobile ? 'flex' : 'none',
+          height: isMobile ? 'calc(100vh - 64px)' : '100vh',
+          position: 'sticky',
+          top: isMobile ? '64px' : 0,
           width: sidebarOpen ? expandedWidth : collapsedWidth,
           transition: 'width 0.2s ease',
           color: '#333',
           borderRight: '1px solid #ccc',
           zIndex: 1000,
           overflow: 'hidden',
+          ...(isMobile && {
+            position: 'fixed',
+            width: expandedWidth,
+            boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
+          })
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'column', width: expandedWidth }}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1.5,
-              p: 2,
-              justifyContent: sidebarOpen ? 'space-between' : 'center',
-              bgcolor: '#fff',
-            }}
-          >
-            {sidebarOpen ? (
-              <>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                  <Box>
-                    <Typography level="h3" sx={{ fontWeight: 'bold', color: '' }}>
-                      {userData.firstName + " " + userData.lastName}
-                    </Typography>
-                    <Typography level="body-sm" sx={{ color: '#000' }}>
-                      My Account Page
-                    </Typography>
+          {/* Desktop Header */}
+          {!isMobile && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                p: 2,
+                justifyContent: sidebarOpen ? 'space-between' : 'center',
+                bgcolor: '#fff',
+              }}
+            >
+              {sidebarOpen ? (
+                <>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Box>
+                      <Typography level="h3" sx={{ fontWeight: 'bold' }}>
+                        {userData.firstName + " " + userData.lastName}
+                      </Typography>
+                      <Typography level="body-sm" sx={{ color: '#000' }}>
+                        My Account Page
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </>
-            ) : (
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <IconButton onClick={handleDrawerToggle} size="sm" variant="plain" color="neutral">
+                    <ChevronLeftIcon />
+                  </IconButton>
+                </>
+              ) : (
                 <IconButton onClick={handleDrawerToggle} size="sm" variant="plain" color="neutral">
                   <MenuIcon />
                 </IconButton>
-              </Box>
-            )}
-          </Box>
+              )}
+            </Box>
+          )}
+
+          {/* Mobile sidebar close button */}
+          {isMobile && sidebarOpen && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+              <IconButton onClick={handleDrawerToggle} size="sm" variant="plain" color="neutral">
+                <ChevronLeftIcon />
+              </IconButton>
+            </Box>
+          )}
 
           <ListDivider />
 
@@ -172,6 +217,7 @@ const ProfileLayout = ({ userData }) => {
                     component={Link}
                     to={item.path}
                     selected={isActive}
+                    onClick={isMobile ? handleDrawerToggle : undefined}
                     sx={{
                       justifyContent: sidebarOpen ? 'flex-start' : 'center',
                       px: sidebarOpen ? 2 : 0,
@@ -203,7 +249,7 @@ const ProfileLayout = ({ userData }) => {
             })}
           </List>
 
-          {/* <Box sx={{ mt: 'auto', px: 2 }}>
+          <Box sx={{ mt: 'auto', px: 2 }}>
             <ListDivider sx={{ my: 2 }} />
             <ListItem>
               <ListItemButton
@@ -211,15 +257,16 @@ const ProfileLayout = ({ userData }) => {
                 sx={{
                   justifyContent: sidebarOpen ? 'flex-start' : 'center',
                   '&:hover': {
-                    bgcolor: '#c8e6c930',
+                    bgcolor: '#333',
                   },
+                  mb:2
                 }}
               >
                 <ListItemDecorator
                   sx={{
                     minWidth: sidebarOpen ? 'auto' : '100%',
                     justifyContent: sidebarOpen ? 'flex-start' : 'center',
-                    color: '#005005',
+                    color: '#333',
                   }}
                 >
                   <LogoutIcon />
@@ -227,9 +274,6 @@ const ProfileLayout = ({ userData }) => {
                 {sidebarOpen && <ListItemContent>Logout</ListItemContent>}
               </ListItemButton>
             </ListItem>
-          </Box> */}
-          {/* <Box sx={{ mt: 'auto', mb: 2, px: 2 }}>
-            <ListDivider sx={{ my: 2 }} />
             <ListItem>
               <ListItemButton
                 component={Link}
@@ -253,21 +297,41 @@ const ProfileLayout = ({ userData }) => {
                 {sidebarOpen && <ListItemContent>Website</ListItemContent>}
               </ListItemButton>
             </ListItem>
-          </Box>*/}
+          </Box>
         </Box> 
       </Sheet>
+
+      {/* Overlay to close sidebar on mobile */}
+      {isMobile && sidebarOpen && (
+        <Box 
+          sx={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            bgcolor: 'rgba(0,0,0,0.4)', 
+            zIndex: 999 
+          }} 
+          onClick={handleDrawerToggle} 
+        />
+      )}
 
       {/* Main Content Area */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 },
           transition: 'margin 0.2s ease',
           ml: 0,
-          width: { sm: `calc(100% - ${sidebarOpen ? expandedWidth : collapsedWidth}px)` },
+          width: { 
+            xs: '100%', 
+            sm: `calc(100% - ${sidebarOpen && !isMobile ? expandedWidth : isMobile ? 0 : collapsedWidth}px)` 
+          },
           overflow: 'auto',
-          position: 'relative'
+          position: 'relative',
+          mt: isMobile ? 0 : 0
         }}
       >
         {loading ? (
@@ -280,10 +344,11 @@ const ProfileLayout = ({ userData }) => {
               open={!!error}
               autoHideDuration={3000}
               onClose={() => setError(null)}
-              color="danger" variant="soft"
-              anchorOrigin={{ vertical: 'top', horizontal: 'center',  color:"danger" }}
+              color="danger" 
+              variant="soft"
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                {error}
+              {error}
             </Snackbar>
 
             <Snackbar
@@ -294,19 +359,17 @@ const ProfileLayout = ({ userData }) => {
               variant="soft"
               anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                {success}
+              {success}
             </Snackbar>
-            <>
-              {/* Pass both the Firebase auth user and the Firestore userData to child components */}
+            
+            <Box sx={{ maxWidth: '1200px', mx: 'auto' }}>
               <Outlet context={{ user, userData, showSuccessMessage, setError }} />
-            </>
-
+            </Box>
           </>
-
         )}
       </Box>
     </Box>
-    </Container>  );
+  );
 };
 
 export default ProfileLayout;

@@ -28,6 +28,8 @@ import { useCart } from './CardContext';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import ShoppingCartCheckout from '@mui/icons-material/ShoppingCartCheckout';
 import Login from '@mui/icons-material/Login';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 export default function CartDrawer() {
   const [open, setOpen] = useState(false);
@@ -38,6 +40,9 @@ export default function CartDrawer() {
   const db = getFirestore(app);
   const { cartProducts } = useCart();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const theme = useTheme();
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 600);
+
 
   useEffect(() => {
     // Check if user is authenticated
@@ -91,19 +96,54 @@ export default function CartDrawer() {
     setOpen(false);
   };
 
+
+  useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 600);
+  };
+  
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
   return (
     <React.Fragment>
-      <Badge badgeContent={isAuthenticated ? totalCartQuantity : 0} color="neutral">
-        <Button
-          variant="soft"
-          color="neutral"
-          startDecorator={<ShoppingCart />}
-          onClick={() => setOpen(true)}
-          sx={{ borderRadius: '20px' }}
-        >
-          View Cart
-        </Button>
-      </Badge>
+       <Badge 
+      badgeContent={isAuthenticated ? totalCartQuantity : 0} 
+      color="neutral"
+      size={isMobile ? "sm" : "md"}
+      variant="solid"
+      sx={{
+        '& .MuiBadge-badge': {
+          fontSize: isMobile ? '0.7rem' : '0.8rem',
+          minWidth: isMobile ? '18px' : '20px',
+          height: isMobile ? '18px' : '20px',
+        }
+      }}
+    >
+      <Button
+        variant="soft"
+        color="neutral"
+        startDecorator={isMobile ? null : <ShoppingCart />}
+        onClick={() => setOpen(true)}
+        sx={{ 
+          borderRadius: '20px',
+          width: isMobile ? 'auto' : 'auto',
+          minWidth: isMobile ? '40px' : 'auto',
+          p: isMobile ? '6px' : '6px 16px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          transition: 'all 0.2s ease-in-out',
+        }}
+      >
+        {isMobile ? (
+          <ShoppingCart fontSize={isMobile ? "small" : "medium"} />
+        ) : (
+          "View Cart"
+        )}
+      </Button>
+    </Badge>
       
       <Drawer 
         variant="outlined" 

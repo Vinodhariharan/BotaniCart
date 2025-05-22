@@ -135,6 +135,7 @@ export default function Login({ setLoggedIn }) {
             zIndex: 1,
             display: 'flex',
             justifyContent: 'center',
+
           }}
         >
           <Box
@@ -145,6 +146,8 @@ export default function Login({ setLoggedIn }) {
               width: '100%',
               maxWidth: '600px',
               px: 0,
+                        m:2
+
             }}
           >
             <Box
@@ -317,6 +320,8 @@ export default function Login({ setLoggedIn }) {
             }}
           />          
         </Box>
+
+        
 
       <Snackbar
         open={snackbarOpen}

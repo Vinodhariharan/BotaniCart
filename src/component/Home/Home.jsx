@@ -594,13 +594,13 @@ const HomePage = () => {
             <Button color="success" size="lg">
               Subscribe
             </Button>
-             <CartSnackbar
-        open={openSnackbar}
-        message={addtoCartSnack}
-        onClose={handleClose}
-      />
-          </Box>
-        </Card> */}
+            </Box>
+            </Card> */}
+            <CartSnackbar
+       open={openSnackbar}
+       message={addtoCartSnack}
+       onClose={handleClose}
+     />
     </Container>
   );
 };

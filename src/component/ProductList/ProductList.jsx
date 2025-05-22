@@ -7,7 +7,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { collection, query, where, orderBy, limit, startAfter, getDocs } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import FilterSidebar from './FilterSidebar';
-import MobileFilterDrawer from './MobileFilterDrawer';
 import ProductControls from './ProductControls';
 import ActiveFilters from './ActiveFilters';
 import ProductGrid from './ProductGrid';
@@ -44,7 +43,6 @@ export default function ProductList({ initialCategory = 'All', specialFilter = n
   const [addtoCartSnack, setaddtoCartSnack] = useState(''); 
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-
   const productsPerPage = 20;
   const paginationRef = useRef({ snapshots: [null], currentCursor: null });
 
@@ -79,35 +77,34 @@ export default function ProductList({ initialCategory = 'All', specialFilter = n
   }, [urlCategory, urlSubCategory, urlSearch, specialFilter]);
 
   // Fetch categories and brands on initial load
-  useEffect(() => {
-    const fetchCategoriesAndBrands = async () => {
-      try {
-        setLoading(true);
-        const productsRef = collection(db, 'products');
-        const snapshot = await getDocs(productsRef);
-        
-        const uniqueCategories = new Set();
-        const uniqueBrands = new Set();
+ useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const categoriesRef = collection(db, 'categories');
+      const snapshot = await getDocs(categoriesRef);
+      
+      const categoryNames = [];
 
-        snapshot.docs.forEach((doc) => {
-          const product = doc.data();
-          if (product.category) uniqueCategories.add(product.category);
-          if (product.brand) uniqueBrands.add(product.brand);
-        });
+      snapshot.docs.forEach((doc) => {
+        const category = doc.data();
+        if (category.name) {
+          categoryNames.push(category.name);
+        }
+      });
 
-        setCategories(['All', ...Array.from(uniqueCategories).sort()]);
-        setBrands(Array.from(uniqueBrands).sort());
-        
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching categories:', err);
-        setError('Failed to load categories. Please try again.');
-        setLoading(false);
-      }
-    };
+      setCategories(['All', ...categoryNames.sort()]);
+      
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+      setError('Failed to load categories. Please try again.');
+      setLoading(false);
+    }
+  };
 
-    fetchCategoriesAndBrands();
-  }, []);
+  fetchCategories();
+}, []);
 
   // Add special filter to active filters if applicable
   useEffect(() => {
@@ -457,26 +454,7 @@ if (specialFilter) {
         setSearchTerm={handleSearchChange}
       />
 
-      {/* Mobile Filter Drawer */}
-      <MobileFilterDrawer
-        open={showFilters}
-        onClose={() => setShowFilters(false)}
-        categories={categories}
-        selectedCategory={selectedCategory}
-        handleCategoryChange={handleCategoryChange}
-        subCategories={subCategories}
-        selectedSubCategory={selectedSubCategory}
-        handleSubCategoryChange={handleSubCategoryChange}
-        priceRange={priceRange}
-        handlePriceRangeChange={handlePriceRangeChange}
-        brands={brands}
-        selectedBrands={selectedBrands}
-        toggleBrandSelection={toggleBrandSelection}
-        clearAllFilters={clearAllFilters}
-        searchTerm={searchTerm}
-        setSearchTerm={handleSearchChange}
-      />
-
+    
       {/* Main Content Area */}
       <Box sx={{ flexGrow: 1, p: 2, flexBasis: 0 }}>
         {/* Breadcrumbs Navigation */}

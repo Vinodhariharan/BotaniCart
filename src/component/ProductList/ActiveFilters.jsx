@@ -17,7 +17,7 @@ const ActiveFilters = ({ activeFilters, removeFilter, clearAllFilters }) => (
           </Chip>
         ))}
         {activeFilters.length > 1 && (
-          <Button size="sm" variant="plain" color="neutral" onClick={clearAllFilters}>
+          <Button size="sm" variant="soft" color="neutral" sx={{justifyContent:'center'}} onClick={clearAllFilters}>
             Clear All
           </Button>
         )}

@@ -120,7 +120,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                   }}
                 >
                   <CategoryIcon sx={{ mr: 1.5, fontSize: 18, opacity: 0.7 }} />
-                  {category.name}
+                  {toTitle(category.name)}
                   <KeyboardArrowRightIcon sx={{ ml: 'auto', fontSize: 18 }} />
                 </ListItemButton>
               </ListItem>
@@ -164,30 +164,31 @@ const MegaMenu = ({ compact, onItemClick }) => {
             }}>
               <Typography
                 level="title-md"
-                fontWeight="bold"
-                sx={{ color: '#555', ml: 1 }}
+                // fontWeight="bold"
+                fontFamily='League Spartan'
+
+                sx={{ color: '#333', ml: 1 }}
               >
-                Categories
+                Browse Categories
               </Typography>
-              <Tooltip title="Browse Categories" placement="right">
-                <IconButton
-                  size="md"
-                  variant="soft"
-                  color="neutral"
-                  onClick={handleDrawerToggle}
-                  aria-label="Open categories menu"
-                  sx={{
-                    borderRadius: '50%',
-                    bgcolor: 'rgba(0, 0, 0, 0.05)',
-                    color: '#666',
-                    '&:hover': {
-                      bgcolor: 'rgba(0, 0, 0, 0.1)'
-                    }
-                  }}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Tooltip>
+              <IconButton
+                size="md"
+                variant="solid"
+                color="primary"
+                onClick={handleDrawerToggle}
+                aria-label="Open categories menu"
+                sx={{
+                  borderRadius: '50%',
+                  bgcolor: 'rgba(74, 123, 163, 0.05)',
+                  color: '#666',
+                  '&:hover': {
+                    bgcolor: 'rgba(0, 0, 0, 0.1)'
+                  }
+                }}
+              >
+                <CategoryIcon color="primary"
+                />
+              </IconButton>
             </Box>
 
             {/* Desktop Categories List */}
@@ -210,7 +211,8 @@ const MegaMenu = ({ compact, onItemClick }) => {
                     display: 'flex',
                     alignItems: 'center',
                     color: '#222',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    // fontFamily:'League Spartan'
                   }}
                 >
                   Browse Categories
@@ -392,7 +394,7 @@ const MegaMenu = ({ compact, onItemClick }) => {
                           gap: 1.5
                         }}>
                           <Typography level="body-lg" color="#333" fontWeight="md">
-                            {category.name}
+                            {toTitle(category.name)}
                           </Typography>
                         </Box>
                       </Box>
