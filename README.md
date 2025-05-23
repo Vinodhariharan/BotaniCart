@@ -26,7 +26,7 @@ Welcome to **BotaniCart**, a refreshed and fully functional full-stack eCommerce
 - Fully functional shopping cart
 - Search and filter plants
 - Admin support for product management
-- Fully responsive design (Coming soon)
+- Fully responsive design
 - Review and Comments section (Coming soon)
 
 ---
