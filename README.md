@@ -1,9 +1,20 @@
-
 # BotaniCart - Full Stack Garden eCommerce Platform
 
 Welcome to **BotaniCart**, a refreshed and fully functional full-stack eCommerce web application for garden and plant lovers. Built with **Vite**, **React.js**, and **MUI Joy UI**, it leverages **Firebase** for authentication, database, and backend services.
 
 **[Live Demo →](https://botani-cart.vercel.app/)**
+
+---
+
+## 🎥 Video Demo
+
+<div align="center">
+  <a href="https://youtu.be/Gmg3EhcLR30">
+    <img src="https://img.youtube.com/vi/Gmg3EhcLR30/maxresdefault.jpg" alt="BotaniCart - Full Stack Demo" style="width:100%; max-width:800px;">
+  </a>
+  <p><strong>🎬 Watch the Complete Walkthrough</strong></p>
+  <p><em>Click above to see BotaniCart's features and implementation in action!</em></p>
+</div>
 
 ---
 
