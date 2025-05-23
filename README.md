@@ -39,12 +39,6 @@ Welcome to **BotaniCart**, a refreshed and fully functional full-stack eCommerce
 
 ---
 
-## Screenshots
-
-*(You can insert screenshots here later)*
-
----
-
 ## Folder Structure (Simplified)
 
 ```
@@ -111,12 +105,6 @@ npm run dev
 ## Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## License
-
-MIT License
 
 ---
 
