@@ -5,7 +5,6 @@ import {
   doc, 
   onSnapshot
 } from 'firebase/firestore';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/joy/Drawer';
 import Button from '@mui/joy/Button';
 import List from '@mui/joy/List';
@@ -17,12 +16,20 @@ import DialogContent from '@mui/joy/DialogContent';
 import ModalClose from '@mui/joy/ModalClose';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { Badge } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/joy/CircularProgress';
+import Badge from '@mui/joy/Badge';
+import IconButton from '@mui/joy/IconButton';
+import { useNavigate } from 'react-router-dom';
 import { app } from '../../firebaseConfig';
 import CompactCartCard from './CartCard';
 import { useCart } from './CardContext';
+
+// Import Joy UI icons instead of Material UI icons
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import ShoppingCartCheckout from '@mui/icons-material/ShoppingCartCheckout';
+import Login from '@mui/icons-material/Login';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@emotion/react';
 
 export default function CartDrawer() {
   const [open, setOpen] = useState(false);
@@ -31,32 +38,48 @@ export default function CartDrawer() {
   const navigate = useNavigate();
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const {cartProducts} = useCart();
+  const { cartProducts } = useCart();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const theme = useTheme();
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 600);
+
 
   useEffect(() => {
-    // Only set up listener if user is authenticated
-    if (auth.currentUser) {
-      // Reference to the user's document
-      const userCartRef = doc(db, 'users', auth.currentUser.uid);
+    // Check if user is authenticated
+    const unsubscribeAuth = auth.onAuthStateChanged(user => {
+      setIsAuthenticated(!!user);
+      setLoading(user ? true : false);
+      
+      if (user) {
+        // Reference to the user's document
+        const userCartRef = doc(db, 'users', user.uid);
 
-      // Set up real-time listener for cart items
-      const unsubscribe = onSnapshot(userCartRef, (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          const userData = docSnapshot.data();
-          const cartData = userData.cart?.items || [];
-          
-          setCartItems(cartData);
+        // Set up real-time listener for cart items
+        const unsubscribe = onSnapshot(userCartRef, (docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const userData = docSnapshot.data();
+            const cartData = userData.cart?.items || [];
+            
+            setCartItems(cartData);
+            setLoading(false);
+          } else {
+            setCartItems([]);
+            setLoading(false);
+          }
+        }, (error) => {
+          console.error("Error fetching cart:", error);
           setLoading(false);
-        }
-      }, (error) => {
-        console.error("Error fetching cart:", error);
-        setLoading(false);
-      });
+        });
 
-      // Cleanup subscription
-      return () => unsubscribe();
-    }
-  }, [auth.currentUser, db]);
+        return () => unsubscribe();
+      } else {
+        setCartItems([]);
+      }
+    });
+
+    // Cleanup subscription
+    return () => unsubscribeAuth();
+  }, [auth, db]);
 
   // Calculate total cart quantity
   const totalCartQuantity = useMemo(() => {
@@ -68,27 +91,75 @@ export default function CartDrawer() {
     setOpen(false);
   };
 
+  const handleSignIn = () => {
+    navigate('/login');
+    setOpen(false);
+  };
+
+
+  useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 600);
+  };
+  
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
   return (
-    <div>
+    <React.Fragment>
+       <Badge 
+      badgeContent={isAuthenticated ? totalCartQuantity : 0} 
+      color="neutral"
+      size={isMobile ? "sm" : "md"}
+      variant="solid"
+      sx={{
+        '& .MuiBadge-badge': {
+          fontSize: isMobile ? '0.7rem' : '0.8rem',
+          minWidth: isMobile ? '18px' : '20px',
+          height: isMobile ? '18px' : '20px',
+        }
+      }}
+    >
       <Button
-        sx={{ borderRadius: '20px' }}
         variant="soft"
         color="neutral"
-        endDecorator={
-          <Badge badgeContent={totalCartQuantity} color="primary">
-            <ShoppingCartIcon color="white" />
-          </Badge>
-        }
+        startDecorator={isMobile ? null : <ShoppingCart />}
         onClick={() => setOpen(true)}
+        sx={{ 
+          borderRadius: '20px',
+          width: isMobile ? 'auto' : 'auto',
+          minWidth: isMobile ? '40px' : 'auto',
+          p: isMobile ? '6px' : '6px 16px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          transition: 'all 0.2s ease-in-out',
+        }}
       >
-        View Cart
+        {isMobile ? (
+          <ShoppingCart fontSize={isMobile ? "small" : "medium"} />
+        ) : (
+          "View Cart"
+        )}
       </Button>
+    </Badge>
+      
       <Drawer 
-        variant="plain" 
+        variant="outlined" 
         open={open} 
         onClose={() => setOpen(false)} 
         size="md" 
         anchor="right"
+        slotProps={{
+          content: {
+            sx: {
+              bgcolor: 'background.surface',
+              p: 0,
+              boxShadow: 'lg'
+            }
+          }
+        }}
       >
         <Sheet
           sx={{
@@ -102,18 +173,37 @@ export default function CartDrawer() {
           }}
         >
           <DialogTitle>Your Cart</DialogTitle>
-          <ModalClose />
+          <ModalClose variant="plain" sx={{ m: 1 }} />
           <Divider />
           <DialogContent sx={{ gap: 2 }}>
-            {loading ? (
+            {!isAuthenticated ? (
               <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
-                <CircularProgress />
+                <Typography level="h4" textAlign="center" sx={{ mb: 2 }}>
+                  Sign In Required
+                </Typography>
+                <Typography textAlign="center" sx={{ mb: 4 }}>
+                  Please sign in to view your cart and add items.
+                </Typography>
+                <Button
+                  size="lg"
+                  variant="soft"
+                  color="primary"
+                  onClick={handleSignIn}
+                  startDecorator={<Login />}
+                  sx={{ borderRadius: '20px', px: 4 }}
+                >
+                  Sign In
+                </Button>
+              </Stack>
+            ) : loading ? (
+              <Stack alignItems="center" justifyContent="center" sx={{ py: 4 }}>
+                <CircularProgress variant="soft" />
                 <Typography level="body-sm" mt={2}>
                   Loading your cart...
                 </Typography>
               </Stack>
             ) : cartItems.length === 0 ? (
-              <Typography level="body-lg" textAlign="center" sx={{ py: 4 }}>
+              <Typography textAlign="center" sx={{ py: 4 }}>
                 Your cart is empty.
               </Typography>
             ) : (
@@ -128,7 +218,7 @@ export default function CartDrawer() {
                     </ListItem>
                   ))}
                 </List>
-                <Typography level="h6" sx={{ mt: 2, textAlign: 'right' }}>
+                <Typography level="title-md" sx={{ mt: 2, textAlign: 'right' }}>
                   Total Items: {cartItems.length}
                 </Typography>
               </>
@@ -136,32 +226,41 @@ export default function CartDrawer() {
           </DialogContent>
           <Divider sx={{ mt: 'auto' }} />
           <Stack direction="row" justifyContent="space-between" useFlexGap spacing={1}>
-            <Button 
-              sx={{ 
-                borderRadius: '20px', 
-                backgroundColor: '#0A4938', 
-                color: '#fff' 
-              }} 
-              variant="soft" 
-              onClick={handleCheckout}
-              disabled={cartItems.length === 0 || loading}
-            >
-              Checkout
-            </Button>
-            <Button 
-              sx={{ 
-                borderRadius: '20px', 
-                backgroundColor: 'red', 
-                color: '#fff' 
-              }} 
-              variant="soft" 
-              onClick={() => setOpen(false)}
-            >
-              Close
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button 
+                  variant="solid" 
+                  color="#fff"
+                  onClick={handleCheckout}
+                  disabled={cartItems.length === 0 || loading}
+                  startDecorator={<ShoppingCartCheckout />}
+                  sx={{ borderRadius: '20px', backgroundColor:"#136c13", color:'#fff'}}
+                >
+                  Checkout
+                </Button>
+                <Button 
+                  variant="plain" 
+                  color="neutral" 
+                  onClick={() => setOpen(false)}
+                  sx={{ borderRadius: 'md' }}
+                >
+                  Close
+                </Button>
+              </>
+            ) : (
+              <Button 
+                fullWidth
+                variant="plain" 
+                color="neutral" 
+                onClick={() => setOpen(false)}
+                sx={{ borderRadius: 'md' }}
+              >
+                Close
+              </Button>
+            )}
           </Stack>
         </Sheet>
       </Drawer>
-    </div>
+    </React.Fragment>
   );
 }

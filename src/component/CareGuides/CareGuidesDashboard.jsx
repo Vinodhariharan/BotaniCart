@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Typography, Box, Card, CardContent, Button, Chip, MenuItem, Input } from '@mui/joy';
+import { Container, Grid, Typography, Box, Card, CardContent, Button, Chip, MenuItem, Input, AspectRatio } from '@mui/joy';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
@@ -10,37 +10,37 @@ const CareGuides = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     const fetchGuides = async () => {
       try {
         setLoading(true);
-        
+
         // Create and execute query
-        let guidesQuery = collection(db, 'careGuides');
+        let guidesQuery = collection(db, 'careguides');
         if (selectedCategory !== 'all') {
           guidesQuery = query(guidesQuery, where('category', '==', selectedCategory));
         }
         guidesQuery = query(guidesQuery, orderBy('publishDate', 'desc'));
-        
+
         const snapshot = await getDocs(guidesQuery);
-        
+
         // Process guides data
         const guidesData = snapshot.docs
           .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(guide => 
-            searchTerm === '' || 
+          .filter(guide =>
+            searchTerm === '' ||
             guide.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             guide.description.toLowerCase().includes(searchTerm.toLowerCase())
           );
-        
+
         setGuides(guidesData);
-        
+
         // Extract unique categories
         const uniqueCategories = [...new Set(
           guidesData.map(guide => guide.category).filter(Boolean)
         )];
-        
+
         setCategories(uniqueCategories);
       } catch (err) {
         console.error('Error fetching care guides:', err);
@@ -48,10 +48,10 @@ const CareGuides = () => {
         setLoading(false);
       }
     };
-    
+
     fetchGuides();
   }, [selectedCategory, searchTerm]);
-  
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 5 }}>
@@ -59,11 +59,11 @@ const CareGuides = () => {
           Plant Care Guides
         </Typography>
         <Typography sx={{ mb: 3, maxWidth: '800px' }}>
-          Discover expert tips and comprehensive guides to help your plants thrive. 
+          Discover expert tips and comprehensive guides to help your plants thrive.
           From basic care to specialized techniques, our guides cover everything you need to know
           for healthy, beautiful plants in your home or garden.
         </Typography>
-        
+
         {/* Search and filter */}
         <Grid container spacing={2} sx={{ mb: 4 }}>
           <Grid xs={12} sm={6} md={4}>
@@ -76,7 +76,7 @@ const CareGuides = () => {
             />
           </Grid>
           <Grid xs={12} sm={6} md={4}>
-            <Input
+            {/* <Input
               select
               fullWidth
               value={selectedCategory}
@@ -89,15 +89,15 @@ const CareGuides = () => {
                   {category}
                 </MenuItem>
               ))}
-            </Input >
+            </Input > */}
           </Grid>
         </Grid>
-        
+
         {/* Featured guide */}
         {guides.length > 0 && (
-          <Box 
-            sx={{ 
-              mb: 6, 
+          <Box
+            sx={{
+              mb: 6,
               borderRadius: 'lg',
               overflow: 'hidden',
               boxShadow: 'md',
@@ -106,28 +106,40 @@ const CareGuides = () => {
           >
             <Grid container>
               <Grid xs={12} md={6}>
-                <Box 
-                  sx={{ 
+                <Box
+                  sx={{
                     height: { xs: '200px', md: '400px' },
-                    background: `url(${guides[0].imageURL})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
+                    overflow: 'hidden', // Ensures image doesn't overflow
+                    borderRadius: 2,     // Optional styling
                   }}
-                />
+                >
+                  <img
+                    src={guides[0].imageURL}
+                    alt="Care Guide"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                </Box>
               </Grid>
+
+
               <Grid xs={12} md={6}>
-                <Box 
-                  sx={{ 
-                    p: 4, 
+                <Box
+                  sx={{
+                    p: 4,
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center'
                   }}
                 >
-                  <Chip 
-                    color="primary" 
-                    variant="soft" 
+                  <Chip
+                    color="primary"
+                    variant="soft"
                     size="sm"
                     sx={{ mb: 2, alignSelf: 'flex-start' }}
                   >
@@ -139,8 +151,8 @@ const CareGuides = () => {
                   <Typography sx={{ mb: 3 }}>
                     {guides[0].description}
                   </Typography>
-                  <Button 
-                    component={Link} 
+                  <Button
+                    component={Link}
                     to={`/care-guides/${guides[0].id}`}
                     variant="outlined"
                     sx={{ alignSelf: 'flex-start' }}
@@ -152,45 +164,45 @@ const CareGuides = () => {
             </Grid>
           </Box>
         )}
-        
+
         {/* All guides */}
         <Grid container spacing={3}>
           {loading ? (
             <Typography sx={{ p: 3 }}>Loading guides...</Typography>
           ) : guides.length > 1 ? (
             guides.slice(1).map((guide) => (
-              <Grid xs={12} sm={6} md={4} key={guide.id}>
-                <Card 
-                  sx={{ 
-                    height: '100%', 
-                    display: 'flex', 
+              <Grid xs={12} sm={6} md={4} key={guide.id} sx={{mb:3}}>
+                <Card
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
                     flexDirection: 'column',
                     transition: 'transform 0.3s',
                     '&:hover': {
                       transform: 'translateY(-8px)',
                       boxShadow: 'lg'
-                    }
+                    },
                   }}
                 >
-                  <AspectRatio  
-  ratio="16/9"
-  sx={{ 
-    minWidth: { xs: '100%', md: '50%' },
-    borderRadius: 'md',
-    overflow: 'hidden'
-  }}
->
-  <img
-    src={guide.imageURL || '/placeholder-plant.jpg'}
-    alt={guide.title}
-    loading="lazy"
-    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-  />
-</AspectRatio>
+                  <AspectRatio
+                    ratio="16/9"
+                    sx={{
+                      minWidth: { xs: '100%', md: '50%' },
+                      borderRadius: 'md',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <img
+                      src={guide.imageURL || '/placeholder-plant.jpg'}
+                      alt={guide.title}
+                      loading="lazy"
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    />
+                  </AspectRatio>
 
                   <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ mb: 1 }}>
-                      <Chip 
+                      <Chip
                         size="sm"
                         color="success"
                         variant="soft"
@@ -198,11 +210,11 @@ const CareGuides = () => {
                         {guide.category}
                       </Chip>
                       {guide.difficulty && (
-                        <Chip 
+                        <Chip
                           size="sm"
                           color={
                             guide.difficulty === 'Easy' ? 'success' :
-                            guide.difficulty === 'Moderate' ? 'warning' : 'danger'
+                              guide.difficulty === 'Moderate' ? 'warning' : 'danger'
                           }
                           variant="soft"
                           sx={{ ml: 1 }}
@@ -217,7 +229,7 @@ const CareGuides = () => {
                     <Typography level="body-sm" sx={{ mb: 2, color: 'text.secondary' }}>
                       {guide.description.substring(0, 100)}...
                     </Typography>
-                    <Button 
+                    <Button
                       component={Link}
                       to={`/care-guides/${guide.id}`}
                       variant="soft"

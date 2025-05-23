@@ -7,7 +7,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const CardSlider = ({ products = [], user }) => {
+const CardSlider = ({ setaddtoCartSnack={setaddtoCartSnack}, products = [], user }) => {
   const CustomPrevArrow = ({ onClick }) => (
     <IconButton
       onClick={onClick}
@@ -84,7 +84,7 @@ const CardSlider = ({ products = [], user }) => {
       <Slider {...settings}>
         {products.map((product) => (
           <div key={product.id} style={{ padding: "10px" }}>
-            <ProductCard product={product} userId={user?.uid} />
+            <ProductCard setaddtoCartSnack={setaddtoCartSnack} product={product} userId={user?.uid} />
           </div>
         ))}
       </Slider>

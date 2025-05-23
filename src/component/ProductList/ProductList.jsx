@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Breadcrumbs, Button, Card, CircularProgress, Link, Typography, Stack } from '@mui/joy';
+import { Box, Breadcrumbs, Button, Card, CircularProgress, Link, Typography, Stack, Snackbar, Alert } from '@mui/joy';
 import HomeIcon from '@mui/icons-material/Home';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SearchIcon from '@mui/icons-material/Search';
 import { collection, query, where, orderBy, limit, startAfter, getDocs } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import FilterSidebar from './FilterSidebar';
-import MobileFilterDrawer from './MobileFilterDrawer';
 import ProductControls from './ProductControls';
 import ActiveFilters from './ActiveFilters';
 import ProductGrid from './ProductGrid';
 import PaginationControls from './PaginationControls';
+import CartSnackbar from '../AllComp/CartSnackBar';
 
 export default function ProductList({ initialCategory = 'All', specialFilter = null }) {
   const location = useLocation();
@@ -40,6 +40,8 @@ export default function ProductList({ initialCategory = 'All', specialFilter = n
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [brands, setBrands] = useState([]);
   const [activeFilters, setActiveFilters] = useState([]);
+  const [addtoCartSnack, setaddtoCartSnack] = useState(''); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const productsPerPage = 20;
   const paginationRef = useRef({ snapshots: [null], currentCursor: null });
@@ -75,35 +77,34 @@ export default function ProductList({ initialCategory = 'All', specialFilter = n
   }, [urlCategory, urlSubCategory, urlSearch, specialFilter]);
 
   // Fetch categories and brands on initial load
-  useEffect(() => {
-    const fetchCategoriesAndBrands = async () => {
-      try {
-        setLoading(true);
-        const productsRef = collection(db, 'products');
-        const snapshot = await getDocs(productsRef);
-        
-        const uniqueCategories = new Set();
-        const uniqueBrands = new Set();
+ useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const categoriesRef = collection(db, 'categories');
+      const snapshot = await getDocs(categoriesRef);
+      
+      const categoryNames = [];
 
-        snapshot.docs.forEach((doc) => {
-          const product = doc.data();
-          if (product.category) uniqueCategories.add(product.category);
-          if (product.brand) uniqueBrands.add(product.brand);
-        });
+      snapshot.docs.forEach((doc) => {
+        const category = doc.data();
+        if (category.name) {
+          categoryNames.push(category.name);
+        }
+      });
 
-        setCategories(['All', ...Array.from(uniqueCategories).sort()]);
-        setBrands(Array.from(uniqueBrands).sort());
-        
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching categories:', err);
-        setError('Failed to load categories. Please try again.');
-        setLoading(false);
-      }
-    };
+      setCategories(['All', ...categoryNames.sort()]);
+      
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+      setError('Failed to load categories. Please try again.');
+      setLoading(false);
+    }
+  };
 
-    fetchCategoriesAndBrands();
-  }, []);
+  fetchCategories();
+}, []);
 
   // Add special filter to active filters if applicable
   useEffect(() => {
@@ -278,7 +279,6 @@ if (specialFilter) {
       });
 
       setProducts(fetchedProducts);
-      console.log(fetchedProducts);
       setHasMore(fetchedProducts.length >= productsPerPage);
 
       // Update pagination snapshots
@@ -327,6 +327,22 @@ if (specialFilter) {
     // Reset to first page when search changes
     setCurrentPage(1);
   };
+
+
+  //Cart Snack Bar
+  useEffect(() => {
+    if (addtoCartSnack) {
+      setOpenSnackbar(true);
+    }
+  }, [addtoCartSnack]);
+   
+  const handleClose = (_, reason) => {
+  if (reason === 'clickaway') return;
+
+  setOpenSnackbar(false);
+  setaddtoCartSnack(''); // or setAddToCartSnack(null);
+};
+
   
   const toggleBrandSelection = (brand) => {
     setSelectedBrands((prev) => 
@@ -418,6 +434,7 @@ if (specialFilter) {
   };
 
   return (
+    <>
     <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
       {/* Desktop Sidebar Filter */}
       <FilterSidebar
@@ -437,26 +454,7 @@ if (specialFilter) {
         setSearchTerm={handleSearchChange}
       />
 
-      {/* Mobile Filter Drawer */}
-      <MobileFilterDrawer
-        open={showFilters}
-        onClose={() => setShowFilters(false)}
-        categories={categories}
-        selectedCategory={selectedCategory}
-        handleCategoryChange={handleCategoryChange}
-        subCategories={subCategories}
-        selectedSubCategory={selectedSubCategory}
-        handleSubCategoryChange={handleSubCategoryChange}
-        priceRange={priceRange}
-        handlePriceRangeChange={handlePriceRangeChange}
-        brands={brands}
-        selectedBrands={selectedBrands}
-        toggleBrandSelection={toggleBrandSelection}
-        clearAllFilters={clearAllFilters}
-        searchTerm={searchTerm}
-        setSearchTerm={handleSearchChange}
-      />
-
+    
       {/* Main Content Area */}
       <Box sx={{ flexGrow: 1, p: 2, flexBasis: 0 }}>
         {/* Breadcrumbs Navigation */}
@@ -532,7 +530,7 @@ if (specialFilter) {
 
         {/* Product Grid */}
         {!loading && !error && products.length > 0 && (
-          <ProductGrid products={products} viewMode={viewMode} />
+          <ProductGrid setaddtoCartSnack={setaddtoCartSnack} products={products} viewMode={viewMode} />
         )}
         
         {/* Pagination Controls */}
@@ -547,5 +545,11 @@ if (specialFilter) {
         )}
       </Box>
     </Stack>
+        <CartSnackbar
+        open={openSnackbar}
+        message={addtoCartSnack}
+        onClose={handleClose}
+      />
+    </>
   );
 }

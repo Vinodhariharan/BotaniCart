@@ -75,46 +75,52 @@ export function CartProvider({ children }) {
     return cartProducts.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const addToCart = async (product) => {
-    const cartItem = {
-      productId: product.id,
-      quantity: 1
-    };
-    
-    let updatedCart = [];
-    
-    setCartItems((prevItems) => {
-      const existingItemIndex = prevItems.findIndex((item) => item.productId === product.id);
+  const addToCart = async (product, quantity = 1) => {
+  if (quantity < 1) return;
 
-      if (existingItemIndex !== -1) {
-        // If product exists, increase its quantity
-        updatedCart = prevItems.map((item, index) =>
-          index === existingItemIndex 
-            ? { ...item, quantity: item.quantity + 1 } 
-            : item
-        );
-      } else {
-        // If product doesn't exist, add new item
-        updatedCart = [...prevItems, cartItem];
-      }
-      
-      return updatedCart;
-    });
-
-    if (user) {
-      try {
-        const userDocRef = doc(db, "users", user.uid);
-        await updateDoc(userDocRef, {
-          "cart.items": updatedCart,
-          "cart.lastUpdated": new Date().toISOString(),
-          "cart.subtotal": calculateSubtotal(updatedCart),
-          "cart.totalQuantity": updatedCart.reduce((sum, item) => sum + item.quantity, 0)
-        });
-      } catch (error) {
-        console.error("Error updating cart in Firestore:", error);
-      }
-    }
+  const cartItem = {
+    productId: product.id,
+    quantity
   };
+
+  let updatedCart = [];
+
+  setCartItems((prevItems) => {
+    const existingItemIndex = prevItems.findIndex((item) => item.productId === product.id);
+
+    if (existingItemIndex !== -1) {
+      // If product exists, increase its quantity
+      updatedCart = prevItems.map((item, index) =>
+        index === existingItemIndex
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      // If product doesn't exist, add new item
+      updatedCart = [...prevItems, cartItem];
+    }
+
+    return updatedCart;
+  });
+
+  if (user) {
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+
+      // Need to wait for state update, so get updatedCart from cartItems
+      const newCartItems = updatedCart.length > 0 ? updatedCart : cartItems;
+
+      await updateDoc(userDocRef, {
+        "cart.items": newCartItems,
+        "cart.lastUpdated": new Date().toISOString(),
+        "cart.subtotal": calculateSubtotal(newCartItems),
+        "cart.totalQuantity": newCartItems.reduce((sum, item) => sum + item.quantity, 0)
+      });
+    } catch (error) {
+      console.error("Error updating cart in Firestore:", error);
+    }
+  }
+};
 
   const removeFromCart = async (product) => {
     const updatedCart = cartItems.filter((item) => item.productId !== product.productId);

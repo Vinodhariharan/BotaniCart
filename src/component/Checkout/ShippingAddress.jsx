@@ -6,8 +6,8 @@ import {
   Divider, 
   Button, 
   Stack, 
-  TextField, 
-  Checkbox 
+  Checkbox, 
+  Input
 } from '@mui/joy';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { doc, setDoc } from 'firebase/firestore';
@@ -109,7 +109,7 @@ const ShippingAddress = ({ user, setUser }) => {
       ) : (
         <Box component="form" sx={{ py: 2 }}>
           <Stack spacing={2}>
-            <TextField
+            <Input
               name="addressLine1"
               label="Address Line 1"
               value={addressForm.addressLine1}
@@ -117,7 +117,7 @@ const ShippingAddress = ({ user, setUser }) => {
               size="sm"
               required
             />
-            <TextField
+            <Input
               name="addressLine2"
               label="Address Line 2"
               value={addressForm.addressLine2}
@@ -125,7 +125,7 @@ const ShippingAddress = ({ user, setUser }) => {
               size="sm"
             />
             <Stack direction="row" spacing={1}>
-              <TextField
+              <Input
                 name="city"
                 label="City"
                 value={addressForm.city}
@@ -134,7 +134,7 @@ const ShippingAddress = ({ user, setUser }) => {
                 fullWidth
                 required
               />
-              <TextField
+              <Input
                 name="state"
                 label="State"
                 value={addressForm.state}
@@ -145,7 +145,7 @@ const ShippingAddress = ({ user, setUser }) => {
               />
             </Stack>
             <Stack direction="row" spacing={1}>
-              <TextField
+              <Input
                 name="postalCode"
                 label="Postal Code"
                 value={addressForm.postalCode}
@@ -154,7 +154,7 @@ const ShippingAddress = ({ user, setUser }) => {
                 fullWidth
                 required
               />
-              <TextField
+              <Input
                 name="country"
                 label="Country"
                 value={addressForm.country}

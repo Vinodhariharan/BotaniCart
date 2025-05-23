@@ -2,12 +2,12 @@ import React from 'react';
 import { Grid, Card, AspectRatio, Box, Typography, Button } from '@mui/joy';
 import ProductCard from '../AllComp/CardComponent';
 
-const ProductGrid = ({ products, viewMode }) => (
+const ProductGrid = ({ setaddtoCartSnack, products, viewMode, }) => (
   <Grid container spacing={2} sx={{ mt: 1, display: viewMode === 'list' ? 'block' : 'flex' }}>
     {products.map((product, index) => (
       viewMode === 'grid' ? (
         <Grid item xs={12} sm={6} md={3} key={product.id || index}> {/* Modified md to 3 */}
-          <ProductCard product={{ ...product, imageSrc: product.imageSrc, title: product.title, price: product.price, description: product.description, link: product.link, stock: 100 }} />
+          <ProductCard setaddtoCartSnack={setaddtoCartSnack} product={{ ...product, imageSrc: product.imageSrc, title: product.title, price: product.price, description: product.description, link: product.link, stock: product.stock }} />
         </Grid>
       ) : (
         <Card key={product.id || index} variant="outlined" orientation="horizontal" sx={{ mb: 2, overflow: 'hidden' }}>
