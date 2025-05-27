@@ -575,7 +575,7 @@ const FullscreenProductView = ({ open, onClose, products, setaddtoCartSnack }) =
   );
 };
 
-export default function ChatbotSheet({ open, onClose, user, setaddtoCartSnack }) {
+export default function ChatBotSheet({ open, onClose, user, setaddtoCartSnack }) {
   const [messages, setMessages] = React.useState([]);
   const [inputMessage, setInputMessage] = React.useState('');
   const [loading, setLoading] = React.useState(false);

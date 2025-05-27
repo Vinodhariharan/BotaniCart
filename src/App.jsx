@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Button, Box, Snackbar, IconButton, Typography } from '@mui/joy'; // Import Button, Box, Snackbar from Joy UI
-import ChatbotSheet from './component/Chatbot/ChatbotSheet'; // Import the new ChatbotSheet component
 import { CartProvider } from './component/AllComp/CardContext'; // Ensure CartProvider is imported
 import useUser from './AuthProtectedRoute/useUser'; // Ensure useUser is imported
 
@@ -35,6 +34,7 @@ import BillingInfo from './component/Customer/BillingInfo.jsx';
 import AccountSettings from './component/Customer/AccountSettings.jsx';
 import { MessageCircle, MessageCircleIcon } from 'lucide-react';
 import { ChatBubble, ChatBubbleOutline, ChatBubbleOutlined } from '@mui/icons-material';
+import ChatBotSheet from './component/ChatBot/ChatBotSheet.jsx';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -224,7 +224,7 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
       )}
 
       {/* Chatbot Sheet Component */}
-      <ChatbotSheet
+      <ChatBotSheet
         open={openChat}
         onClose={() => setOpenChat(false)}
         user={user} // Pass the user object to the chatbot
