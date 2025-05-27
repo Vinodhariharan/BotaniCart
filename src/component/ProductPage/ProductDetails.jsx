@@ -38,7 +38,7 @@ import {
   ChevronRight
 } from "@mui/icons-material";
 import { useCart } from '../AllComp/CardContext';
-import RelatedProducts from "../AllComp/RelatedProducts.jsx";
+import RelatedProducts from "./RelatedProducts.jsx";
 import CartSnackbar from "../AllComp/CartSnackBar.jsx";
 import useUser from "../../AuthProtectedRoute/useUser.js";
 

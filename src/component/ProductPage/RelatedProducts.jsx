@@ -3,7 +3,7 @@ import { getFirestore, collection, query, where, getDocs, limit, documentId } fr
 import { getAuth } from 'firebase/auth';
 import { app } from '../../firebaseConfig';
 import { Box, Typography, CircularProgress } from '@mui/joy';
-import CardSlider from './CardSlider';
+import CardSlider from '../AllComp/CardSlider';
 
 const RelatedProducts = ({setaddtoCartSnack, category, currentProductId, limit: productLimit = 6 }) => {
   const [products, setProducts] = useState([]);

@@ -1,5 +1,10 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Button, Box, Snackbar, IconButton, Typography } from '@mui/joy'; // Import Button, Box, Snackbar from Joy UI
+import ChatbotSheet from './component/Chatbot/ChatbotSheet'; // Import the new ChatbotSheet component
+import { CartProvider } from './component/AllComp/CardContext'; // Ensure CartProvider is imported
+import useUser from './AuthProtectedRoute/useUser'; // Ensure useUser is imported
+
 import Navbar from './component/AllComp/Navbar';
 import ProductCategories from './component/Home/MegaMenu';
 import Footer from './component/Footer/Footer.jsx';
@@ -8,6 +13,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import ProtectedAdminRoute from './AuthProtectedRoute/ProtectedAdminRoute.jsx';
 import LoadingPage from './component/AllComp/LoadingPage';
 import { lazyWithLoading } from './component/AllComp/RouteTransition.jsx';
+// Removed lucide-react imports for simpler implementation
 
 // Regular imports for auth pages (no loading screen)
 import Login from './component/Login/Login';
@@ -27,6 +33,8 @@ import ProtectedUserRoute from './AuthProtectedRoute/ProtectedUserRoute.jsx';
 import OrdersList from './component/Customer/OrderDetails.jsx';
 import BillingInfo from './component/Customer/BillingInfo.jsx';
 import AccountSettings from './component/Customer/AccountSettings.jsx';
+import { MessageCircle, MessageCircleIcon } from 'lucide-react';
+import { ChatBubble, ChatBubbleOutline, ChatBubbleOutlined } from '@mui/icons-material';
 
 // Lazy load components to enable loading screen
 const Home = lazyWithLoading(() => import('./component/Home/Home'));
@@ -72,10 +80,10 @@ const App = () => {
   return (
     <Router>
       <Suspense fallback={<GlobalLoadingFallback />}>
-          {/* <SnackbarProvider> */}
-
-        <AppContent isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
-      {/* </SnackbarProvider> */}
+        {/* Wrap AppContent with CartProvider to make useCart available */}
+        <CartProvider>
+          <AppContent isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+        </CartProvider>
       </Suspense>
     </Router>
   );
@@ -85,13 +93,28 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const isAdminPage = location.pathname.startsWith('/admin');
+  const isProductsList = location.pathname.startsWith('/products?') || location.pathname.startsWith('/new-arrivals') || location.pathname.startsWith('/bestSelling') || location.pathname === '/products' || location.pathname.startsWith('/category') || location.pathname.startsWith('featured');
+  
+  
+  // State for chatbot sheet visibility and snackbar messages
+  const [openChat, setOpenChat] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { user } = useUser(); // Get user object from your useUser hook
+
+  // Function to set snackbar message and open it
+  const setaddtoCartSnack = (message) => {
+    setSnackBarMessage(message);
+    setOpenSnackbar(true);
+  };
 
   useEffect(() => {
     document.body.style.backgroundColor = isAuthPage ? '#0A4938' : '#fff';
   }, [isAuthPage]);
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* Navbar and Product Categories are not shown on auth/admin pages */}
       {!isAuthPage && !isAdminPage && <Navbar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />}
       {!isAuthPage && !isAdminPage && <ProductCategories />}
 
@@ -135,17 +158,16 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         {/* Product Listing pages */}
         <Route path='/category/:slug' element={<ProductListPass />} />
         <Route path='/category/' element={<ProductListPass />} />
-        {/* <Route path="/products/:slug" element={<ProductDetails />} /> */}
-        <Route path="/new-arrivals" element={<SpecialProducts type="newArrival" />} />
-        <Route path="/bestselling" element={<SpecialProducts type="bestSelling" />} />
-        <Route path="/featured" element={<SpecialProducts type="featured" />} />
         <Route path="products">
           {/* Product list with optional query parameters (category, subCategory, search) */}
           <Route index element={<ProductList initialCategory="All" />} />
-
           {/* Product detail page */}
           <Route path=":productId" element={<ProductDetails />} />
         </Route>
+        <Route path="/new-arrivals" element={<SpecialProducts type="newArrival" />} />
+        <Route path="/bestselling" element={<SpecialProducts type="bestSelling" />} />
+        <Route path="/featured" element={<SpecialProducts type="featured" />} />
+
 
         {/* Direct product link (alternative route) */}
         <Route path="product/:productId" element={<ProductDetails />} />
@@ -167,8 +189,59 @@ const AppContent = ({ isLoggedIn, setLoggedIn }) => {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
+      {/* Footer is not shown on auth/admin pages */}
       {!isAuthPage && !isAdminPage && <Footer />}
-    </div>
+
+      {/* Action Button to Open Chatbot */}
+     {!isAuthPage && !isAdminPage && (
+        <Button
+          onClick={() => setOpenChat(true)}
+          sx={{
+            position: 'fixed',
+            bottom: {
+              xs: isProductsList ? 90 : 20, // Mobile: lift on product pages
+              sm: 20, // Desktop: always normal position
+            },
+            right: 25,
+            borderRadius: '50%',
+            boxShadow: 'lg',
+            zIndex: 999,
+            background: 'linear-gradient(135deg, #4ade80 0%, #16a34a 100%)',
+            color: 'white',
+            minWidth: '60px',
+            width: '60px',
+            height: '60px',
+            fontSize: '20px',
+            fontWeight: 'bold',
+           '&:hover': {
+            transform: 'scale(1.05)',
+          },
+          transition: 'all 0.2s ease-in-out',
+          }}
+        >
+          <ChatBubble/>
+        </Button>
+      )}
+
+      {/* Chatbot Sheet Component */}
+      <ChatbotSheet
+        open={openChat}
+        onClose={() => setOpenChat(false)}
+        user={user} // Pass the user object to the chatbot
+        setaddtoCartSnack={setaddtoCartSnack} // Pass the snackbar setter
+      />
+
+      {/* Snackbar for notifications (e.g., "Added to Cart!") */}
+      <Snackbar
+        variant="soft"
+        color="success"
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        {snackBarMessage}
+      </Snackbar>
+    </Box>
   );
 };
 
