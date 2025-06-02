@@ -44,7 +44,7 @@ import useUser from "../../AuthProtectedRoute/useUser.js";
 
 function ProductDetails() {
   const { productId } = useParams();
-    const { isUser } = useUser();
+  const { isUser } = useUser();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -59,8 +59,8 @@ function ProductDetails() {
     category: '',
     subCategory: '',
     type: '',
-    featured: false,    // Add these three badge fields
-    newArrival: false,  // instead of a single badge field
+    featured: false,
+    newArrival: false,
     popular: false,
     details: {
       scientificName: '',
@@ -86,18 +86,17 @@ function ProductDetails() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const { addToCart } = useCart();
 
-  //addto Cart SnackBar
+  // Add to Cart SnackBar
   useEffect(() => {
-      if (addtoCartSnack) {
-        setOpenSnackbar(true);
-      }
-    }, [addtoCartSnack]);
+    if (addtoCartSnack) {
+      setOpenSnackbar(true);
+    }
+  }, [addtoCartSnack]);
      
-    const handleClose = (_, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === 'clickaway') return;
-  
     setOpenSnackbar(false);
-    setaddtoCartSnack(''); // or setAddToCartSnack(null);
+    setaddtoCartSnack('');
   };
 
   useEffect(() => {
@@ -106,14 +105,12 @@ function ProductDetails() {
       setError(null);
 
       try {
-        // First, try to find product by ID/productId directly
         const productRef = doc(db, "products", productId);
         const docSnap = await getDoc(productRef);
 
         if (docSnap.exists()) {
           setProductData({ id: docSnap.id, ...docSnap.data() });
         } else {
-          // If not found by ID, try to find by link field
           const productsQuery = query(
             collection(db, "products"),
             where("link", "==", productId)
@@ -122,7 +119,6 @@ function ProductDetails() {
           const querySnapshot = await getDocs(productsQuery);
 
           if (!querySnapshot.empty) {
-            // Use the first matching document
             const matchingDoc = querySnapshot.docs[0];
             setProductData({ id: matchingDoc.id, ...matchingDoc.data() });
           } else {
@@ -141,20 +137,15 @@ function ProductDetails() {
     fetchProductFromFirebase();
   }, [productId]);
 
-
-
   const handleAddToCart = () => {
     if(isUser){
-    addToCart(productData, quantity);
-    //  setTimeout(() => setAdded(false), 1000);
-      setaddtoCartSnack("Added to Cart!");}
-    else{
+      addToCart(productData, quantity);
+      setaddtoCartSnack("Added to Cart!");
+    } else {
       setaddtoCartSnack("Sign in to add plants to your garden collection");
       setTimeout(1000);
     }
-
   };
-
 
   const increaseQuantity = () => {
     if (quantity < productData.stock.quantity) {
@@ -177,130 +168,316 @@ function ProductDetails() {
       productData.category === 'shrubs' ||
       productData.category === 'trees') {
       return (
-        <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Box sx={{ mt: 4 }}>
           {details.scientificName && (
-            <Grid xs={12}>
-              <Typography level="title-md">Scientific Name:</Typography>
-              <Typography level="body-md" fontStyle="italic">{details.scientificName}</Typography>
-            </Grid>
+            <Box sx={{ mb: 3, p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ color: 'text.secondary', mb: 1 }}>
+                Scientific Name
+              </Typography>
+              <Typography level="body-lg" fontWeight="md" fontStyle="italic">
+                {details.scientificName}
+              </Typography>
+            </Box>
           )}
 
-          <Grid xs={12} sm={6} md={4}>
-            <Card variant="soft" sx={{ height: "100%" }}>
-              <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                <WbSunny color="warning" />
-                <Typography level="title-sm">Sunlight</Typography>
-              </Stack>
-              <Typography level="body-sm">{details.sunlight || "Not specified"}</Typography>
-            </Card>
-          </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
-            <Card variant="soft" sx={{ height: "100%" }}>
-              <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                <Opacity color="info" />
-                <Typography level="title-sm">Watering</Typography>
-              </Stack>
-              <Typography level="body-sm">{details.watering || "Not specified"}</Typography>
-            </Card>
-          </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
-            <Card variant="soft" sx={{ height: "100%" }}>
-              <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                <Speed />
-                <Typography level="title-sm">Growth Rate</Typography>
-              </Stack>
-              <Typography level="body-sm">{details.growthRate || "Not specified"}</Typography>
-            </Card>
-          </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
-            <Card variant="soft" sx={{ height: "100%" }}>
-              <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                <Build />
-                <Typography level="title-sm">Maintenance</Typography>
-              </Stack>
-              <Typography level="body-sm">{details.maintenance || "Not specified"}</Typography>
-            </Card>
-          </Grid>
-
-          {details.bloomSeason && (
-            <Grid xs={12} sm={6} md={4}>
-              <Card variant="soft" sx={{ height: "100%" }}>
-                <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                  <LocalFlorist color="secondary" />
-                  <Typography level="title-sm">Bloom Season</Typography>
+          <Grid container spacing={2}>
+            <Grid xs={12} sm={6} lg={3}>
+              <Card 
+                variant="plain" 
+                sx={{ 
+                  p: 3, 
+                  height: '100%',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  '&:hover': {
+                    boxShadow: 'sm',
+                    borderColor: 'primary.200'
+                  }
+                }}
+              >
+                <Stack spacing={2}>
+                  <Box sx={{ 
+                    p: 2, 
+                    borderRadius: 'md', 
+                    bgcolor: 'warning.50',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    height: 48
+                  }}>
+                    <WbSunny sx={{ color: 'warning.500' }} />
+                  </Box>
+                  <Box>
+                    <Typography level="title-sm" sx={{ mb: 1 }}>Sunlight</Typography>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                      {details.sunlight || "Not specified"}
+                    </Typography>
+                  </Box>
                 </Stack>
-                <Typography level="body-sm">{details.bloomSeason}</Typography>
               </Card>
             </Grid>
-          )}
 
-          {details.specialFeatures && (
-            <Grid xs={12} sm={6} md={4}>
-              <Card variant="soft" sx={{ height: "100%" }}>
-                <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-                  <Grass color="success" />
-                  <Typography level="title-sm">Special Features</Typography>
+            <Grid xs={12} sm={6} lg={3}>
+              <Card 
+                variant="plain" 
+                sx={{ 
+                  p: 3, 
+                  height: '100%',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  '&:hover': {
+                    boxShadow: 'sm',
+                    borderColor: 'primary.200'
+                  }
+                }}
+              >
+                <Stack spacing={2}>
+                  <Box sx={{ 
+                    p: 2, 
+                    borderRadius: 'md', 
+                    bgcolor: 'primary.50',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    height: 48
+                  }}>
+                    <Opacity sx={{ color: 'primary.500' }} />
+                  </Box>
+                  <Box>
+                    <Typography level="title-sm" sx={{ mb: 1 }}>Watering</Typography>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                      {details.watering || "Not specified"}
+                    </Typography>
+                  </Box>
                 </Stack>
-                <Typography level="body-sm">{details.specialFeatures}</Typography>
               </Card>
             </Grid>
-          )}
+
+            <Grid xs={12} sm={6} lg={3}>
+              <Card 
+                variant="plain" 
+                sx={{ 
+                  p: 3, 
+                  height: '100%',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  '&:hover': {
+                    boxShadow: 'sm',
+                    borderColor: 'primary.200'
+                  }
+                }}
+              >
+                <Stack spacing={2}>
+                  <Box sx={{ 
+                    p: 2, 
+                    borderRadius: 'md', 
+                    bgcolor: 'neutral.50',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    height: 48
+                  }}>
+                    <Speed sx={{ color: 'neutral.500' }} />
+                  </Box>
+                  <Box>
+                    <Typography level="title-sm" sx={{ mb: 1 }}>Growth Rate</Typography>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                      {details.growthRate || "Not specified"}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Card>
+            </Grid>
+
+            <Grid xs={12} sm={6} lg={3}>
+              <Card 
+                variant="plain" 
+                sx={{ 
+                  p: 3, 
+                  height: '100%',
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  '&:hover': {
+                    boxShadow: 'sm',
+                    borderColor: 'primary.200'
+                  }
+                }}
+              >
+                <Stack spacing={2}>
+                  <Box sx={{ 
+                    p: 2, 
+                    borderRadius: 'md', 
+                    bgcolor: 'success.50',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 48,
+                    height: 48
+                  }}>
+                    <Build sx={{ color: 'success.500' }} />
+                  </Box>
+                  <Box>
+                    <Typography level="title-sm" sx={{ mb: 1 }}>Maintenance</Typography>
+                    <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                      {details.maintenance || "Not specified"}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Card>
+            </Grid>
+
+            {details.bloomSeason && (
+              <Grid xs={12} sm={6}>
+                <Card 
+                  variant="plain" 
+                  sx={{ 
+                    p: 3, 
+                    height: '100%',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    '&:hover': {
+                      boxShadow: 'sm',
+                      borderColor: 'primary.200'
+                    }
+                  }}
+                >
+                  <Stack spacing={2}>
+                    <Box sx={{ 
+                      p: 2, 
+                      borderRadius: 'md', 
+                      bgcolor: 'danger.50',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 48,
+                      height: 48
+                    }}>
+                      <LocalFlorist sx={{ color: 'danger.500' }} />
+                    </Box>
+                    <Box>
+                      <Typography level="title-sm" sx={{ mb: 1 }}>Bloom Season</Typography>
+                      <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                        {details.bloomSeason}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </Card>
+              </Grid>
+            )}
+
+            {details.specialFeatures && (
+              <Grid xs={12} sm={6}>
+                <Card 
+                  variant="plain" 
+                  sx={{ 
+                    p: 3, 
+                    height: '100%',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    '&:hover': {
+                      boxShadow: 'sm',
+                      borderColor: 'primary.200'
+                    }
+                  }}
+                >
+                  <Stack spacing={2}>
+                    <Box sx={{ 
+                      p: 2, 
+                      borderRadius: 'md', 
+                      bgcolor: 'success.50',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 48,
+                      height: 48
+                    }}>
+                      <Grass sx={{ color: 'success.500' }} />
+                    </Box>
+                    <Box>
+                      <Typography level="title-sm" sx={{ mb: 1 }}>Special Features</Typography>
+                      <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
+                        {details.specialFeatures}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </Card>
+              </Grid>
+            )}
+          </Grid>
 
           {details.toxicity && (
-            <Grid xs={12}>
-              <Card
-                variant="outlined"
-                color={details.toxicity.toLowerCase().includes('toxic') ? 'danger' : 'success'}
-                sx={{ mt: 2 }}
-              >
-                <Typography level="title-sm">
-                  Toxicity: {details.toxicity}
-                </Typography>
-              </Card>
-            </Grid>
+            <Alert 
+              variant="soft" 
+              color={details.toxicity.toLowerCase().includes('toxic') ? 'danger' : 'success'}
+              sx={{ mt: 3 }}
+            >
+              <Typography level="title-sm">
+                Toxicity: {details.toxicity}
+              </Typography>
+            </Alert>
           )}
-        </Grid>
+        </Box>
       );
     }
 
-    // For other product categories (containers, tools, etc.)
+    // For other product categories
     return (
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {details.material && (
           <Grid xs={12} sm={6}>
-            <Typography level="title-sm">Material:</Typography>
-            <Typography level="body-md">{details.material}</Typography>
+            <Box sx={{ p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ mb: 1, color: 'text.secondary' }}>
+                Material
+              </Typography>
+              <Typography level="body-md">{details.material}</Typography>
+            </Box>
           </Grid>
         )}
 
         {details.size && (
           <Grid xs={12} sm={6}>
-            <Typography level="title-sm">Size:</Typography>
-            <Typography level="body-md">{details.size}</Typography>
+            <Box sx={{ p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ mb: 1, color: 'text.secondary' }}>
+                Size
+              </Typography>
+              <Typography level="body-md">{details.size}</Typography>
+            </Box>
           </Grid>
         )}
 
         {details.color && (
           <Grid xs={12} sm={6}>
-            <Typography level="title-sm">Color:</Typography>
-            <Typography level="body-md">{details.color}</Typography>
+            <Box sx={{ p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ mb: 1, color: 'text.secondary' }}>
+                Color
+              </Typography>
+              <Typography level="body-md">{details.color}</Typography>
+            </Box>
           </Grid>
         )}
 
         {details.useCase && (
           <Grid xs={12} sm={6}>
-            <Typography level="title-sm">Use Case:</Typography>
-            <Typography level="body-md">{details.useCase}</Typography>
+            <Box sx={{ p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ mb: 1, color: 'text.secondary' }}>
+                Use Case
+              </Typography>
+              <Typography level="body-md">{details.useCase}</Typography>
+            </Box>
           </Grid>
         )}
 
         {details.drainageHoles !== undefined && (
           <Grid xs={12} sm={6}>
-            <Typography level="title-sm">Drainage Holes:</Typography>
-            <Typography level="body-md">{details.drainageHoles ? 'Yes' : 'No'}</Typography>
+            <Box sx={{ p: 3, bgcolor: 'background.level1', borderRadius: 'lg' }}>
+              <Typography level="title-sm" sx={{ mb: 1, color: 'text.secondary' }}>
+                Drainage Holes
+              </Typography>
+              <Typography level="body-md">{details.drainageHoles ? 'Yes' : 'No'}</Typography>
+            </Box>
           </Grid>
         )}
       </Grid>
@@ -309,17 +486,19 @@ function ProductDetails() {
 
   if (loading) {
     return (
-      <Container sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
         <Grid container spacing={4}>
-          <Grid xs={12} md={6}>
-            <Skeleton variant="rectangular" width="100%" height={400} />
+          <Grid xs={12} lg={7}>
+            <Skeleton variant="rectangular" width="100%" height={500} sx={{ borderRadius: 'lg' }} />
           </Grid>
-          <Grid xs={12} md={6}>
-            <Skeleton variant="text" width="80%" height={40} />
-            <Skeleton variant="text" width="60%" height={30} sx={{ mt: 2 }} />
-            <Skeleton variant="text" width="40%" height={30} sx={{ mt: 2 }} />
-            <Skeleton variant="rectangular" width="100%" height={100} sx={{ mt: 3 }} />
-            <Skeleton variant="rectangular" width="60%" height={50} sx={{ mt: 2 }} />
+          <Grid xs={12} lg={5}>
+            <Stack spacing={2}>
+              <Skeleton variant="text" width="80%" height={40} />
+              <Skeleton variant="text" width="60%" height={30} />
+              <Skeleton variant="text" width="40%" height={30} />
+              <Skeleton variant="rectangular" width="100%" height={120} />
+              <Skeleton variant="rectangular" width="60%" height={50} />
+            </Stack>
           </Grid>
         </Grid>
       </Container>
@@ -328,29 +507,31 @@ function ProductDetails() {
 
   if (error) {
     return (
-      <Container sx={{ py: 4 }}>
-        <Alert variant="soft" color="danger" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-        <Button
-          component={Link}
-          to="/shop"
-          variant="solid"
-          color="primary"
-          startDecorator={<ArrowBack />}
-        >
-          Return to Shop
-        </Button>
+      <Container maxWidth="lg" sx={{ py: 6 }}>
+        <Stack spacing={3} alignItems="center">
+          <Alert variant="soft" color="danger">
+            {error}
+          </Alert>
+          <Button
+            component={Link}
+            to="/shop"
+            variant="solid"
+            color="primary"
+            startDecorator={<ArrowBack />}
+          >
+            Return to Shop
+          </Button>
+        </Stack>
       </Container>
     );
   }
 
   return (
-    <Container sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 } }}>
       {/* Breadcrumbs */}
       <Breadcrumbs
         separator={<ChevronRight fontSize="small" />}
-        sx={{ mb: 3 }}
+        sx={{ mb: 4 }}
       >
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
           <Home sx={{ mr: 0.5 }} fontSize="sm" />
@@ -369,261 +550,237 @@ function ProductDetails() {
 
       <Grid container spacing={4}>
         {/* Product Image */}
-        <Grid xs={12} md={6}>
-          <Card variant="outlined" sx={{ overflow: 'hidden', height: '100%' }}>
-            <CardOverflow>
-              {/* Low Stock Badge */}
-              {productData.stock && productData.stock.quantity < 10 && (
-                <Badge
-                  color="danger"
-                  badgeContent={`Only ${productData.stock.quantity} left!`}
-                  sx={{ position: 'absolute', top: 16, right: 16 }}
-                />
-              )}
+        <Grid xs={12} lg={7}>
+          <Box sx={{ position: 'sticky', top: 100 }}>
+            <Card 
+              variant="plain" 
+              sx={{ 
+                overflow: 'hidden', 
+                bgcolor: 'background.level1',
+                border: 'none'
+              }}
+            >
+              <CardOverflow>
+                {/* Badges Container */}
+                <Box sx={{ position: 'absolute', top: 20, left: 20, zIndex: 10 }}>
+                  <Stack spacing={1}>
+                    {productData.popular && (
+                      <Chip 
+                        color="warning" 
+                        size="sm"
+                        sx={{ fontWeight: 'bold' }}
+                      >
+                        Best Seller
+                      </Chip>
+                    )}
+                    {productData.featured && (
+                      <Chip 
+                        color="primary" 
+                        size="sm"
+                        sx={{ fontWeight: 'bold' }}
+                      >
+                        Featured
+                      </Chip>
+                    )}
+                    {productData.newArrival && (
+                      <Chip 
+                        color="success" 
+                        size="sm"
+                        sx={{ fontWeight: 'bold' }}
+                      >
+                        New Arrival
+                      </Chip>
+                    )}
+                  </Stack>
+                </Box>
 
-              {/* Feature Badges - Position them at the left */}
-              <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                {productData.popular && (
-                  <Box sx={{
-                    bgcolor: 'warning.300',
-                    color: 'white',
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 'md',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    fontSize: 'xs'
-                  }}>
-                    Best Seller
+                {/* Stock Badge */}
+                {productData.stock && productData.stock.quantity < 10 && (
+                  <Box sx={{ position: 'absolute', top: 20, right: 20, zIndex: 10 }}>
+                    <Chip color="danger" size="sm" sx={{ fontWeight: 'bold' }}>
+                      Only {productData.stock.quantity} left!
+                    </Chip>
                   </Box>
                 )}
 
-                {productData.featured && (
-                  <Box sx={{
-                    bgcolor: 'primary.400',
-                    color: 'white',
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 'md',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    fontSize: 'xs'
-                  }}>
-                    Featured
-                  </Box>
-                )}
-
-                {productData.newArrival && (
-                  <Box sx={{
-                    bgcolor: 'success.400',
-                    color: 'white',
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 'md',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    fontSize: 'xs'
-                  }}>
-                    New Arrival
-                  </Box>
-                )}
-              </Box>
-
-              <AspectRatio ratio="4/3" objectFit="cover">
-                <img
-                  src={productData.imageSrc}
-                  alt={productData.title}
-                  loading="lazy"
-                />
-              </AspectRatio>
-            </CardOverflow>
-          </Card>
+                <AspectRatio ratio="4/3" sx={{ minHeight: 400 }}>
+                  <img
+                    src={productData.imageSrc}
+                    alt={productData.title}
+                    loading="lazy"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </AspectRatio>
+              </CardOverflow>
+            </Card>
+          </Box>
         </Grid>
 
         {/* Product Information */}
-        <Grid xs={12} md={6}>
-          <Sheet
-            variant="outlined"
-            sx={{
-              p: 3,
-              borderRadius: 'md',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
+        <Grid xs={12} lg={5}>
+          <Stack spacing={3}>
+            {/* Back Button */}
             <IconButton
               component={Link}
               to="/shop"
               variant="plain"
               size="sm"
-              sx={{ alignSelf: 'flex-start', mb: 2 }}
-              aria-label="back to shop"
+              sx={{ alignSelf: 'flex-start' }}
             >
               <ArrowBack />
             </IconButton>
 
-            <Typography level="body-xs" textTransform="uppercase" mb={1}>
-              {productData.category}
-            </Typography>
-
-            <Typography level="h3" component="h1" fontWeight="lg">
-              {productData.title}
-            </Typography>
-
-            {productData.details && productData.details.scientificName && (
-              <Typography level="body-lg" fontStyle="italic" mb={2}>
-                {productData.details.scientificName}
+            {/* Product Title & Category */}
+            <Box>
+              <Typography 
+                level="body-xs" 
+                textTransform="uppercase" 
+                sx={{ 
+                  color: 'text.secondary', 
+                  letterSpacing: '0.1em',
+                  mb: 1 
+                }}
+              >
+                {productData.category}
               </Typography>
-            )}
+              
+              <Typography level="h2" component="h1" sx={{ mb: 2 }}>
+                {productData.title}
+              </Typography>
 
-            <Typography level="h4" color="primary" fontWeight="lg" my={2}>
+              {productData.details && productData.details.scientificName && (
+                <Typography 
+                  level="body-lg" 
+                  fontStyle="italic" 
+                  sx={{ color: 'text.secondary' }}
+                >
+                  {productData.details.scientificName}
+                </Typography>
+              )}
+            </Box>
+
+            {/* Price */}
+            <Typography level="h3" color="primary" fontWeight="lg">
               ${productData.price}
             </Typography>
 
-            <Divider sx={{ my: 2 }} />
+            {/* Description */}
+            <Box sx={{ py: 2 }}>
+              <Typography level="body-md" sx={{ lineHeight: 1.7 }}>
+                {productData.description || "No description available for this product."}
+              </Typography>
+            </Box>
 
-            <Typography level="body-md" mb={3}>
-              {productData.description || "No description available for this product."}
-            </Typography>
+            {/* Status Chips */}
+            {(productData.stock?.availability || productData.subCategory || productData.type) && (
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                {productData.stock && productData.stock.availability ? (
+                  <Chip color="success" variant="soft" size="sm">
+                    In Stock
+                  </Chip>
+                ) : (
+                  <Chip color="danger" variant="soft" size="sm">
+                    Out of Stock
+                  </Chip>
+                )}
 
-            {/* Quantity Selector */}
-            <Stack direction="row" alignItems="center" spacing={1} mb={3}>
-              <Typography level="body-md">Quantity:</Typography>
-              <Button
-                variant="outlined"
-                size="sm"
-                onClick={decreaseQuantity}
-                disabled={quantity <= 1}
-              >
-                <Remove fontSize="small" />
-              </Button>
-              <Typography sx={{ mx: 2 }}>{quantity}</Typography>
-              <Button
-                variant="outlined"
-                size="sm"
-                onClick={increaseQuantity}
-                disabled={!productData.stock || quantity >= productData.stock.quantity}
-              >
-                <Add fontSize="small" />
-              </Button>
-            </Stack>
+                {productData.subCategory && (
+                  <Chip color="primary" variant="soft" size="sm">
+                    {productData.subCategory}
+                  </Chip>
+                )}
 
-            {/* Add to Cart Button */}
-            <Button
-              variant="solid"
-              color="success"
-              size="lg"
-              startDecorator={<ShoppingCart />}
-              onClick={handleAddToCart}
-              disabled={!productData.stock || !productData.stock.availability}
-              sx={{
-                py: 1.5,
-                borderRadius: 'xl',
-                mt: 'auto'
-              }}
-            >
-              Add to Garden
-            </Button>
+                {productData.type && (
+                  <Chip color="neutral" variant="soft" size="sm">
+                    {productData.type}
+                  </Chip>
+                )}
+              </Stack>
+            )}
 
-            <Snackbar open={open} variant="soft" color="success" autoHideDuration={3000} onClose={() => setOpen(false)}>
-              Added to cart!
-            </Snackbar>
+            {/* Quantity & Add to Cart */}
+            <Card variant="outlined" sx={{ p: 3 }}>
+              <Stack spacing={3}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                  <Typography level="title-sm">Quantity</Typography>
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <IconButton
+                      variant="outlined"
+                      size="sm"
+                      onClick={decreaseQuantity}
+                      disabled={quantity <= 1}
+                    >
+                      <Remove fontSize="small" />
+                    </IconButton>
+                    <Typography 
+                      level="title-md" 
+                      sx={{ 
+                        minWidth: 40, 
+                        textAlign: 'center',
+                        py: 1,
+                        px: 2,
+                        bgcolor: 'background.level1',
+                        borderRadius: 'sm'
+                      }}
+                    >
+                      {quantity}
+                    </Typography>
+                    <IconButton
+                      variant="outlined"
+                      size="sm"
+                      onClick={increaseQuantity}
+                      disabled={!productData.stock || quantity >= productData.stock.quantity}
+                    >
+                      <Add fontSize="small" />
+                    </IconButton>
+                  </Stack>
+                </Stack>
 
-            <Stack direction="row" spacing={1} mt={3} flexWrap="wrap">
-              {productData.stock && productData.stock.availability ? (
-                <Chip
+                <Button
+                  variant="solid"
                   color="success"
-                  variant="soft"
-                  size="md"
+                  size="lg"
+                  startDecorator={<ShoppingCart />}
+                  onClick={handleAddToCart}
+                  disabled={!productData.stock || !productData.stock.availability}
+                  sx={{
+                    py: 1.5,
+                    borderRadius: 'md'
+                  }}
                 >
-                  In Stock
-                </Chip>
-              ) : (
-                <Chip
-                  color="danger"
-                  variant="soft"
-                  size="md"
-                >
-                  Out of Stock
-                </Chip>
-              )}
-
-              {productData.subCategory && (
-                <Chip
-                  color="primary"
-                  variant="soft"
-                  size="md"
-                >
-                  {productData.subCategory}
-                </Chip>
-              )}
-
-              {productData.type && (
-                <Chip
-                  color="neutral"
-                  variant="soft"
-                  size="md"
-                >
-                  {productData.type}
-                </Chip>
-              )}
-
-              {/* Add chips based on the boolean fields */}
-              {productData.popular && (
-                <Chip
-                  color="warning"
-                  variant="soft"
-                  size="md"
-                >
-                  Best Seller
-                </Chip>
-              )}
-
-              {productData.featured && (
-                <Chip
-                  color="primary"
-                  variant="soft"
-                  size="md"
-                >
-                  Featured
-                </Chip>
-              )}
-
-              {productData.newArrival && (
-                <Chip
-                  color="success"
-                  variant="soft"
-                  size="md"
-                >
-                  New Arrival
-                </Chip>
-              )}
-            </Stack>
-          </Sheet>
+                  Add to Garden
+                </Button>
+              </Stack>
+            </Card>
+          </Stack>
         </Grid>
 
         {/* Product Details Section */}
         <Grid xs={12}>
-          <Card sx={{ p: 3, mt: 4 }}>
-            <Typography level="h5" component="h2" gutterBottom>
+          <Box sx={{ mt: 6 }}>
+            <Typography level="h3" component="h2" sx={{ mb: 3 }}>
               Product Details
             </Typography>
-            <Divider sx={{ mb: 3 }} />
-
             {renderPlantDetails()}
-          </Card>
+          </Box>
         </Grid>
 
-        {/* Related Products Section - This could be added in a future enhancement */}
+        {/* Related Products Section */}
         <Grid xs={12}>
-          <Typography level="h2" component="h2" sx={{ mt: 6, mb: 3 }}>
-            You May Also Like
-          </Typography>
-          <RelatedProducts setaddtoCartSnack={setaddtoCartSnack} category={productData.category} currentProductId={productId} />
+          <Box sx={{ mt: 8 }}>
+            <Typography level="h3" component="h2" sx={{ mb: 4 }}>
+              You May Also Like
+            </Typography>
+            <RelatedProducts 
+              setaddtoCartSnack={setaddtoCartSnack} 
+              category={productData.category} 
+              currentProductId={productId} 
+            />
+          </Box>
         </Grid>
       </Grid>
-       <CartSnackbar
+
+      <CartSnackbar
         open={openSnackbar}
         message={addtoCartSnack}
         onClose={handleClose}
